@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.noyji.thequestforge.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "thequestforge.refmap.json",
+  "client": [
+    "CameraInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

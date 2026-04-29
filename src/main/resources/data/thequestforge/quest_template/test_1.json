@@ -1,0 +1,99 @@
+{
+  "pool": "none",
+  "weight": 100,
+  "time_limit": {
+    "max": 120,
+    "min": 10
+  },
+  "requirement": [],
+  "name": {
+    "en_us": ["Debug Quest: The Beginning", "A Test of Might"],
+    "ru_ru": ["Дебаг квест: Начало", "Проверка силы"]
+  },
+  "description": {
+    "en_us": [
+      "Please help me test this system.",
+      "Collect the items and return them to me."
+    ],
+    "ru_ru": [
+      "Пожалуйста, помоги мне протестировать эту систему.",
+      "Собери нужные предметы и принеси их мне."
+    ]
+  },
+  "requirement_items": [],
+  "group": "thequestforge:test",
+  "task_count": {
+    "max": 3,
+    "min": 1
+  },
+  "reward_count": {
+    "max": 5,
+    "min": 2
+  },
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": [
+          "Hello traveler! Are you ready for a test?",
+          "I have a dangerous task for you."
+        ],
+        "ru_ru": [
+          "Привет, путник! Готов к сложному тесту?",
+          "У меня есть для тебя опасное задание."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Yes, I am ready!"],
+            "ru_ru": ["Да, я готов!"]
+          },
+          "toGo": "quest_details"
+        },
+        {
+          "text": {
+            "en_us": ["No, maybe later."],
+            "ru_ru": ["Нет, может быть позже."]
+          },
+          "toGo": "exit"
+        }
+      ]
+    },
+    "quest_details": {
+      "text": {
+        "en_us": ["Excellent. Bring me the required items and you will be rewarded."],
+        "ru_ru": ["Отлично. Принеси мне нужные предметы, и я щедро награжу тебя."]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["I will do it."],
+            "ru_ru": ["Я сделаю это."]
+          },
+          "toGo": "exit"
+        },
+        {
+          "text": {
+            "en_us": ["Wait, what items?"],
+            "ru_ru": ["Подожди, какие предметы?"]
+          },
+          "toGo": "start"
+        }
+      ]
+    },
+    "exit": {
+      "text": {
+        "en_us": ["Farewell.", "Good luck on your journey!"],
+        "ru_ru": ["Прощай.", "Удачи в твоем путешествии!"]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Close"],
+            "ru_ru": ["Закрыть"]
+          }
+        }
+      ]
+    }
+  }
+}

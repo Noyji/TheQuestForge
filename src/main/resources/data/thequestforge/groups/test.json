@@ -1,0 +1,172 @@
+{
+  "tasks": [
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:zombie",
+      "count": {
+        "min": 10,
+        "max": 20
+      },
+      "multiplier": true,
+      "weight": 100
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:skeleton",
+      "count": {
+        "min": 5,
+        "max": 15
+      },
+      "multiplier": true,
+      "weight": 80
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:bone",
+      "count": {
+        "min": 16,
+        "max": 32
+      },
+      "multiplier": false,
+      "weight": 60
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:phantom_membrane",
+      "count": {
+        "min": 1,
+        "max": 5
+      },
+      "multiplier": true,
+      "weight": 30
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:wither_skeleton",
+      "count": {
+        "min": 1,
+        "max": 3
+      },
+      "multiplier": false,
+      "weight": 10
+    }
+  ],
+  "rewards": [
+    {
+      "target": "minecraft:emerald",
+      "tag": "{display:{Name:'{\"text\":\"Amity Seed\",\"color\":\"green\"}',Lore:['{\"text\":\"Хранит в себе древние воспоминания...\",\"color\":\"gray\",\"italic\":true}']}}",
+      "count": {
+        "min": 5,
+        "max": 15
+      },
+      "multiplier": true,
+      "weight": 100
+    },
+    {
+      "target": "minecraft:blaze_rod",
+      "tag": "{display:{Name:'{\"text\":\"Посох Призывателя\",\"color\":\"gold\",\"bold\":true}'}}",
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "multiplier": false,
+      "weight": 25,
+      "enchantment_count": {
+        "min": 1,
+        "max": 2
+      },
+      "enchantment": [
+        {
+          "id": "minecraft:knockback",
+          "level": {
+            "min": 1,
+            "max": 2
+          },
+          "weight": 50
+        },
+        {
+          "id": "minecraft:fire_aspect",
+          "level": {
+            "min": 1,
+            "max": 2
+          },
+          "weight": 30
+        }
+      ]
+    },
+    {
+      "target": "minecraft:glass_bottle",
+      "tag": "{display:{Name:'{\"text\":\"Diluted Mnemonic\",\"color\":\"aqua\"}'}}",
+      "count": {
+        "min": 1,
+        "max": 3
+      },
+      "multiplier": false,
+      "weight": 40
+    },
+    {
+      "target": "minecraft:diamond_sword",
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "multiplier": false,
+      "weight": 15,
+      "enchantment_count": {
+        "min": 2,
+        "max": 3
+      },
+      "enchantment": [
+        {
+          "id": "minecraft:sharpness",
+          "level": {
+            "min": 3,
+            "max": 5
+          },
+          "weight": 40
+        },
+        {
+          "id": "minecraft:smite",
+          "level": {
+            "min": 4,
+            "max": 5
+          },
+          "weight": 30
+        },
+        {
+          "id": "minecraft:looting",
+          "level": {
+            "min": 1,
+            "max": 3
+          },
+          "weight": 20
+        },
+        {
+          "id": "minecraft:unbreaking",
+          "level": {
+            "min": 2,
+            "max": 3
+          },
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "target": "minecraft:gold_ingot",
+      "count": {
+        "min": 10,
+        "max": 30
+      },
+      "multiplier": true,
+      "weight": 80
+    }
+  ],
+  "xp_reward": {
+    "min": 100,
+    "max": 500
+  },
+  "currency_reward": {
+    "min": 200,
+    "max": 1000
+  }
+}
