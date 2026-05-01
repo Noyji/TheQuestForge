@@ -2,7 +2,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
-    id 'org.spongepowered.mixin' version '0.7.+' // ДОБАВЛЕНО ДЛЯ MIXIN: Подключаем плагин
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 group = mod_group_id
@@ -16,11 +16,8 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
-// ДОБАВЛЕНО ДЛЯ MIXIN: Основная конфигурация
 mixin {
-    // Указываем генератору создать файл refmap для нашего мода
     add sourceSets.main, "thequestforge.refmap.json"
-    // Указываем главный конфигурационный файл миксинов
     config "thequestforge.mixins.json"
 }
 
@@ -36,7 +33,6 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
-            // ДОБАВЛЕНО ДЛЯ MIXIN: Эти свойства помогают игре правильно читать обфусцированные имена
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapElementAttribute', 'true'
 
@@ -49,14 +45,12 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
-            // ДОБАВЛЕНО ДЛЯ MIXIN: Принудительно скармливаем наш JSON клиенту
             arg "-mixin.config=thequestforge.mixins.json"
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
-            // ДОБАВЛЕНО ДЛЯ MIXIN: Принудительно скармливаем наш JSON серверу
             arg "-mixin.config=thequestforge.mixins.json"
         }
 
@@ -74,14 +68,11 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    // Здесь можно добавлять репозитории других модов, если понадобится
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    // ДОБАВЛЕНО ДЛЯ MIXIN: Процессор аннотаций. Он нужен, чтобы при компиляции
-    // Gradle прочитал твои аннотации @Mixin и @Invoker и создал файл thequestforge.refmap.json
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
@@ -108,7 +99,6 @@ tasks.named('jar', Jar).configure {
                     "Implementation-Version"  : project.jar.archiveVersion,
                     "Implementation-Vendor"   : mod_authors,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                    // ДОБАВЛЕНО ДЛЯ MIXIN: Указываем миксины для скомпилированного .jar файла
                     "MixinConfigs"            : "thequestforge.mixins.json"])
     }
 
