@@ -12,7 +12,10 @@ import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class Quest extends PlayerQuest {
     private Map<String, QuestDialog> dialogs = new HashMap<>()  ;

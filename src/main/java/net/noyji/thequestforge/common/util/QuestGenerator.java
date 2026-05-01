@@ -4,7 +4,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-
 import net.minecraft.world.item.ItemStack;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.requirements.RequirementContext;
@@ -18,7 +17,6 @@ import net.noyji.thequestforge.data.quest.entity.components.QuestDialog;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import net.noyji.thequestforge.data.template.QuestTemplate;
-
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;

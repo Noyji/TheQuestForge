@@ -1,7 +1,5 @@
 package net.noyji.thequestforge.data.quest.player.components;
 
-import net.noyji.thequestforge.data.quest.entity.components.QuestDialog;
-
 public enum QuestRarity {
     COMMON(0, "common"),
     UNCOMMON(1, "uncommon"),

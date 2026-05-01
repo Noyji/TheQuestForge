@@ -20,7 +20,6 @@ import net.noyji.thequestforge.common.items.ItemsRegistry;
 import net.noyji.thequestforge.config.ClientConfig;
 import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.capability.AttachCapabilities;
-import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.network.ModNetworking;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;

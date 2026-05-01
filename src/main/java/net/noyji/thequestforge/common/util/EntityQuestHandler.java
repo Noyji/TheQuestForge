@@ -20,11 +20,6 @@ import net.noyji.thequestforge.network.s2c.OpenQuestGuiS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncEntityQuestDataS2CPacket;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentMap;
-
 public class EntityQuestHandler {
     private static final RandomSource RANDOM = RandomSource.create();
 

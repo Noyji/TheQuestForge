@@ -8,7 +8,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.IWeighable;
 import net.noyji.thequestforge.data.group.components.EnchantmentContext;
 import net.noyji.thequestforge.data.group.components.JsonReward;

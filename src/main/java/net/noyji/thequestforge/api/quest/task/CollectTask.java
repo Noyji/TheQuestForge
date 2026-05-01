@@ -8,14 +8,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.common.util.Util;
-import net.noyji.thequestforge.data.group.components.EnchantmentContext;
 import net.noyji.thequestforge.data.group.components.JsonTask;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
-
-import java.util.List;
 
 public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     private ItemStack itemStack;

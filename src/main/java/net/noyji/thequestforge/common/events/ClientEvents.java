@@ -6,7 +6,6 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.noyji.thequestforge.client.ClientHandler;
-import net.noyji.thequestforge.client.KeyBindings;
 import net.noyji.thequestforge.client.render.AdditionalRenders;
 import net.noyji.thequestforge.client.render.DialogueCameraManager;
 import net.noyji.thequestforge.client.render.DialogueGuiManager;

@@ -2,7 +2,6 @@ package net.noyji.thequestforge.network.c2s;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 import net.noyji.thequestforge.common.util.EntityQuestHandler;
