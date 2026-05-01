@@ -7,9 +7,9 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.noyji.thequestforge.TheQuestForge;
-import net.noyji.thequestforge.network.s2c.OpenQuestGuiS2CPacket;
-import net.noyji.thequestforge.network.s2c.SyncEntityQuestDataS2CPacket;
-import net.noyji.thequestforge.network.s2c.SyncQuestTemplateS2CPacket;
+import net.noyji.thequestforge.network.c2s.ActionHandlerC2SPacket;
+import net.noyji.thequestforge.network.c2s.InteractNpcC2SPacket;
+import net.noyji.thequestforge.network.s2c.*;
 
 import java.util.Optional;
 
@@ -29,6 +29,7 @@ public class ModNetworking {
     );
 
     public static void register(){
+        //S2C
         CHANNEL.registerMessage(
                 id(),
                 SyncEntityQuestDataS2CPacket.class,
@@ -37,7 +38,6 @@ public class ModNetworking {
                 SyncEntityQuestDataS2CPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT)
         );
-
         CHANNEL.registerMessage(
                 id(),
                 OpenQuestGuiS2CPacket.class,
@@ -46,7 +46,6 @@ public class ModNetworking {
                 OpenQuestGuiS2CPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT)
         );
-
         CHANNEL.registerMessage(
                 id(),
                 SyncQuestTemplateS2CPacket.class,
@@ -54,6 +53,48 @@ public class ModNetworking {
                 SyncQuestTemplateS2CPacket::decode,
                 SyncQuestTemplateS2CPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                SyncPlayerAllQuestS2CPacket.class,
+                SyncPlayerAllQuestS2CPacket::encode,
+                SyncPlayerAllQuestS2CPacket::decode,
+                SyncPlayerAllQuestS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                AddPlayerQuestS2CPacket.class,
+                AddPlayerQuestS2CPacket::encode,
+                AddPlayerQuestS2CPacket::decode,
+                AddPlayerQuestS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                SyncSpecificPlayerQuestS2CPacket.class,
+                SyncSpecificPlayerQuestS2CPacket::encode,
+                SyncSpecificPlayerQuestS2CPacket::decode,
+                SyncSpecificPlayerQuestS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+
+        //C2S
+        CHANNEL.registerMessage(
+                id(),
+                ActionHandlerC2SPacket.class,
+                ActionHandlerC2SPacket::encode,
+                ActionHandlerC2SPacket::decode,
+                ActionHandlerC2SPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                InteractNpcC2SPacket.class,
+                InteractNpcC2SPacket::encode,
+                InteractNpcC2SPacket::decode,
+                InteractNpcC2SPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER)
         );
     }
 

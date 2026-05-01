@@ -22,13 +22,22 @@ public class TemplateDialog {
         return Util.getTranslateTextFromMap(text, key, textIndex);
     }
 
+    public List<TemplateDialogButton> getButtons() {
+        return buttons;
+    }
+
     @Nullable
     public QuestDialog toQuestDialog(RandomSource randomSource){
         if (text == null || text.isEmpty()) return null;
 
         int textIndex = randomSource.nextInt(0, text.get("en_us").size());
+        List<Integer> result = new ArrayList<>();
 
-        return new QuestDialog(textIndex, buttons.size());
+        for (TemplateDialogButton templateDialogButton : buttons){
+            result.add(templateDialogButton.getTextIndex(randomSource));
+        }
+
+        return new QuestDialog(textIndex, result);
     }
 
     public CompoundTag serializeNBT() {

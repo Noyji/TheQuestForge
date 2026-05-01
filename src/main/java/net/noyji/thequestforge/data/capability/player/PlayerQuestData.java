@@ -5,8 +5,14 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
+import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.data.quest.player.PlayerQuest;
+import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.s2c.SyncSpecificPlayerQuestS2CPacket;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -14,6 +20,21 @@ public class PlayerQuestData {
     private final Map<UUID, PlayerQuest> playerQuestMap = new HashMap<>();
     // --- ResourceLocation(thequestforge:collect) --- ResourceLocation(minecraft:pig) --- questId
     private final Map<ResourceLocation, Map<ResourceLocation, List<UUID>>> questCatalog = new HashMap<>();
+
+    //TODO:
+    public int sizeQuest(){
+        return playerQuestMap.size();
+    }
+
+    public void debugInfo(){
+        for (Map.Entry<ResourceLocation, Map<ResourceLocation, List<UUID>>> entry : questCatalog.entrySet()){
+            for (Map.Entry<ResourceLocation, List<UUID>> listEntry : entry.getValue().entrySet()){
+                for (UUID uuids : listEntry.getValue()){
+                    TheQuestForge.LOGGER.debug("Quest task: {}, target: {}, uuid: {}", entry.getKey(), listEntry.getKey(), uuids);
+                }
+            }
+        }
+    }
 
     public boolean hasQuest(UUID uuid){
         return playerQuestMap.containsKey(uuid);
@@ -25,7 +46,7 @@ public class PlayerQuestData {
         return playerQuest.isComplete();
     }
 
-    public void progressUpdate(ResourceLocation taskTypeKey, ResourceLocation target, Event event){
+    public void progressUpdate(ResourceLocation taskTypeKey, ResourceLocation target, Event event, Player player){
         if (questCatalog.isEmpty()) return;
         if (questCatalog.get(taskTypeKey) == null || questCatalog.get(taskTypeKey).isEmpty()) return;
         if (questCatalog.get(taskTypeKey).get(target) == null || questCatalog.get(taskTypeKey).get(target).isEmpty()) return;
@@ -34,7 +55,18 @@ public class PlayerQuestData {
         for (UUID uuid : uuids){
             PlayerQuest quest = playerQuestMap.get(uuid);
             quest.updateTask(taskTypeKey, target, event);
+
+            if (player instanceof ServerPlayer serverPlayer) {
+                ModNetworking.sendToPlayer(new SyncSpecificPlayerQuestS2CPacket(uuid, quest.serializeNBT()), serverPlayer);
+            }
         }
+    }
+
+    public void updateQuest(UUID questId, CompoundTag data){
+        PlayerQuest quest = playerQuestMap.get(questId);
+        if (quest == null) return;
+
+        quest.deserializeNBT(data);
     }
 
     public void removeQuest(UUID uuid){
@@ -91,7 +123,7 @@ public class PlayerQuestData {
         return save;
     }
 
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(@NotNull CompoundTag nbt) {
         this.playerQuestMap.clear();
         this.questCatalog.clear();
 

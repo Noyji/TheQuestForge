@@ -16,6 +16,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.noyji.thequestforge.api.registry.ActionRegistry;
 import net.noyji.thequestforge.api.registry.RequirementRegistry;
 import net.noyji.thequestforge.api.registry.TaskHandlerRegistry;
+import net.noyji.thequestforge.common.items.ItemsRegistry;
 import net.noyji.thequestforge.config.ClientConfig;
 import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.capability.AttachCapabilities;
@@ -40,6 +41,7 @@ public class TheQuestForge {
         TaskHandlerRegistry.register(modEventBus);
         ActionRegistry.register(modEventBus);
         RequirementRegistry.register(modEventBus);
+        ItemsRegistry.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, String.format("%s-client.toml", MODID));
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, String.format("%s-server.toml", MODID));

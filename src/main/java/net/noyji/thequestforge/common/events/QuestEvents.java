@@ -7,7 +7,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
@@ -28,7 +27,7 @@ public class QuestEvents {
 
         if (killer instanceof Player player){
             ResourceLocation mob = Util.getEntityResourceLocation(deathMob);
-            CapabilityUtil.getPlayerQuestData(player).progressUpdate(KILL_KEY, mob, event);
+            CapabilityUtil.getPlayerQuestData(player).progressUpdate(KILL_KEY, mob, event, player);
         }
     }
 

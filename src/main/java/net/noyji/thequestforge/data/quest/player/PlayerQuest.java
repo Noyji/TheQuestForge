@@ -49,18 +49,25 @@ public class PlayerQuest {
         this.rewards = rewards;
     }
 
-    public void updateTask(ResourceLocation taskTypeKey, ResourceLocation target, Event event){
-        int completedTask = 0;
+    public boolean updateTask(ResourceLocation taskTypeKey, ResourceLocation target, Event event){
+        boolean progressChanged = false;
+        int completedCount = 0;
+
         for (AbstractTask<?> abstractTask : tasks){
-            if (abstractTask.isComplete()){
-                completedTask++;
-                continue;
+            if (!abstractTask.isComplete() && abstractTask.taskIs(taskTypeKey, target)){
+                abstractTask.tryHandle(event);
+                progressChanged = true;
             }
 
-            if (!abstractTask.taskIs(taskTypeKey, target)) continue;
-            abstractTask.tryHandle(event);
+            if (abstractTask.isComplete()){
+                completedCount++;
+            }
         }
-        complete = (completedTask == tasks.size());
+
+        boolean wasComplete = this.complete;
+        this.complete = (completedCount == this.tasks.size());
+
+        return progressChanged || (!wasComplete && this.complete);
     }
 
     public List<String> getLocationAndTarget(){

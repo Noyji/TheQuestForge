@@ -70,7 +70,8 @@
             "en_us": ["I will do it."],
             "ru_ru": ["Я сделаю это."]
           },
-          "toGo": "exit"
+          "toGo": "exit",
+          "actions": ["thequestforge:accepta", "thequestforge:accept"]
         },
         {
           "text": {
@@ -91,7 +92,8 @@
           "text": {
             "en_us": ["Close"],
             "ru_ru": ["Закрыть"]
-          }
+          },
+          "actions": ["thequestforge:close"]
         }
       ]
     }

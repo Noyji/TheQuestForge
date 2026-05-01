@@ -10,6 +10,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.action.AbstractAction;
+import net.noyji.thequestforge.api.quest.action.AcceptQuestAction;
 
 import java.util.function.Supplier;
 
@@ -35,4 +36,6 @@ public class ActionRegistry {
     public static AbstractAction getAction(ResourceLocation resourceLocation){
         return REGISTRY.get().getValue(resourceLocation);
     }
+
+    public static final RegistryObject<AbstractAction> QUEST_ACCEPT = registerAction(new AcceptQuestAction());
 }

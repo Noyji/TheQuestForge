@@ -4,6 +4,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.noyji.thequestforge.TheQuestForge;
+import net.noyji.thequestforge.api.quest.action.AbstractAction;
+import net.noyji.thequestforge.api.registry.ActionRegistry;
+import net.noyji.thequestforge.common.util.Util;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +27,44 @@ public class TemplateDialogButton {
     private String toGo;
     private String altToGo;
     private List<String> actions;
+
+    public void runActions(Player player, Entity entity){
+        for (String action : actions){
+            ResourceLocation loc = ResourceLocation.parse(action);
+            AbstractAction abstractAction = ActionRegistry.getAction(loc);
+
+            if (abstractAction == null) {
+                TheQuestForge.LOGGER.debug("Action : {} not found", action);
+                continue;
+            }
+            TheQuestForge.LOGGER.debug("Action : {} running!", action);
+            abstractAction.handler(player, entity);
+        }
+    }
+
+    public boolean hasActions(){
+        List<String> result = new ArrayList<>(actions);
+        result.remove("thequestforge:close");
+        return !result.isEmpty();
+    }
+
+    public boolean hasAction(String action){
+        if (action == null || action.isEmpty()) return false;
+        return actions.contains(action);
+    }
+
+    public String getTranslateText(String languageKey, int nameIndex){
+        return Util.getTranslateTextFromMap(text, languageKey, nameIndex);
+    }
+
+    public int getTextIndex(@NotNull RandomSource randomSource){
+        int limit = text.get("en_us").size();
+        return randomSource.nextInt(0, limit);
+    }
+
+    public String getToGo() {
+        return toGo;
+    }
 
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
@@ -65,7 +112,7 @@ public class TemplateDialogButton {
         return nbt;
     }
 
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(@NotNull CompoundTag nbt) {
 
         this.function = nbt.getString("function");
         this.toGo = nbt.getString("toGo");
