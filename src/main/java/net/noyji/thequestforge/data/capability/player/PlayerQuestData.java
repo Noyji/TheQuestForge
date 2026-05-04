@@ -36,6 +36,10 @@ public class PlayerQuestData {
         }
     }
 
+    public List<PlayerQuest> getQuests(){
+        return playerQuestMap.values().stream().toList();
+    }
+
     public boolean hasQuest(UUID uuid){
         return playerQuestMap.containsKey(uuid);
     }

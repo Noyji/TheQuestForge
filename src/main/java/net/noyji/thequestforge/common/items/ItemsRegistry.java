@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.noyji.thequestforge.TheQuestForge;
+import net.noyji.thequestforge.common.items.custom.QuestBookItem;
 
 public class ItemsRegistry {
     public static final DeferredRegister<Item> ITEMS =
@@ -16,5 +17,5 @@ public class ItemsRegistry {
     }
 
     public static final RegistryObject<Item> QUEST_BOOK = ITEMS.register("quest_book",
-            () -> new Item( new Item.Properties()));
+            () -> new QuestBookItem(new Item.Properties().stacksTo(1)));
 }

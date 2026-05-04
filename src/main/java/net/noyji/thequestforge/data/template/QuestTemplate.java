@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.noyji.thequestforge.TheQuestForge;
@@ -13,6 +14,7 @@ import net.noyji.thequestforge.api.quest.requirements.AbstractRequirement;
 import net.noyji.thequestforge.api.quest.requirements.RequirementContext;
 import net.noyji.thequestforge.api.registry.RequirementRegistry;
 import net.noyji.thequestforge.common.util.QuestGenerator;
+import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.quest.entity.components.QuestDialog;
 import net.noyji.thequestforge.data.template.components.Range;
 import net.noyji.thequestforge.data.template.components.TemplateDialog;
@@ -42,6 +44,21 @@ public class QuestTemplate implements IWeighable {
     private Map<String, TemplateDialog> dialogs;
     private String nextQuest;
 
+    public Component getQuestDescription(String language, int index){
+        if (language == null || language.isEmpty()) language = "en_us";
+        if (index < 0 || index > description.get(language).size() - 1) {
+            return Component.literal("index out of range");
+        }
+        return Component.literal(Util.getTranslateTextFromMap(description, language, index));
+    }
+
+    public Component getQuestName(String language, int index){
+        if (language == null || language.isEmpty()) language = "en_us";
+        if (index < 0 || index > name.get(language).size() - 1) {
+            return Component.literal("index out of range");
+        }
+        return Component.literal(Util.getTranslateTextFromMap(name, language, index));
+    }
     @Nullable
     public TemplateDialog getDialogByKey(String key){
         if (key == null || key.isEmpty()) return null;

@@ -1,18 +1,20 @@
 package net.noyji.thequestforge.data.quest.player.components;
 
+import net.minecraft.network.chat.Component;
+
 public enum QuestRarity {
-    COMMON(0, "common"),
-    UNCOMMON(1, "uncommon"),
-    RARE(2, "rare"),
-    EPIC(3, "epic"),
-    LEGENDARY(4, "legendary");
+    COMMON(0, "gui.thequestforge.quest.rarity.common"),
+    UNCOMMON(1, "gui.thequestforge.quest.rarity.uncommon"),
+    RARE(2, "gui.thequestforge.quest.rarity.rare"),
+    EPIC(3, "gui.thequestforge.quest.rarity.epic"),
+    LEGENDARY(4, "gui.thequestforge.quest.rarity.legendary");
 
     private final int weight;
-    private final String name;
+    private final String translateKey;
 
-    QuestRarity(int weight, String name) {
+    QuestRarity(int weight, String translateKey) {
         this.weight = weight;
-        this.name = name;
+        this.translateKey = translateKey;
     }
 
     /**
@@ -28,5 +30,9 @@ public enum QuestRarity {
 
     public static boolean rarityIs(QuestRarity reference, QuestRarity weighted){
         return reference.weight == weighted.weight;
+    }
+
+    public Component getTranslateName(){
+        return Component.translatable(translateKey);
     }
 }

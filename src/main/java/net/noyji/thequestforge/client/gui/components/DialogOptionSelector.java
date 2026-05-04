@@ -81,6 +81,13 @@ public class DialogOptionSelector extends AbstractWidget {
         this.onSelectSound = sound;
     }
 
+    public void updateBounds(int newX, int newY, int newWidth, int newHeight) {
+        this.setX(newX);
+        this.setY(newY);
+        this.setWidth(newWidth);
+        this.height = newHeight;
+    }
+
     @Override
     public void renderWidget(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         if (!visible || options.isEmpty()) return;

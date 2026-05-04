@@ -87,6 +87,22 @@ public class TypewriterTextWidget extends AbstractWidget {
         }
     }
 
+    public void updateBounds(int newX, int newY, int newWidth) {
+        this.setX(newX);
+        this.setY(newY);
+
+        if (this.width != newWidth) {
+            this.setWidth(newWidth);
+
+            this.lines.clear();
+            this.lineLengths.clear();
+
+            this.wrapText(this.getMessage(), newWidth);
+
+            this.height = this.lines.size() * this.font.lineHeight;
+        }
+    }
+
     public boolean isFinished() {
         return isFinished;
     }

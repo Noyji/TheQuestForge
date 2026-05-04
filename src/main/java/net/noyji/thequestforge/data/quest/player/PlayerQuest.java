@@ -49,6 +49,22 @@ public class PlayerQuest {
         this.rewards = rewards;
     }
 
+    public int getNameIndex(){
+        return nameIndex;
+    }
+
+    public QuestRarity getRarity(){
+        return rarity;
+    }
+
+    public int getDescriptionIndex(){
+        return descriptionIndex;
+    }
+
+    public int getTimeLimit(){
+        return timeLimit;
+    }
+
     public boolean updateTask(ResourceLocation taskTypeKey, ResourceLocation target, Event event){
         boolean progressChanged = false;
         int completedCount = 0;

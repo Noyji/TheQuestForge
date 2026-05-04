@@ -1,4 +1,14 @@
 {
+  "gui.thequestforge.rarity.info": "Rarity: ",
+  "gui.thequestforge.quest.rarity.common": "Common",
+  "gui.thequestforge.quest.rarity.uncommon": "Uncommon",
+  "gui.thequestforge.quest.rarity.rare": "Rare",
+  "gui.thequestforge.quest.rarity.epic": "Epic",
+  "gui.thequestforge.quest.rarity.legendary": "Legendary",
+
+  "gui.thequestforge.time_limit.info": "Days left: ",
+  "gui.thequestforge.quest.time_limit": "Today",
+
   "overlay.thequestforge.interact_message": "to talk",
 
   "key.categories.thequestforge": "TheQuestForge control",
