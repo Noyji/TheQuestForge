@@ -1,10 +1,12 @@
-package net.noyji.thequestforge.common.events;
+package net.noyji.thequestforge.client.events;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.noyji.thequestforge.api.client.registry.TaskRendererRegistry;
 import net.noyji.thequestforge.client.ClientHandler;
 import net.noyji.thequestforge.client.render.AdditionalRenders;
 import net.noyji.thequestforge.client.render.DialogueCameraManager;
@@ -52,4 +54,10 @@ public class ClientEvents {
     public static void onInput(InputEvent.Key event) {
         ClientHandler.interact(event);
     }
+
+    @SubscribeEvent
+    public static void onFMLClientSetup(FMLClientSetupEvent event) {
+        TaskRendererRegistry.init(event);
+    }
+
 }

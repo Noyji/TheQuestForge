@@ -12,7 +12,7 @@ import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.IWeighable;
 import net.noyji.thequestforge.api.quest.requirements.AbstractRequirement;
 import net.noyji.thequestforge.api.quest.requirements.RequirementContext;
-import net.noyji.thequestforge.api.registry.RequirementRegistry;
+import net.noyji.thequestforge.api.quest.registry.RequirementRegistry;
 import net.noyji.thequestforge.common.util.QuestGenerator;
 import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.quest.entity.components.QuestDialog;

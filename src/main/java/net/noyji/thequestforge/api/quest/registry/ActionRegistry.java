@@ -1,4 +1,4 @@
-package net.noyji.thequestforge.api.registry;
+package net.noyji.thequestforge.api.quest.registry;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

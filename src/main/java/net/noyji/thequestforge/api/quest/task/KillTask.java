@@ -32,6 +32,10 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
         this.goal = goal;
     }
 
+    public EntityType<?> getEntity(){
+        return target;
+    }
+
     @Override
     public ResourceLocation getTarget() {
         return Util.getEntityResourceLocation(target);
@@ -80,17 +84,48 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
     }
 
     @Override
+    public int getGoal() {
+        return goal;
+    }
+
+    @Override
+    public int getProgress() {
+        return progress;
+    }
+
+    @Override
     public void info() {
         TheQuestForge.LOGGER.debug("{}: Target: {} Tag: {} Goal: {}", getLocation(), getTarget(), tag, goal);
     }
 
     @Override
     public void serializeNBT(CompoundTag nbt) {
+        nbt.putInt("Goal", this.goal);
+        nbt.putInt("Progress", this.progress);
 
+        if (this.target != null) {
+            ResourceLocation entityId = Util.getEntityResourceLocation(target);
+            if (entityId == null) entityId = ResourceLocation.parse("minecraft:pig");
+            nbt.putString("Target", entityId.toString());
+        }
+
+        if (this.tag != null) {
+            nbt.put("Tag", this.tag);
+        }
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
+        this.goal = nbt.getInt("Goal");
+        this.progress = nbt.getInt("Progress");
 
+        if (nbt.contains("Target")) {
+            ResourceLocation entityId = ResourceLocation.parse(nbt.getString("Target"));
+            this.target = Util.getEntityType(entityId);
+        }
+
+        if (nbt.contains("Tag")) {
+            this.tag = nbt.getCompound("Tag");
+        }
     }
 }

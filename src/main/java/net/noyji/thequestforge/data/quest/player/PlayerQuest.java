@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
 import net.noyji.thequestforge.api.quest.task.TaskType;
-import net.noyji.thequestforge.api.registry.TaskHandlerRegistry;
+import net.noyji.thequestforge.api.quest.registry.TaskHandlerRegistry;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
 
@@ -47,6 +47,10 @@ public class PlayerQuest {
         this.complete = complete;
         this.tasks = tasks;
         this.rewards = rewards;
+    }
+
+    public List<AbstractTask<?>> getTasks(){
+        return tasks;
     }
 
     public int getNameIndex(){

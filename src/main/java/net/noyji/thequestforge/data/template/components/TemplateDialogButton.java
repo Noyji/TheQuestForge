@@ -10,7 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.action.AbstractAction;
-import net.noyji.thequestforge.api.registry.ActionRegistry;
+import net.noyji.thequestforge.api.quest.registry.ActionRegistry;
 import net.noyji.thequestforge.common.util.Util;
 import org.jetbrains.annotations.NotNull;
 

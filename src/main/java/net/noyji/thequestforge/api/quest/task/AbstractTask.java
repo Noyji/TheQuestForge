@@ -21,6 +21,10 @@ public abstract class AbstractTask<T extends Event> {
 
     public abstract void handle(T event);
 
+    public abstract int getGoal();
+
+    public abstract int getProgress();
+
     public abstract void serializeNBT(CompoundTag nbt);
 
     public abstract void deserializeNBT(CompoundTag nbt);

@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +15,7 @@ import net.noyji.thequestforge.data.capability.CapabilityUtil;
 @Mod.EventBusSubscriber
 public class QuestEvents {
     private static final ResourceLocation KILL_KEY = TheQuestForge.id("kill");
+    private static final ResourceLocation COLLECT_KEY = TheQuestForge.id("collect");
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         LivingEntity deathMob = event.getEntity();
@@ -30,5 +32,11 @@ public class QuestEvents {
             CapabilityUtil.getPlayerQuestData(player).progressUpdate(KILL_KEY, mob, event, player);
         }
     }
+
+    @SubscribeEvent
+    public static void onTickPlayerTick(TickEvent.PlayerTickEvent event) {
+        //TODO: Доделать ивент на сбор предметов
+    }
+
 
 }

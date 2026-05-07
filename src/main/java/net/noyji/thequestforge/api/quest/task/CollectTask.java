@@ -26,6 +26,10 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
         this.goal = goal;
     }
 
+    public ItemStack getItemStack(){
+        return itemStack;
+    }
+
     @Override
     public ResourceLocation getTarget() {
         return Util.getItemResourceLocation(itemStack);
@@ -78,17 +82,41 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     }
 
     @Override
+    public int getGoal() {
+        return goal;
+    }
+
+    @Override
+    public int getProgress() {
+        return count;
+    }
+
+    @Override
     public void info() {
         TheQuestForge.LOGGER.debug("{}: Target: {} Goal: {}", getLocation(), getTarget(), goal);
     }
 
     @Override
     public void serializeNBT(CompoundTag nbt) {
+        nbt.putInt("Goal", this.goal);
+        nbt.putInt("Count", this.count);
 
+        CompoundTag itemTag = new CompoundTag();
+        if (this.itemStack != null && !this.itemStack.isEmpty()) {
+            this.itemStack.save(itemTag);
+        }
+        nbt.put("ItemStack", itemTag);
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
+        this.goal = nbt.getInt("Goal");
+        this.count = nbt.getInt("Count");
 
+        if (nbt.contains("ItemStack")) {
+            this.itemStack = ItemStack.of(nbt.getCompound("ItemStack"));
+        } else {
+            this.itemStack = ItemStack.EMPTY;
+        }
     }
 }

@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
 import net.noyji.thequestforge.api.quest.task.TaskType;
-import net.noyji.thequestforge.api.registry.TaskHandlerRegistry;
+import net.noyji.thequestforge.api.quest.registry.TaskHandlerRegistry;
 import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.group.components.JsonReward;
 import net.noyji.thequestforge.data.group.components.JsonTask;
