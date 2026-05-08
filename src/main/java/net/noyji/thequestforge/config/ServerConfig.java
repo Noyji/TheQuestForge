@@ -25,6 +25,8 @@ public class ServerConfig {
     public static final ForgeConfigSpec.ConfigValue<Double> EPIC_TASK_MULTIPLIER;
     public static final ForgeConfigSpec.ConfigValue<Double> LEGENDARY_TASK_MULTIPLIER;
 
+    public static final ForgeConfigSpec.ConfigValue<String> CURRENCY_ID;
+
     private static final ForgeConfigSpec.ConfigValue<Integer> UNCOMMON_QUEST_CHANCE;
     private static final ForgeConfigSpec.ConfigValue<Integer> RARE_QUEST_CHANCE;
     private static final ForgeConfigSpec.ConfigValue<Integer> EPIC_QUEST_CHANCE;
@@ -47,6 +49,8 @@ public class ServerConfig {
         RARE_TASK_MULTIPLIER = BUILDER.defineInRange("rare_item_multiplier", 1.2f, 0.1f, 10.f);
         EPIC_TASK_MULTIPLIER = BUILDER.defineInRange("epic_item_multiplier", 1.4f, 0.1f, 10.f);
         LEGENDARY_TASK_MULTIPLIER = BUILDER.defineInRange("legendary_item_multiplier", 1.5f, 0.1f, 10.f);
+
+        CURRENCY_ID = BUILDER.define("currency_id", "minecraft:emerald");
 
         SPEC = BUILDER.build();
     }

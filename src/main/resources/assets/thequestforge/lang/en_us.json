@@ -8,6 +8,8 @@
 
   "gui.thequestforge.time_limit.info": "Days left: ",
   "gui.thequestforge.quest.time_limit": "Today",
+  "gui.thequestforge.book.task": "Task",
+  "gui.thequestforge.book.reward": "Reward",
 
   "overlay.thequestforge.interact_message": "to talk",
 

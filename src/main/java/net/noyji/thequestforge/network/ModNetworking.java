@@ -9,6 +9,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.network.c2s.ActionHandlerC2SPacket;
 import net.noyji.thequestforge.network.c2s.InteractNpcC2SPacket;
+import net.noyji.thequestforge.network.c2s.RemovePlayerQuestC2SPacket;
 import net.noyji.thequestforge.network.s2c.*;
 
 import java.util.Optional;
@@ -94,6 +95,14 @@ public class ModNetworking {
                 InteractNpcC2SPacket::encode,
                 InteractNpcC2SPacket::decode,
                 InteractNpcC2SPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                RemovePlayerQuestC2SPacket.class,
+                RemovePlayerQuestC2SPacket::encode,
+                RemovePlayerQuestC2SPacket::decode,
+                RemovePlayerQuestC2SPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER)
         );
     }

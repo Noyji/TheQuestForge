@@ -10,12 +10,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.noyji.thequestforge.TheQuestForge;
-
 import net.noyji.thequestforge.api.client.ITaskRenderer;
 import net.noyji.thequestforge.api.client.registry.TaskRendererRegistry;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
-
 import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,29 +25,40 @@ public class QuestTaskListWidget extends AbstractWidget {
     private static final ResourceLocation PROGRESS_BAR =
             ResourceLocation.fromNamespaceAndPath(TheQuestForge.MODID, "textures/gui/quest_book/components/progress_bar.png");
     private static final ResourceLocation UNKNOWN_MOB =
-            ResourceLocation.fromNamespaceAndPath(TheQuestForge.MODID, "textures/gui/quest_book_book/icons/unknown_mob.png");
+            ResourceLocation.fromNamespaceAndPath(TheQuestForge.MODID, "textures/gui/quest_book/icons/unknown_mob.png");
 
     private List<AbstractTask<?>> tasks;
     private double scrollAmount = 0;
     private final int entryHeight = 22;
 
+    private float scale = 1.0F;
+    private int logicalWidth;
+    private int logicalHeight;
+
     private final boolean showTotalCountOnly;
     private final int textColor;
     private final int countColor;
 
-    private QuestTaskListWidget(int x, int y, int width, int height, List<AbstractTask<?>> tasks, boolean showTotalCountOnly, int textColor, int countColor) {
+    private QuestTaskListWidget(int x, int y, int width, int height, float scale, List<AbstractTask<?>> tasks, boolean showTotalCountOnly, int textColor, int countColor) {
         super(x, y, width, height, Component.empty());
+        this.scale = scale;
+        this.logicalWidth = width;
+        this.logicalHeight = height;
         this.tasks = tasks != null ? tasks : new ArrayList<>();
         this.showTotalCountOnly = showTotalCountOnly;
         this.textColor = textColor;
         this.countColor = countColor;
     }
 
-    public void updateBounds(int newX, int newY, int newWidth, int newHeight) {
-        this.setX(newX);
-        this.setY(newY);
-        this.width = newWidth;
-        this.height = newHeight;
+    public void updateLayout(int logicalX, int logicalY, int logicalWidth, int logicalHeight, float newScale) {
+        this.scale = newScale;
+        this.logicalWidth = logicalWidth;
+        this.logicalHeight = logicalHeight;
+
+        this.setX((int) (logicalX * scale));
+        this.setY((int) (logicalY * scale));
+        this.width = (int) (logicalWidth * scale);
+        this.height = (int) (logicalHeight * scale);
     }
 
     public void setTasks(List<AbstractTask<?>> newTasks) {
@@ -63,16 +73,20 @@ public class QuestTaskListWidget extends AbstractWidget {
         Font font = Minecraft.getInstance().font;
         Component tooltipToRender = null;
 
-        // Включаем ножницы для отсечения контента вне зоны виджета
         graphics.enableScissor(getX(), getY(), getX() + width, getY() + height);
         graphics.pose().pushPose();
+        graphics.pose().translate(getX(), getY(), 0);
+        graphics.pose().scale(scale, scale, 1.0F);
         graphics.pose().translate(0, -scrollAmount, 0);
 
-        int currentY = getY();
+        double relativeMouseX = (mouseX - getX()) / scale;
+        double relativeMouseY = (mouseY - getY()) / scale;
+
+        int currentY = 0;
+
         for (AbstractTask<?> task : tasks) {
-            // Оптимизация: рисуем только видимые элементы
-            if (currentY + entryHeight > scrollAmount + getY() && currentY < scrollAmount + getY() + height) {
-                Component hoveredTooltip = renderEntry(graphics, font, task, getX(), currentY, mouseX, mouseY);
+            if (currentY + entryHeight > scrollAmount && currentY < scrollAmount + logicalHeight) {
+                Component hoveredTooltip = renderEntry(graphics, font, task, 0, currentY, relativeMouseX, relativeMouseY);
                 if (hoveredTooltip != null) {
                     tooltipToRender = hoveredTooltip;
                 }
@@ -85,14 +99,13 @@ public class QuestTaskListWidget extends AbstractWidget {
 
         renderScrollbar(graphics);
 
-        // Рисуем тултип поверх всего
         if (tooltipToRender != null) {
             graphics.renderTooltip(font, tooltipToRender, mouseX, mouseY);
         }
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private Component renderEntry(GuiGraphics graphics, Font font, AbstractTask<?> task, int entryX, int entryY, int mouseX, int mouseY) {
+    private Component renderEntry(GuiGraphics graphics, Font font, AbstractTask<?> task, int entryX, int entryY, double relativeMouseX, double relativeMouseY) {
         Component name = Component.literal("Unknown Task");
         int iconYOffset = 3;
 
@@ -111,7 +124,7 @@ public class QuestTaskListWidget extends AbstractWidget {
 
         String countTxt = showTotalCountOnly ? "x" + task.getGoal() : task.getProgress() + "/" + task.getGoal();
         int countWidth = font.width(countTxt);
-        int maxTextWidth = this.width - 25 - countWidth - 10;
+        int maxTextWidth = this.logicalWidth - 25 - countWidth - 10;
 
         String textToDraw = name.getString();
         boolean isTruncated = false;
@@ -121,34 +134,31 @@ public class QuestTaskListWidget extends AbstractWidget {
             isTruncated = true;
         }
 
-        // Вертикальное выравнивание текста
         int textY = showTotalCountOnly ? (entryY + (entryHeight - font.lineHeight) / 2) : (entryY + 2);
 
         graphics.drawString(font, textToDraw, entryX + 22, textY, textColor, false);
-        graphics.drawString(font, countTxt, getX() + this.width - countWidth - 5, textY, countColor, false);
+        graphics.drawString(font, countTxt, this.logicalWidth - countWidth - 5, textY, countColor, false);
 
-        // --- Прогресс Бар ---
         if (!showTotalCountOnly) {
             int barX = entryX + 22;
             int barY = entryY + 14;
-            int barWidth = this.width - 25 - 5; // Динамическая ширина
+            int barWidth = this.logicalWidth - 25 - 5;
 
             float percent = task.getGoal() > 0 ? Math.min(1.0F, (float) task.getProgress() / task.getGoal()) : 0;
             int filledWidth = (int) (barWidth * percent);
 
-            graphics.blit(PROGRESS_BAR, barX, barY, 0, 0, barWidth, 5, 127, 10);
+            drawAdaptiveProgressBar(graphics, barX, barY, barWidth, barWidth, 0);
 
             if (filledWidth > 0) {
-                graphics.blit(PROGRESS_BAR, barX, barY, 0, 5, filledWidth, 5, 127, 10);
+                drawAdaptiveProgressBar(graphics, barX, barY, barWidth, filledWidth, 5);
             }
         }
 
         double entryScreenY = entryY - scrollAmount;
-        boolean isMouseOverWidget = isMouseOver(mouseX, mouseY);
-        boolean isMouseOverEntry = mouseX >= entryX && mouseX <= entryX + width &&
-                mouseY >= entryScreenY && mouseY <= entryScreenY + entryHeight;
+        boolean isMouseOverEntry = relativeMouseX >= entryX && relativeMouseX <= entryX + logicalWidth &&
+                relativeMouseY >= entryScreenY && relativeMouseY <= entryScreenY + entryHeight;
 
-        if (isMouseOverWidget && isMouseOverEntry && isTruncated) {
+        if (isHovered() && isMouseOverEntry && isTruncated) {
             return name;
         }
 
@@ -157,35 +167,67 @@ public class QuestTaskListWidget extends AbstractWidget {
 
     private void renderScrollbar(GuiGraphics graphics) {
         int contentHeight = tasks.size() * entryHeight;
-        if (contentHeight <= height) return;
+        if (contentHeight <= logicalHeight) return;
 
-        int scrollBarHeight = Math.max(10, (int) ((float) (height * height) / contentHeight));
-        int scrollBarX = getX() + width + 2;
-        int scrollBarY = getY() + (int) ((height - scrollBarHeight) * (scrollAmount / (contentHeight - height)));
+        int scrollBarHeight = Math.max(10, (int) ((float) (height * height) / (contentHeight * scale)));
+        int scrollBarX = getX() + width - 2;
+        int scrollBarY = getY() + (int) ((height - scrollBarHeight) * (scrollAmount / (contentHeight - logicalHeight)));
 
         graphics.fill(scrollBarX, getY(), scrollBarX + 2, getY() + height, 0x44000000);
         graphics.fill(scrollBarX, scrollBarY, scrollBarX + 2, scrollBarY + scrollBarHeight, 0xFF8B4513);
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
-        if (isMouseOver(mouseX, mouseY)) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmountArg) {
+        if (isHovered()) {
             int contentHeight = tasks.size() * entryHeight;
-            if (contentHeight <= height) return false;
+            if (contentHeight <= logicalHeight) return false;
 
             double scrollSpeed = 15.0;
-            this.scrollAmount = Mth.clamp(this.scrollAmount - scrollAmount * scrollSpeed, 0, contentHeight - height);
+            this.scrollAmount = Mth.clamp(this.scrollAmount - scrollAmountArg * scrollSpeed, 0, contentHeight - logicalHeight);
             return true;
         }
         return false;
     }
 
     @Override
-    protected void updateWidgetNarration(@NotNull NarrationElementOutput narrationElementOutput) {
+    protected void updateWidgetNarration(@NotNull NarrationElementOutput narrationElementOutput) {}
+
+    private void drawAdaptiveProgressBar(GuiGraphics graphics, int x, int y, int barWidth, int filledWidth, int vOffset) {
+        if (filledWidth <= 0) return;
+
+        int edgeSize = 2;
+        int texWidth = 127;
+
+        if (barWidth <= edgeSize * 2) {
+            graphics.blit(PROGRESS_BAR, x, y, 0, vOffset, filledWidth, 5, 127, 10);
+            return;
+        }
+
+        int leftWidth = Math.min(edgeSize, filledWidth);
+        graphics.blit(PROGRESS_BAR, x, y, leftWidth, 5, 0, vOffset, leftWidth, 5, 127, 10);
+
+        if (filledWidth > edgeSize) {
+            int maxMiddle = barWidth - (edgeSize * 2);
+            int currentMiddle = filledWidth - edgeSize;
+            int drawMiddle = Math.min(currentMiddle, maxMiddle);
+
+            if (drawMiddle > 0) {
+                graphics.blit(PROGRESS_BAR, x + edgeSize, y, drawMiddle, 5, edgeSize, vOffset, drawMiddle, 5, 127, 10);
+            }
+        }
+
+        if (filledWidth > barWidth - edgeSize) {
+            int rightStart = barWidth - edgeSize;
+            int drawRight = filledWidth - rightStart;
+
+            graphics.blit(PROGRESS_BAR, x + rightStart, y, drawRight, 5, texWidth - edgeSize, vOffset, drawRight, 5, 127, 10);
+        }
     }
 
     public static class Builder {
         private int x = 0, y = 0, width = 100, height = 100;
+        private float scale = 1.0F;
         private List<AbstractTask<?>> tasks = new ArrayList<>();
         private boolean showTotalCountOnly = false;
         private int textColor = 0x3F3F3F;
@@ -193,12 +235,13 @@ public class QuestTaskListWidget extends AbstractWidget {
 
         public Builder position(int x, int y) { this.x = x; this.y = y; return this; }
         public Builder size(int width, int height) { this.width = width; this.height = height; return this; }
+        public Builder scale(float scale) { this.scale = scale; return this; }
         public Builder tasks(List<AbstractTask<?>> tasks) { if (tasks != null) this.tasks = tasks; return this; }
         public Builder showTotalOnly(boolean show) { this.showTotalCountOnly = show; return this; }
         public Builder colors(int textColor, int countColor) { this.textColor = textColor; this.countColor = countColor; return this; }
 
         public QuestTaskListWidget build() {
-            return new QuestTaskListWidget(x, y, width, height, tasks, showTotalCountOnly, textColor, countColor);
+            return new QuestTaskListWidget(x, y, width, height, scale, tasks, showTotalCountOnly, textColor, countColor);
         }
     }
 }

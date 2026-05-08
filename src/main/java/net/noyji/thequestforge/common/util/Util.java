@@ -101,6 +101,10 @@ public class Util {
         return itemStack;
     }
 
+    public static Item getItem(ResourceLocation resourceLocation){
+        return ForgeRegistries.ITEMS.getValue(resourceLocation);
+    }
+
     public static String getTranslateTextFromMap(Map<String, List<String>> source, String languageKey, int textIndex){
         if (source == null || source.isEmpty()) return "source is null or empty!";
 

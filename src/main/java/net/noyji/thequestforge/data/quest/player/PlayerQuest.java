@@ -49,6 +49,18 @@ public class PlayerQuest {
         this.rewards = rewards;
     }
 
+    public List<ItemStack> getRewards(){
+        return rewards;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public int getCurrency() {
+        return currency;
+    }
+
     public List<AbstractTask<?>> getTasks(){
         return tasks;
     }

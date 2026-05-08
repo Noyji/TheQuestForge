@@ -23,7 +23,7 @@
   "requirement_items": [],
   "group": "thequestforge:test",
   "task_count": {
-    "max": 3,
+    "max": 5,
     "min": 1
   },
   "reward_count": {

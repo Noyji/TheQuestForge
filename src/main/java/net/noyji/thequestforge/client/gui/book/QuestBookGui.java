@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.noyji.thequestforge.TheQuestForge;
+import net.noyji.thequestforge.client.gui.book.components.QuestRewardGridWidget;
 import net.noyji.thequestforge.client.gui.book.components.QuestTaskListWidget;
 import net.noyji.thequestforge.client.gui.components.AnimatedButton;
 import org.jetbrains.annotations.NotNull;
@@ -26,11 +27,15 @@ public class QuestBookGui extends Screen {
 
     private int mainPosX;
     private int mainPosY;
+    private int textColor = 0x3F3F3F;
+    private int pageWidth = 0;
 
     private AnimatedButton leftPageButton;
     private AnimatedButton rightPageButton;
+    private AnimatedButton removeQuestButton;
 
     private QuestTaskListWidget taskListWidget;
+    private QuestRewardGridWidget rewardGridWidget;
 
     private final QuestBookManager manager = new QuestBookManager();
 
@@ -48,12 +53,44 @@ public class QuestBookGui extends Screen {
         manager.init();
 
         taskListWidget = new QuestTaskListWidget.Builder()
-                .position((int) (this.width / 2F + (10 * scale)), (int) (this.height / 2F - 70 * scale))
-                .size(140, 50)
+                .position((int) (this.width / 2F + (10 * scale)), (int) (this.height / 2F - 62 * scale))
+                .size((int) (115 * scale), (int) (60 * scale))
+                .scale(Math.min(1.0F, scale))
                 .tasks(manager.getCurrentQuestTasks())
                 .build();
 
         this.addRenderableWidget(taskListWidget);
+
+        rewardGridWidget = new QuestRewardGridWidget.Builder()
+                .position((int) (this.width / 2F + (10 * scale)), (int) (this.height / 2F + 14 * scale))
+                .size((int) (115 * scale), (int) (60 * scale))
+                .scale(Math.min(1.0F, scale))
+                .rewards(manager.getCurrentQuestRewards(), manager.getQuestXp(), manager.getQuestCurrency())
+                .build();
+
+        this.addRenderableWidget(rewardGridWidget);
+
+        removeQuestButton = new AnimatedButton.Builder()
+                .position((int) (this.width / 2f - (30 * scale)), (int) (this.height / 2f - 105 * scale))
+                .size(20, 40)
+                .scale(scale)
+                .texture(QUEST_BOOK_TEXTURE)
+                .textureSize(512, 512)
+                .uv(322, 0)
+                .animation(AnimatedButton.AnimationDirection.UP, 10.0F, 2.55F)
+                .easing(AnimatedButton.EasingType.EASE_OUT)
+                .onPress(button -> {
+                    if (manager.removeQuest()) {
+                        taskListWidget.setTasks(manager.getCurrentQuestTasks());
+                        rewardGridWidget.setRewards(manager.getCurrentQuestRewards(), manager.getQuestXp(), manager.getQuestCurrency());
+                    } else {
+                        taskListWidget.setTasks(null);
+                        rewardGridWidget.setRewards(null, -1, -1);
+                    }
+                })
+                .build();
+
+        this.addRenderableWidget(removeQuestButton);
 
         leftPageButton = new AnimatedButton.Builder()
                 .position((int) (this.width / 2f - (160 * scale)), (int) (this.height / 2f + 30 * scale))
@@ -70,6 +107,7 @@ public class QuestBookGui extends Screen {
                                 SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0F, 1.0F)
                         );
                         taskListWidget.setTasks(manager.getCurrentQuestTasks());
+                        rewardGridWidget.setRewards(manager.getCurrentQuestRewards(), manager.getQuestXp(), manager.getQuestCurrency());
                     }
                 })
                 .build();
@@ -91,6 +129,7 @@ public class QuestBookGui extends Screen {
                                 SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0F, 1.0F)
                         );
                         taskListWidget.setTasks(manager.getCurrentQuestTasks());
+                        rewardGridWidget.setRewards(manager.getCurrentQuestRewards(), manager.getQuestXp(), manager.getQuestCurrency());
                     }
                 })
                 .build();
@@ -123,6 +162,7 @@ public class QuestBookGui extends Screen {
     private void drawButtons(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick){
         leftPageButton.render(guiGraphics, mouseX, mouseY, partialTick);
         rightPageButton.render(guiGraphics, mouseX, mouseY, partialTick);
+        removeQuestButton.render(guiGraphics, mouseX, mouseY, partialTick);
 
         RenderSystem.enableBlend();
         guiGraphics.blit(QUEST_BOOK_TEXTURE, (int) (this.width / 2F - (138 * scale)), (int) (this.height / 2f + 30 * scale),
@@ -140,8 +180,8 @@ public class QuestBookGui extends Screen {
         int startX = (int) (mainPosX + (16 * scale));
         int startY = (int) (mainPosY + (15 * scale));
         int pageWidth = (int) ((280 * scale) / 2 - (20 * scale));
+        this.pageWidth = pageWidth;
         int currentY = 0;
-        int textColor = 0x3F3F3F;
 
         float scaleText = Math.min(1.0F, scale);
 
@@ -178,14 +218,33 @@ public class QuestBookGui extends Screen {
             guiGraphics.drawString(this.font, manager.getTimeLimit(), 0, currentY, textColor, false);
             currentY += this.font.lineHeight + 2;
         }
-
+        //Quest description
         guiGraphics.drawWordWrap(this.font, manager.getQuestDescription(), 0, currentY + 3, pageWidth, textColor);
-
         guiGraphics.pose().popPose();
     }
 
     private void drawRightSidePage(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick){
+        Component taskText = Component.translatable("gui.thequestforge.book.task");
+        int taskTextX = (int) (((this.width / 2F + (10 * scale)) + ((float) pageWidth / 2 - (5 * scale)) - ((float) font.width(taskText) / 2)));
+        guiGraphics.drawString(this.font, taskText, taskTextX, (int) (this.height / 2F - 78 * scale), textColor, false);
+
+        guiGraphics.blit(QUEST_BOOK_TEXTURE, (int) (this.width / 2F + (10 * scale)), (int) (this.height / 2F - 68 * scale), (int) (115 * scale), (int) (3 * scale), 384, 39, 115, 3, 512, 512);
+
         taskListWidget.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        guiGraphics.blit(QUEST_BOOK_TEXTURE, (int) (this.width / 2F + (10 * scale)), (int) (this.height / 2F + 1 * scale), (int) (115 * scale), (int) (3 * scale), 384, 44, 115, 3, 512, 512);
+
+        Component rewardText = Component.translatable("gui.thequestforge.book.reward");
+        int rewardTaskX = (int) (((this.width / 2F + (10 * scale)) + ((float) pageWidth / 2 - (5 * scale)) - ((float) font.width(rewardText) / 2)));
+        guiGraphics.drawString(this.font, rewardText, rewardTaskX, (int) (this.height / 2F + 6 * scale), textColor, false);
+
+        rewardGridWidget.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        if (manager.isComplete()) {
+            RenderSystem.enableBlend();
+            guiGraphics.blit(QUEST_BOOK_TEXTURE, (int) (this.width / 2F + (95 * scale)), (int) (this.height / 2F + 55 * scale), (int) (25 * (scale - 0.25F)), (int) (25 * (scale - 0.25F)), 410, 100, 25, 25, 512, 512);
+            RenderSystem.disableBlend();
+        }
     }
 
     private float getFinaleScale(){
