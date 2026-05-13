@@ -4,12 +4,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.common.util.EntityQuestHandler;
+import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.managers.QuestGiversManager;
@@ -61,6 +64,26 @@ public class PlayerEvents {
 
         PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(serverPlayer);
         ModNetworking.sendToPlayer(new SyncPlayerAllQuestS2CPacket(playerQuestData.serializeNBT()), serverPlayer);
+        playerQuestData.debugInfoCatalog();
     }
 
+    @SubscribeEvent
+    public static void onTickPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.side.isClient() || event.phase == TickEvent.Phase.START) return;
+
+        Player player = event.player;
+
+        if ((player.tickCount + player.getId()) % 20 == 0){
+            PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
+
+            long currentCycle = player.level().getGameTime() / (ServerConfig.TIME_TO_RESET_NPCS.get() * 24_000);
+
+            if (currentCycle > playerQuestData.getLastResetCycle()){
+                playerQuestData.clearLockedNpc();
+                playerQuestData.setLastResetCycle(currentCycle);
+
+                TheQuestForge.LOGGER.debug("NPC reset!");
+            }
+        }
+    }
 }

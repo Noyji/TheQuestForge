@@ -2,12 +2,15 @@ package net.noyji.thequestforge.network;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.network.c2s.ActionHandlerC2SPacket;
+import net.noyji.thequestforge.network.c2s.RunFunctionsC2SPacket;
+import net.noyji.thequestforge.network.s2c.AddDialogStageS2CPacket;
 import net.noyji.thequestforge.network.c2s.InteractNpcC2SPacket;
 import net.noyji.thequestforge.network.c2s.RemovePlayerQuestC2SPacket;
 import net.noyji.thequestforge.network.s2c.*;
@@ -79,6 +82,38 @@ public class ModNetworking {
                 SyncSpecificPlayerQuestS2CPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT)
         );
+        CHANNEL.registerMessage(
+                id(),
+                AddDialogStageS2CPacket.class,
+                AddDialogStageS2CPacket::encode,
+                AddDialogStageS2CPacket::decode,
+                AddDialogStageS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                RemovePlayerQuestS2CPacket.class,
+                RemovePlayerQuestS2CPacket::encode,
+                RemovePlayerQuestS2CPacket::decode,
+                RemovePlayerQuestS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                QuestToastS2CPacket.class,
+                QuestToastS2CPacket::encode,
+                QuestToastS2CPacket::decode,
+                QuestToastS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                ClosePlayerGuiS2CPacket.class,
+                ClosePlayerGuiS2CPacket::encode,
+                ClosePlayerGuiS2CPacket::decode,
+                ClosePlayerGuiS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
 
         //C2S
         CHANNEL.registerMessage(
@@ -105,10 +140,24 @@ public class ModNetworking {
                 RemovePlayerQuestC2SPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER)
         );
+        CHANNEL.registerMessage(
+                id(),
+                RunFunctionsC2SPacket.class,
+                RunFunctionsC2SPacket::encode,
+                RunFunctionsC2SPacket::decode,
+                RunFunctionsC2SPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+        );
     }
 
     public static void debugInfo(String string){
         TheQuestForge.LOGGER.debug("Sync! {}", string);
+    }
+
+    public static void sendToPlayer(Object message, Player player){
+        if (player instanceof ServerPlayer serverPlayer){
+            sendToPlayer(message, serverPlayer);
+        }
     }
 
     public static void sendToPlayer(Object message, ServerPlayer serverPlayer){

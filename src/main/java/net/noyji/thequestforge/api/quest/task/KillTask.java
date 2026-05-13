@@ -5,6 +5,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.common.util.Util;
@@ -15,7 +16,6 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
     private EntityType<?> target;
     private CompoundTag tag;
     private int progress = 0;
-    private int goal;
 
     public KillTask() {
     }
@@ -65,7 +65,13 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
     }
 
     @Override
+    public void inComplete(Player player) {
+    }
+
+    @Override
     public void handle(LivingDeathEvent event) {
+        if (progress >= goal) return;
+
         if (tag == null || tag.isEmpty()){
             if (target == event.getEntity().getType()) {
 
@@ -81,11 +87,6 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
                 progress++;
             }
         }
-    }
-
-    @Override
-    public int getGoal() {
-        return goal;
     }
 
     @Override

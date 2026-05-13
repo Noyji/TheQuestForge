@@ -7,11 +7,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.noyji.thequestforge.data.template.components.TemplateDialogButton;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -27,9 +29,13 @@ public class DialogOptionSelector extends AbstractWidget {
     private List<TemplateDialogButton> options = Collections.emptyList();
     private List<Integer> textIndices = Collections.emptyList();
 
+    private final List<List<FormattedCharSequence>> splitLines = new ArrayList<>();
+    private final List<Integer> optionHeights = new ArrayList<>();
+    private final List<Integer> optionYOffsets = new ArrayList<>();
+
     private int selectedIndex = 0;
     private float scrollPosition = 0f;
-    private final int spacing = 15;
+    private final int spacingBetweenOptions = 10;
 
     private Alignment alignment = Alignment.CENTER;
     private int colorActive = 0xFFFFFFFF;
@@ -58,10 +64,12 @@ public class DialogOptionSelector extends AbstractWidget {
         this.textIndices = textIndices != null ? textIndices : Collections.emptyList();
         this.selectedIndex = 0;
         this.scrollPosition = 0f;
+        recalculateLayout();
     }
 
     public void setLanguageKey(String key) {
         this.languageKey = key;
+        recalculateLayout();
     }
 
     public void setAlignment(Alignment alignment) {
@@ -86,18 +94,56 @@ public class DialogOptionSelector extends AbstractWidget {
         this.setY(newY);
         this.setWidth(newWidth);
         this.height = newHeight;
+        recalculateLayout();
+    }
+
+    private void recalculateLayout() {
+        splitLines.clear();
+        optionHeights.clear();
+        optionYOffsets.clear();
+
+        int currentY = 0;
+        int maxWidth = Math.max(10, this.width - 20);
+
+        for (int i = 0; i < options.size(); i++) {
+            int currentTextIndex = (textIndices.size() > i) ? textIndices.get(i) : 0;
+            String rawText = options.get(i).getTranslateText(languageKey, currentTextIndex);
+            Component textComp = Component.literal(rawText.replace('&', '\u00A7'));
+
+            List<FormattedCharSequence> lines = font.split(textComp, maxWidth);
+            splitLines.add(lines);
+
+            int blockHeight = lines.size() * font.lineHeight;
+            optionHeights.add(blockHeight);
+            optionYOffsets.add(currentY);
+
+            currentY += blockHeight + spacingBetweenOptions;
+        }
     }
 
     @Override
     public void renderWidget(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        if (!visible || options.isEmpty()) return;
+        if (!visible || options.isEmpty() || splitLines.isEmpty()) return;
 
         scrollPosition = Mth.lerp(0.2f * partialTick + 0.1f, scrollPosition, (float) selectedIndex);
 
-        int centerY = getY() + getHeight() / 2;
+        int centerY = getY() + height / 2;
 
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
+
+        float currentScrollY = 0;
+        int floorIdx = Mth.floor(scrollPosition);
+        if (floorIdx >= 0 && floorIdx < optionYOffsets.size()) {
+            float frac = scrollPosition - floorIdx;
+            float y1 = optionYOffsets.get(floorIdx);
+            float y2 = (floorIdx + 1 < optionYOffsets.size()) ? optionYOffsets.get(floorIdx + 1) : y1;
+            currentScrollY = Mth.lerp(frac, y1, y2);
+        } else if (floorIdx < 0) {
+            currentScrollY = optionYOffsets.get(0);
+        } else {
+            currentScrollY = optionYOffsets.get(optionYOffsets.size() - 1);
+        }
 
         for (int i = 0; i < options.size(); i++) {
             float distance = Math.abs(i - scrollPosition);
@@ -110,7 +156,7 @@ public class DialogOptionSelector extends AbstractWidget {
             int color = leapColor(colorInactive, colorActive, 1f - Math.min(1f, distance * 0.5f));
             int finalColor = applyAlpha(color, alpha);
 
-            float offsetY = (i - scrollPosition) * spacing;
+            float offsetY = optionYOffsets.get(i) - currentScrollY;
 
             graphics.pose().pushPose();
 
@@ -123,22 +169,22 @@ public class DialogOptionSelector extends AbstractWidget {
             graphics.pose().translate(pivotX, centerY + offsetY, 0);
             graphics.pose().scale(scale, scale, 1f);
 
-            int currentTextIndex = (textIndices.size() > i) ? textIndices.get(i) : 0;
+            List<FormattedCharSequence> lines = splitLines.get(i);
+            int blockHeight = optionHeights.get(i);
 
-            String rawText = options.get(i).getTranslateText(languageKey, currentTextIndex);
+            int lineY = -blockHeight / 2;
 
-            Component textComp = Component.literal(rawText.replace('&', '\u00A7'));
+            for (FormattedCharSequence line : lines) {
+                int lineWidth = font.width(line);
+                float drawX = switch (alignment) {
+                    case CENTER -> -lineWidth / 2f;
+                    case LEFT -> 0;
+                    case RIGHT -> -lineWidth;
+                };
 
-            int textWidth = font.width(textComp);
-            float drawX = 0;
-
-            switch (alignment) {
-                case CENTER -> drawX = -textWidth / 2f;
-                case LEFT -> drawX = 0;
-                case RIGHT -> drawX = -textWidth;
+                graphics.drawString(font, line, (int) drawX, lineY, finalColor, true);
+                lineY += font.lineHeight;
             }
-
-            graphics.drawString(font, textComp, (int) drawX, -4, finalColor, true);
 
             graphics.pose().popPose();
         }

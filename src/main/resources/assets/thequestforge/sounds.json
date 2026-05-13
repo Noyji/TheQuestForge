@@ -1,0 +1,19 @@
+{
+  "npc_voice": {
+    "category": "player",
+    "subtitle": "",
+    "sounds": [
+      "thequestforge:npc_voice"
+    ]
+  },
+  "remove_quest": {
+    "category": "player",
+    "subtitle": "",
+    "sounds": [
+      "thequestforge:remove_quest_1",
+      "thequestforge:remove_quest_2",
+      "thequestforge:remove_quest_3",
+      "thequestforge:remove_quest_4"
+    ]
+  }
+}

@@ -1,4 +1,8 @@
 {
+  "item.thequestforge.quest_book": "Quest book",
+
+  "toast.thequestforge.completed": "Quest completed!",
+
   "gui.thequestforge.rarity.info": "Rarity: ",
   "gui.thequestforge.quest.rarity.common": "Common",
   "gui.thequestforge.quest.rarity.uncommon": "Uncommon",

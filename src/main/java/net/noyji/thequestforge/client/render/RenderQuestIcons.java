@@ -44,6 +44,8 @@ public class RenderQuestIcons {
 
         PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
 
+        if (playerQuestData.isNpcLocked(entity.getUUID())) return;
+
         UUID questId = entity.getUUID();
         ResourceLocation textureIcon = null;
 

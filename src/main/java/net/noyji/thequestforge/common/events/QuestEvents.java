@@ -11,6 +11,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
+import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber
 public class QuestEvents {
@@ -35,7 +40,13 @@ public class QuestEvents {
 
     @SubscribeEvent
     public static void onTickPlayerTick(TickEvent.PlayerTickEvent event) {
-        //TODO: Доделать ивент на сбор предметов
+        if (event.side.isClient() || event.phase == TickEvent.Phase.START) return;
+
+        Player player = event.player;
+
+        if ((player.tickCount + player.getId()) % 20 == 0){
+            CapabilityUtil.getPlayerQuestData(player).checkCollectTasks(player, event);
+        }
     }
 
 

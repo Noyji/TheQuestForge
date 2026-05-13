@@ -1,15 +1,19 @@
 package net.noyji.thequestforge.data.template.components;
 
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.ServerFunctionManager;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.action.AbstractAction;
+import net.noyji.thequestforge.api.quest.action.ActionContext;
 import net.noyji.thequestforge.api.quest.registry.ActionRegistry;
 import net.noyji.thequestforge.common.util.Util;
 import org.jetbrains.annotations.NotNull;
@@ -23,14 +27,15 @@ public class TemplateDialogButton {
     private Map<String, List<String>> text;
     private List<SimplyItemStack> give;
     private List<SimplyItemStack> remove;
-    private String function;
+    private List<String> functions;
     private String toGo;
     private String altToGo;
     private List<String> actions;
 
-    public void runActions(Player player, Entity entity){
+    public void runActions(ActionContext context){
         for (String action : actions){
-            ResourceLocation loc = ResourceLocation.parse(action);
+
+            ResourceLocation loc = TheQuestForge.parse(action);
             AbstractAction abstractAction = ActionRegistry.getAction(loc);
 
             if (abstractAction == null) {
@@ -38,14 +43,74 @@ public class TemplateDialogButton {
                 continue;
             }
             TheQuestForge.LOGGER.debug("Action : {} running!", action);
-            abstractAction.handler(player, entity);
+            if (!abstractAction.handler(context)){
+                TheQuestForge.LOGGER.debug("Action failed.");
+            }
         }
+    }
+
+    public void runFunctions(ServerPlayer serverPlayer){
+        if (functions == null || functions.isEmpty()) {
+            TheQuestForge.LOGGER.debug("function is null or empty");
+            return;
+        }
+
+        MinecraftServer server = serverPlayer.getServer();
+        if (server == null) return;
+
+        ServerFunctionManager functionManager = server.getFunctions();
+        CommandSourceStack sourceStack = serverPlayer.createCommandSourceStack().withSuppressedOutput();
+        for (String function : functions){
+            ResourceLocation functionId = ResourceLocation.parse(function);
+
+            functionManager.get(functionId).ifPresentOrElse(
+                    commandFunction -> {
+                        functionManager.execute(commandFunction, sourceStack);
+                        TheQuestForge.LOGGER.debug("Function {} executed successfully for {}", functionId, serverPlayer);
+                    },
+                    () -> TheQuestForge.LOGGER.warn("Функция {} не найдена на сервере!", functionId)
+            );
+        }
+    }
+
+    public boolean hasItemToGive(){
+        return give != null && !give.isEmpty();
+    }
+
+    public List<ItemStack> getGiveItems(){
+        List<ItemStack> result = new ArrayList<>();
+        for (SimplyItemStack simplyItemStack : give){
+            ItemStack stack = simplyItemStack.toItem();
+
+            if (stack == null || stack.isEmpty()) continue;
+            result.add(stack);
+        }
+        return result;
+    }
+
+    public boolean hasItemToRemove(){
+        return remove != null && !remove.isEmpty();
+    }
+
+    public List<ItemStack> getRemoveItem(){
+        List<ItemStack> result = new ArrayList<>();
+        for (SimplyItemStack simplyItemStack : remove){
+            ItemStack stack = simplyItemStack.toItem();
+
+            if (stack == null || stack.isEmpty()) continue;
+            result.add(stack);
+        }
+        return result;
     }
 
     public boolean hasActions(){
         List<String> result = new ArrayList<>(actions);
         result.remove("thequestforge:close");
         return !result.isEmpty();
+    }
+
+    public boolean hasFunctions(){
+        return functions != null && !functions.isEmpty();
     }
 
     public boolean hasAction(String action){
@@ -57,6 +122,14 @@ public class TemplateDialogButton {
         return Util.getTranslateTextFromMap(text, languageKey, nameIndex);
     }
 
+    public List<ResourceLocation> getFunctions(){
+        List<ResourceLocation> result = new ArrayList<>();
+        for (String function : functions){
+            result.add(TheQuestForge.parse(function));
+        }
+        return result;
+    }
+
     public int getTextIndex(@NotNull RandomSource randomSource){
         int limit = text.get("en_us").size();
         return randomSource.nextInt(0, limit);
@@ -66,12 +139,24 @@ public class TemplateDialogButton {
         return toGo;
     }
 
+    public String getAltToGo() {
+        return altToGo;
+    }
+
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
 
-        nbt.putString("function", this.function != null ? this.function : "");
+
         nbt.putString("toGo", this.toGo != null ? this.toGo : "");
         nbt.putString("altToGo", this.altToGo != null ? this.altToGo : "");
+
+        if (this.functions != null && !this.functions.isEmpty()){
+            ListTag functionTag = new ListTag();
+            for (String function : this.functions){
+                functionTag.add(StringTag.valueOf(function));
+            }
+            nbt.put("functions", functionTag);
+        }
 
         if (this.actions != null && !this.actions.isEmpty()) {
             ListTag actionsTag = new ListTag();
@@ -114,9 +199,16 @@ public class TemplateDialogButton {
 
     public void deserializeNBT(@NotNull CompoundTag nbt) {
 
-        this.function = nbt.getString("function");
         this.toGo = nbt.getString("toGo");
         this.altToGo = nbt.getString("altToGo");
+
+        this.functions = new ArrayList<>();
+        if (nbt.contains("functions", Tag.TAG_LIST)) {
+            ListTag functionsTag = nbt.getList("functions", Tag.TAG_STRING);
+            for (int i = 0; i < functionsTag.size(); i++) {
+                this.functions.add(functionsTag.getString(i));
+            }
+        }
 
         this.actions = new ArrayList<>();
         if (nbt.contains("actions", Tag.TAG_LIST)) {
@@ -149,7 +241,6 @@ public class TemplateDialogButton {
         this.text = new HashMap<>();
         if (nbt.contains("text", Tag.TAG_COMPOUND)) {
             CompoundTag textMapTag = nbt.getCompound("text");
-            // Проходим по всем ключам, которые есть в этом CompoundTag
             for (String key : textMapTag.getAllKeys()) {
                 ListTag stringListTag = textMapTag.getList(key, Tag.TAG_STRING);
                 List<String> strings = new ArrayList<>();

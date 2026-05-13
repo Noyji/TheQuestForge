@@ -39,10 +39,17 @@ public class QuestTemplate implements IWeighable {
     private String group;
     @SerializedName("task_count")
     private Range taskCount;
-    @SerializedName("reward_count")
-    private Range rewardCount;
+    @SerializedName("max_reward")
+    private int maxReward;
     private Map<String, TemplateDialog> dialogs;
     private String nextQuest;
+
+    @Nullable
+    public ResourceLocation getNextQuest(){
+        if (nextQuest == null || nextQuest.isEmpty()) return null;
+
+        return TheQuestForge.parse(nextQuest);
+    }
 
     public Component getQuestDescription(String language, int index){
         if (language == null || language.isEmpty()) language = "en_us";
@@ -82,8 +89,8 @@ public class QuestTemplate implements IWeighable {
         return taskCount.getRandomInRange(randomSource);
     }
 
-    public int getRewardCount(RandomSource randomSource){
-        return rewardCount.getRandomInRange(randomSource);
+    public int getRewardCount(){
+        return maxReward;
     }
 
     public ResourceLocation getGroupKey(){
@@ -131,7 +138,7 @@ public class QuestTemplate implements IWeighable {
         return this.pool;
     }
 
-    public List<String> getRequirementItems() {
+    public List<String> getRequirementTarget() {
         return requirementItems;
     }
 
@@ -161,12 +168,12 @@ public class QuestTemplate implements IWeighable {
         nbt.putString("thisId", this.thisId != null ? this.thisId : "");
         nbt.putString("pool", this.pool != null ? this.pool : "");
         nbt.putInt("weight", this.weight);
+        nbt.putInt("rewardCount", this.maxReward);
         nbt.putString("group", this.group != null ? this.group : "");
         nbt.putString("nextQuest", this.nextQuest != null ? this.nextQuest : "");
 
         if (this.timeLimit != null) nbt.put("timeLimit", this.timeLimit.serializeNBT());
         if (this.taskCount != null) nbt.put("taskCount", this.taskCount.serializeNBT());
-        if (this.rewardCount != null) nbt.put("rewardCount", this.rewardCount.serializeNBT());
 
         if (this.requirement != null && !this.requirement.isEmpty()) {
             ListTag reqTag = new ListTag();
@@ -225,6 +232,7 @@ public class QuestTemplate implements IWeighable {
         this.weight = nbt.getInt("weight");
         this.group = nbt.getString("group");
         this.nextQuest = nbt.getString("nextQuest");
+        this.maxReward = nbt.getInt("rewardCount");
 
         if (nbt.contains("timeLimit", Tag.TAG_COMPOUND)) {
             this.timeLimit = new Range();
@@ -234,11 +242,6 @@ public class QuestTemplate implements IWeighable {
         if (nbt.contains("taskCount", Tag.TAG_COMPOUND)) {
             this.taskCount = new Range();
             this.taskCount.deserializeNBT(nbt.getCompound("taskCount"));
-        }
-
-        if (nbt.contains("rewardCount", Tag.TAG_COMPOUND)) {
-            this.rewardCount = new Range();
-            this.rewardCount.deserializeNBT(nbt.getCompound("rewardCount"));
         }
 
         this.requirement = new ArrayList<>();

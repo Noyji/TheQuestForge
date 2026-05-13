@@ -30,6 +30,8 @@ public class AdditionalRenders {
             Player player = minecraft.player;
             if (player == null) return;
 
+            if (CapabilityUtil.getPlayerQuestData(player).isNpcLocked(target.getUUID())) return;
+
             if (target.distanceTo(minecraft.player) > 4.0f) return;
 
             Component keyName = KeyBindings.INTERACT_KEY.getTranslatedKeyMessage();

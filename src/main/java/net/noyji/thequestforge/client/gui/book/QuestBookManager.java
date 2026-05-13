@@ -1,6 +1,8 @@
 package net.noyji.thequestforge.client.gui.book;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -137,5 +139,13 @@ public class QuestBookManager {
 
         updateQuest();
         return true;
+    }
+
+    public int getQuestIndex() {
+        return questIndex;
+    }
+
+    public int getMaxQuestsCount() {
+        return  playerQuests.size();
     }
 }

@@ -29,8 +29,13 @@ public class Quest extends PlayerQuest {
         this.dialogs = dialogs;
     }
 
-    public PlayerQuest copyToPlayerQuest(){
-        return new PlayerQuest(sourceTemplate ,id, timeLimit, type, rarity, nameIndex, descriptionIndex, xp, currency, complete, tasks, rewards);
+    public PlayerQuest copyToPlayerQuest() {
+        PlayerQuest playerQuest = new PlayerQuest();
+        CompoundTag nbt = this.serializeNBT();
+
+        playerQuest.deserializeNBT(nbt);
+
+        return playerQuest;
     }
 
     @Nullable

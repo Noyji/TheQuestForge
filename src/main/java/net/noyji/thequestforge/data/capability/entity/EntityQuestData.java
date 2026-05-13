@@ -5,6 +5,7 @@ import net.minecraft.nbt.Tag;
 import net.noyji.thequestforge.data.quest.entity.Quest;
 
 public class EntityQuestData {
+    //TODO: ахитектура не годится для квестовой цепочки!!
 
     private Quest entityQuest = null;
     private boolean isQuestGiver = false;

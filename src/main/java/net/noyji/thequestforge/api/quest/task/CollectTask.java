@@ -3,9 +3,7 @@ package net.noyji.thequestforge.api.quest.task;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.noyji.thequestforge.TheQuestForge;
@@ -15,8 +13,7 @@ import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 
 public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     private ItemStack itemStack;
-    private int count;
-    private int goal;
+    private int progress;
 
     public CollectTask() {
     }
@@ -42,7 +39,7 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
 
     @Override
     public boolean isComplete() {
-        return count >= goal;
+        return progress >= goal;
     }
 
     @Override
@@ -58,37 +55,20 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     }
 
     @Override
-    public void handle(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if (!itemStack.hasTag()){
-            Item item = itemStack.getItem();
-
-            count = player.getInventory().countItem(item);
-
-        } else {
-            Inventory inventory = player.getInventory();
-            int total = 0;
-            for (int i = 0; i < inventory.getContainerSize(); i++){
-                ItemStack slotStack = inventory.getItem(i);
-
-                if (slotStack.isEmpty()) continue;
-
-                if (ItemStack.isSameItemSameTags(itemStack, slotStack)){
-                    total +=slotStack.getCount();
-                }
-            }
-            count = total;
-        }
+    public void inComplete(Player player) {
+        Util.removeItemFromPlayer(player, itemStack, progress);
     }
 
     @Override
-    public int getGoal() {
-        return goal;
+    public void handle(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+
+        progress = Util.countMatchingItems(player, itemStack);
     }
 
     @Override
     public int getProgress() {
-        return count;
+        return progress;
     }
 
     @Override
@@ -99,7 +79,7 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     @Override
     public void serializeNBT(CompoundTag nbt) {
         nbt.putInt("Goal", this.goal);
-        nbt.putInt("Count", this.count);
+        nbt.putInt("Count", this.progress);
 
         CompoundTag itemTag = new CompoundTag();
         if (this.itemStack != null && !this.itemStack.isEmpty()) {
@@ -111,7 +91,7 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         this.goal = nbt.getInt("Goal");
-        this.count = nbt.getInt("Count");
+        this.progress = nbt.getInt("Count");
 
         if (nbt.contains("ItemStack")) {
             this.itemStack = ItemStack.of(nbt.getCompound("ItemStack"));

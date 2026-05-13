@@ -18,6 +18,8 @@ public class ServerConfig {
 
     public static final ForgeConfigSpec.ConfigValue<Integer> SPAWN_QUEST_GIVER_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<Integer> ATTEMPTS_TO_CREATE_QUEST;
+    public static final ForgeConfigSpec.ConfigValue<Integer> MAX_REMEMBERED_NPCS;
+    public static final ForgeConfigSpec.ConfigValue<Integer> TIME_TO_RESET_NPCS;
 
     public static final ForgeConfigSpec.ConfigValue<Double> COMMON_TASK_MULTIPLIER;
     public static final ForgeConfigSpec.ConfigValue<Double> UNCOMMON_TASK_MULTIPLIER;
@@ -26,6 +28,9 @@ public class ServerConfig {
     public static final ForgeConfigSpec.ConfigValue<Double> LEGENDARY_TASK_MULTIPLIER;
 
     public static final ForgeConfigSpec.ConfigValue<String> CURRENCY_ID;
+
+    public static final ForgeConfigSpec.ConfigValue<Boolean> GIVE_OUT_EXPERIENCE;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> GIVE_OUT_CURRENCY;
 
     private static final ForgeConfigSpec.ConfigValue<Integer> UNCOMMON_QUEST_CHANCE;
     private static final ForgeConfigSpec.ConfigValue<Integer> RARE_QUEST_CHANCE;
@@ -38,11 +43,16 @@ public class ServerConfig {
 
         SPAWN_QUEST_GIVER_CHANCE = BUILDER.defineInRange("quest_giver_chance", 80, 30, 100);
         ATTEMPTS_TO_CREATE_QUEST = BUILDER.defineInRange("attempts_to_create", 50, 10, 300);
+        MAX_REMEMBERED_NPCS = BUILDER.defineInRange("max_remembered_npcs", 128, 2, 1024);
+        TIME_TO_RESET_NPCS = BUILDER.defineInRange("time_to_reset_npcs", 40, 1, 500);
 
         UNCOMMON_QUEST_CHANCE = BUILDER.defineInRange("uncommon_quest_rarity", 30, 0, 100);
         RARE_QUEST_CHANCE = BUILDER.defineInRange("rare_quest_rarity", 25, 0, 100);
         EPIC_QUEST_CHANCE = BUILDER.defineInRange("epic_quest_rarity", 10, 0, 100);
         LEGENDARY_QUEST_CHANCE = BUILDER.defineInRange("legendary_quest_rarity", 5, 0, 100);
+
+        GIVE_OUT_EXPERIENCE = BUILDER.define("give_out_experience", true);
+        GIVE_OUT_CURRENCY = BUILDER.define("give_out_currency", true);
 
         COMMON_TASK_MULTIPLIER = BUILDER.defineInRange("common_item_multiplier", 1.0f, 0.1f, 10.f);
         UNCOMMON_TASK_MULTIPLIER = BUILDER.defineInRange("uncommon_item_multiplier", 1.13f, 0.1f, 10.f);

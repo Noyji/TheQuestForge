@@ -65,8 +65,12 @@ public class EntityQuestHandler {
 
     public static void onEntityInteract(Player player, @NotNull Entity target){
         if (target.distanceTo(player) > 4.0f) return;
+
+        if (CapabilityUtil.getPlayerQuestData(player).isNpcLocked(target.getUUID())) return;
+
         EntityQuestData entityQuestData = CapabilityUtil.getEntityQuestData(target);
         if (!(player instanceof ServerPlayer serverPlayer)) return;
+
         if (!(target.isAlive())) return;
 
         if (!entityQuestData.isQuestGiver()) {

@@ -2,6 +2,8 @@ package net.noyji.thequestforge.network;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -9,11 +11,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.client.gui.entity.QuestGiverGUI;
+import net.noyji.thequestforge.client.gui.toast.QuestToast;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.entity.EntityQuestData;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.managers.QuestTemplateManager;
 import net.noyji.thequestforge.data.quest.entity.Quest;
+import net.noyji.thequestforge.data.quest.player.PlayerQuest;
+import net.noyji.thequestforge.data.template.QuestTemplate;
 
 import java.util.UUID;
 
@@ -81,4 +86,41 @@ public class ClientHandlerNetwork {
         playerQuestData.addQuest(quest);
     }
 
+    public static void removePlayerQuest(UUID questId){
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        CapabilityUtil.getPlayerQuestData(player).removeQuest(questId);
+    }
+
+    public static void addDialogStage(UUID uuid, String stage){
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
+
+        playerQuestData.putDialogProgress(uuid, stage);
+        playerQuestData.setSpareDialogStage(uuid, stage);
+    }
+
+    public static void questToast(UUID questid){
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
+        PlayerQuest playerQuest = playerQuestData.getQuest(questid);
+        if (playerQuest == null) return;
+
+        QuestTemplate template = QuestTemplateManager.INSTANCE.getQuestTemplate(playerQuest.getSourceTemplate());
+        if (template == null) return;
+
+        String language = Minecraft.getInstance().options.languageCode;
+        Component questName = template.getQuestName(language, playerQuest.getNameIndex());
+
+        Minecraft.getInstance().getToasts().addToast(new QuestToast(questName));
+    }
+
+    public static void closeGui(){
+        Minecraft.getInstance().setScreen(null);
+    }
 }

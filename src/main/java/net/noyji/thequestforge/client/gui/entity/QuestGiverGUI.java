@@ -1,5 +1,6 @@
 package net.noyji.thequestforge.client.gui.entity;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -11,6 +12,7 @@ import net.noyji.thequestforge.client.gui.components.DialogManager;
 import net.noyji.thequestforge.client.gui.components.DialogOptionSelector;
 import net.noyji.thequestforge.client.gui.components.TypewriterTextWidget;
 import net.noyji.thequestforge.client.render.DialogueCameraManager;
+import net.noyji.thequestforge.common.init.TheQuestForgeSounds;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -73,7 +75,7 @@ public class QuestGiverGUI extends Screen {
 
     private void createTypewriterTextWidget(){
         int dialogWidth = Math.min(this.width - 80, 318);
-        int dialogX = (this.width ) / 2 - 200;
+        int dialogX = (this.width ) / 2 - 205;
         int dialogY = this.height - 100;
 
         if (typewriterTextWidget == null) {
@@ -81,7 +83,8 @@ public class QuestGiverGUI extends Screen {
                     .position(dialogX, dialogY)
                     .width(dialogWidth)
                     .speed(35.0f)
-                    .soundSettings(2, 0.8f)
+                    .sound(TheQuestForgeSounds.NPC_VOICE.get())
+                    .soundSettings(3, 0.9f)
                     .onComplete(() -> {
                     })
                     .build();
@@ -95,7 +98,7 @@ public class QuestGiverGUI extends Screen {
         int selectorWidth = 200;
         int selectorHeight = 80;
 
-        int selectorX = this.width / 2 + 110;
+        int selectorX = this.width / 2 + 115;
         int selectorY = this.height - selectorHeight - 20;
 
         if (this.optionSelector == null) {
@@ -115,14 +118,12 @@ public class QuestGiverGUI extends Screen {
         float maxAllowedWidth = this.width * 0.95F;
         float scale = Math.min(1.0F, maxAllowedWidth / baseWidth);
 
-        PoseStack pose = guiGraphics.pose();
-        pose.pushPose();
-        pose.scale(scale, scale, 1.0f);
-
-        int x = (int) (((this.width / 2F - 50F) / scale) - (baseWidth / 2F));
+        int x = (int) (((this.width / 2F - 55F) / scale) - (baseWidth / 2F));
         int y = (int) ((this.height - 10f) / scale - baseHeight);
 
-        guiGraphics.blit(DIALOG_FRAME_TEXTURE, x, y, 0, 0, 330, 100, 330, 100);
-        pose.popPose();
+        RenderSystem.enableBlend();
+        guiGraphics.blit(DIALOG_FRAME_TEXTURE, x, y, (int) (baseWidth * scale), (int) (baseHeight * scale), 0, 0, 330, 100, 330, 100);;
+        RenderSystem.disableBlend();
+
     }
 }

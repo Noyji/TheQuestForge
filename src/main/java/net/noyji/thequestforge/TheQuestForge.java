@@ -16,12 +16,14 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.noyji.thequestforge.api.quest.registry.ActionRegistry;
 import net.noyji.thequestforge.api.quest.registry.RequirementRegistry;
 import net.noyji.thequestforge.api.quest.registry.TaskHandlerRegistry;
-import net.noyji.thequestforge.common.items.ItemsRegistry;
+import net.noyji.thequestforge.common.init.TheQuestForgeSounds;
+import net.noyji.thequestforge.common.items.TheQuestForgeItems;
 import net.noyji.thequestforge.config.ClientConfig;
 import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.capability.AttachCapabilities;
 import net.noyji.thequestforge.network.ModNetworking;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 
@@ -40,7 +42,8 @@ public class TheQuestForge {
         TaskHandlerRegistry.register(modEventBus);
         ActionRegistry.register(modEventBus);
         RequirementRegistry.register(modEventBus);
-        ItemsRegistry.register(modEventBus);
+        TheQuestForgeItems.register(modEventBus);
+        TheQuestForgeSounds.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, String.format("%s-client.toml", MODID));
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, String.format("%s-server.toml", MODID));
@@ -63,6 +66,13 @@ public class TheQuestForge {
 
     public static ResourceLocation id (@NotNull String path){
         return ResourceLocation.fromNamespaceAndPath(TheQuestForge.MODID, path);
+    }
+
+    public static ResourceLocation parse(@NotNull String location){
+        if (location.contains(":")){
+            return ResourceLocation.parse(location);
+        }
+        return ResourceLocation.fromNamespaceAndPath(MODID, location);
     }
 
 }

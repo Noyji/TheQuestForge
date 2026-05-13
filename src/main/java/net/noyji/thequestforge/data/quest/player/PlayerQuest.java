@@ -4,14 +4,19 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Event;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
 import net.noyji.thequestforge.api.quest.task.TaskType;
 import net.noyji.thequestforge.api.quest.registry.TaskHandlerRegistry;
+import net.noyji.thequestforge.client.gui.toast.QuestToast;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
+import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.s2c.QuestToastS2CPacket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,8 @@ public class PlayerQuest {
     protected List<AbstractTask<?>> tasks;
     protected List<ItemStack> rewards;
 
+    private String spareDialogKey;
+
     public PlayerQuest(){}
 
     public PlayerQuest(ResourceLocation sourceTemplate, UUID id, int timeLimit, QuestType type, QuestRarity rarity, int nameIndex, int descriptionIndex,
@@ -47,6 +54,14 @@ public class PlayerQuest {
         this.complete = complete;
         this.tasks = tasks;
         this.rewards = rewards;
+    }
+
+    public String getSpareDialogKey() {
+        return (spareDialogKey == null) ? "start" : spareDialogKey;
+    }
+
+    public void setSpareDialogKey(String spareDialogKey) {
+        this.spareDialogKey = spareDialogKey;
     }
 
     public List<ItemStack> getRewards(){
@@ -81,12 +96,13 @@ public class PlayerQuest {
         return timeLimit;
     }
 
-    public boolean updateTask(ResourceLocation taskTypeKey, ResourceLocation target, Event event){
+    public boolean updateTask(ResourceLocation taskTypeKey, ResourceLocation target, Event event, Player player){
+
         boolean progressChanged = false;
         int completedCount = 0;
 
         for (AbstractTask<?> abstractTask : tasks){
-            if (!abstractTask.isComplete() && abstractTask.taskIs(taskTypeKey, target)){
+            if (abstractTask.taskIs(taskTypeKey, target)){
                 abstractTask.tryHandle(event);
                 progressChanged = true;
             }
@@ -97,7 +113,17 @@ public class PlayerQuest {
         }
 
         boolean wasComplete = this.complete;
-        this.complete = (completedCount == this.tasks.size());
+
+        if (!complete){
+            this.complete = (completedCount == this.tasks.size());
+
+            if (complete) {
+                ModNetworking.sendToPlayer(new QuestToastS2CPacket(this.id), player);
+            }
+
+        } else {
+            this.complete = (completedCount == this.tasks.size());
+        }
 
         return progressChanged || (!wasComplete && this.complete);
     }
@@ -139,6 +165,8 @@ public class PlayerQuest {
         save.putInt("xp", xp);
         save.putInt("currency", currency);
         save.putBoolean("complete", complete);
+
+        if (spareDialogKey != null && !spareDialogKey.isEmpty()) save.putString("spare_dialog_key", spareDialogKey);
 
         ListTag tasks = new ListTag();
         for (AbstractTask<?> abstractTask : this.tasks){
@@ -187,6 +215,9 @@ public class PlayerQuest {
         }
         if (nbt.contains("rarity", Tag.TAG_STRING)) {
             this.rarity = QuestRarity.valueOf(nbt.getString("rarity"));
+        }
+        if (nbt.contains("spare_dialog_key", Tag.TAG_STRING)) {
+            this.spareDialogKey = nbt.getString("spare_dialog_key");
         }
 
         this.rewards = new ArrayList<>();

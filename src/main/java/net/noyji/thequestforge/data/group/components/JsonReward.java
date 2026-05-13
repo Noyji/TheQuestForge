@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonReward implements IWeighable {
+public class JsonReward implements IWeighable, IParseItems {
     private String target;
     private String tag;
     private List<EnchantmentJsonContext> enchantment;
@@ -25,18 +25,21 @@ public class JsonReward implements IWeighable {
     private Range enchantmentCount;
     private boolean multiplier;
     private Range count;
+    private int price;
     private int weight;
+
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
+    public int getWeight() {
+        return weight;
+    }
 
     public int getCount(RandomSource randomSource, QuestRarity rarity){
         if (isMultiplier()){
-            double m;
-            switch (rarity){
-                case UNCOMMON -> m = ServerConfig.UNCOMMON_TASK_MULTIPLIER.get();
-                case RARE -> m = ServerConfig.RARE_TASK_MULTIPLIER.get();
-                case EPIC -> m = ServerConfig.EPIC_TASK_MULTIPLIER.get();
-                case LEGENDARY -> m = ServerConfig.LEGENDARY_TASK_MULTIPLIER.get();
-                default -> m = ServerConfig.COMMON_TASK_MULTIPLIER.get();
-            }
+            double m = Util.getRarityMultiplier(rarity);
             return (int) (count.getRandomInRange(randomSource) * m);
         } else {
             return count.getRandomInRange(randomSource);
@@ -46,10 +49,11 @@ public class JsonReward implements IWeighable {
     public boolean targetIs(String id){
         return target.equals(id);
     }
-
+    @Override
     public ResourceLocation getTarget() {
         return ResourceLocation.parse(target);
     }
+    @Override
     @Nullable
     public List<EnchantmentContext> getEnchantments(RandomSource randomSource) {
         if (enchantment == null || enchantment.isEmpty()) return null;
@@ -75,6 +79,7 @@ public class JsonReward implements IWeighable {
 
         return result;
     }
+    @Override
     @Nullable
     public CompoundTag getTag() {
         if (tag == null || tag.isEmpty()) return null;
@@ -87,10 +92,5 @@ public class JsonReward implements IWeighable {
 
     public boolean isMultiplier() {
         return multiplier;
-    }
-
-    @Override
-    public int getWeight() {
-        return weight;
     }
 }

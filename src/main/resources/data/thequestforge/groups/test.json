@@ -3,170 +3,533 @@
     {
       "task_type": "thequestforge:kill",
       "target": "minecraft:zombie",
-      "count": {
-        "min": 10,
-        "max": 20
-      },
+      "count": { "min": 10, "max": 20 },
+      "value": 4,
       "multiplier": true,
       "weight": 100
     },
     {
       "task_type": "thequestforge:kill",
       "target": "minecraft:skeleton",
-      "count": {
-        "min": 5,
-        "max": 15
-      },
+      "count": { "min": 8, "max": 16 },
+      "value": 4,
       "multiplier": true,
-      "weight": 80
+      "weight": 95
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:creeper",
+      "count": { "min": 5, "max": 12 },
+      "value": 4,
+      "multiplier": true,
+      "weight": 85
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:spider",
+      "count": { "min": 10, "max": 25 },
+      "value": 4,
+      "multiplier": true,
+      "weight": 90
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:drowned",
+      "count": { "min": 8, "max": 20 },
+      "value": 5,
+      "multiplier": true,
+      "weight": 75
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:husk",
+      "count": { "min": 6, "max": 14 },
+      "value": 4,
+      "multiplier": true,
+      "weight": 70
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:witch",
+      "count": { "min": 3, "max": 8 },
+      "value": 4,
+      "multiplier": true,
+      "weight": 50
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:blaze",
+      "count": { "min": 5, "max": 12 },
+      "value": 6,
+      "multiplier": true,
+      "weight": 45
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:wither_skeleton",
+      "count": { "min": 3, "max": 8 },
+      "value": 6,
+      "multiplier": true,
+      "weight": 35
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:piglin_brute",
+      "count": { "min": 2, "max": 6 },
+      "value": 6,
+      "multiplier": false,
+      "weight": 30
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:elder_guardian",
+      "count": { "min": 1, "max": 2 },
+      "value": 10,
+      "multiplier": false,
+      "weight": 10
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "target": "minecraft:evoker",
+      "count": { "min": 1, "max": 3 },
+      "value": 8,
+      "multiplier": false,
+      "weight": 15
     },
     {
       "task_type": "thequestforge:collect",
       "target": "minecraft:bone",
-      "count": {
-        "min": 16,
-        "max": 32
-      },
+      "count": { "min": 16, "max": 48 },
+      "value": 1,
+      "multiplier": false,
+      "weight": 80
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:rotten_flesh",
+      "count": { "min": 32, "max": 64 },
+      "value": 1,
+      "multiplier": false,
+      "weight": 75
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:string",
+      "count": { "min": 16, "max": 32 },
+      "value": 1,
+      "multiplier": false,
+      "weight": 70
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:gunpowder",
+      "count": { "min": 8, "max": 24 },
+      "value": 2,
+      "multiplier": false,
+      "weight": 65
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:spider_eye",
+      "count": { "min": 8, "max": 20 },
+      "value": 2,
       "multiplier": false,
       "weight": 60
     },
     {
       "task_type": "thequestforge:collect",
       "target": "minecraft:phantom_membrane",
-      "count": {
-        "min": 1,
-        "max": 5
-      },
+      "count": { "min": 1, "max": 5 },
+      "value": 4,
       "multiplier": true,
       "weight": 30
     },
     {
-      "task_type": "thequestforge:kill",
-      "target": "minecraft:wither_skeleton",
-      "count": {
-        "min": 1,
-        "max": 3
-      },
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:blaze_rod",
+      "count": { "min": 4, "max": 12 },
+      "value": 4,
+      "multiplier": true,
+      "weight": 35
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:ender_pearl",
+      "count": { "min": 4, "max": 10 },
+      "value": 4,
+      "multiplier": true,
+      "weight": 40
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:ghast_tear",
+      "count": { "min": 1, "max": 4 },
+      "value": 6,
+      "multiplier": true,
+      "weight": 20
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:nether_star",
+      "count": { "min": 1, "max": 1 },
+      "value": 200,
       "multiplier": false,
-      "weight": 10
+      "weight": 3
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:shulker_shell",
+      "count": { "min": 1, "max": 4 },
+      "value": 8,
+      "multiplier": true,
+      "weight": 12
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:iron_ingot",
+      "count": { "min": 16, "max": 64 },
+      "value": 2,
+      "multiplier": false,
+      "weight": 70
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:gold_ingot",
+      "count": { "min": 8, "max": 32 },
+      "value": 3,
+      "multiplier": false,
+      "weight": 55
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:diamond",
+      "count": { "min": 1, "max": 8 },
+      "value": 8,
+      "multiplier": true,
+      "weight": 18
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:emerald",
+      "count": { "min": 3, "max": 12 },
+      "value": 6,
+      "multiplier": true,
+      "weight": 25
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:oak_log",
+      "count": { "min": 32, "max": 128 },
+      "value": 1,
+      "multiplier": false,
+      "weight": 65
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:coal",
+      "count": { "min": 32, "max": 64 },
+      "value": 1,
+      "multiplier": false,
+      "weight": 60
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "target": "minecraft:obsidian",
+      "count": { "min": 8, "max": 32 },
+      "value": 4,
+      "multiplier": false,
+      "weight": 30
     }
   ],
   "rewards": [
     {
       "target": "minecraft:emerald",
-      "tag": "{display:{Name:'{\"text\":\"Amity Seed\",\"color\":\"green\"}',Lore:['{\"text\":\"Хранит в себе древние воспоминания...\",\"color\":\"gray\",\"italic\":true}']}}",
-      "count": {
-        "min": 5,
-        "max": 15
-      },
+      "count": { "min": 5, "max": 15 },
+      "price": 10,
       "multiplier": true,
       "weight": 100
     },
     {
-      "target": "minecraft:blaze_rod",
-      "tag": "{display:{Name:'{\"text\":\"Посох Призывателя\",\"color\":\"gold\",\"bold\":true}'}}",
-      "count": {
-        "min": 1,
-        "max": 1
-      },
+      "target": "minecraft:gold_ingot",
+      "count": { "min": 10, "max": 30 },
+      "price": 8,
+      "multiplier": true,
+      "weight": 90
+    },
+    {
+      "target": "minecraft:iron_ingot",
+      "count": { "min": 16, "max": 64 },
+      "price": 5,
+      "multiplier": true,
+      "weight": 85
+    },
+    {
+      "target": "minecraft:diamond",
+      "count": { "min": 1, "max": 4 },
+      "price": 30,
+      "multiplier": true,
+      "weight": 20
+    },
+    {
+      "target": "minecraft:experience_bottle",
+      "count": { "min": 3, "max": 12 },
+      "price": 12,
+      "multiplier": true,
+      "weight": 70
+    },
+    {
+      "target": "minecraft:bone_meal",
+      "count": { "min": 16, "max": 48 },
+      "price": 4,
       "multiplier": false,
-      "weight": 25,
-      "enchantment_count": {
-        "min": 1,
-        "max": 2
-      },
-      "enchantment": [
-        {
-          "id": "minecraft:knockback",
-          "level": {
-            "min": 1,
-            "max": 2
-          },
-          "weight": 50
-        },
-        {
-          "id": "minecraft:fire_aspect",
-          "level": {
-            "min": 1,
-            "max": 2
-          },
-          "weight": 30
-        }
-      ]
+      "weight": 60
+    },
+    {
+      "target": "minecraft:cooked_beef",
+      "count": { "min": 8, "max": 32 },
+      "price": 5,
+      "multiplier": false,
+      "weight": 75
     },
     {
       "target": "minecraft:glass_bottle",
       "tag": "{display:{Name:'{\"text\":\"Diluted Mnemonic\",\"color\":\"aqua\"}'}}",
-      "count": {
-        "min": 1,
-        "max": 3
-      },
+      "count": { "min": 1, "max": 3 },
+      "price": 15,
       "multiplier": false,
       "weight": 40
     },
     {
-      "target": "minecraft:diamond_sword",
-      "count": {
-        "min": 1,
-        "max": 1
-      },
+      "target": "minecraft:emerald",
+      "tag": "{display:{Name:'{\"text\":\"Amity Seed\",\"color\":\"green\"}',Lore:['{\"text\":\"Хранит в себе древние воспоминания...\",\"color\":\"gray\",\"italic\":true}']}}",
+      "count": { "min": 3, "max": 8 },
+      "price": 20,
+      "multiplier": true,
+      "weight": 35
+    },
+    {
+      "target": "minecraft:blaze_rod",
+      "tag": "{display:{Name:'{\"text\":\"Посох Призывателя\",\"color\":\"gold\",\"bold\":true}'}}",
+      "count": { "min": 1, "max": 1 },
+      "price": 40,
       "multiplier": false,
       "weight": 15,
-      "enchantment_count": {
-        "min": 2,
-        "max": 3
-      },
+      "enchantment_count": { "min": 1, "max": 2 },
       "enchantment": [
         {
-          "id": "minecraft:sharpness",
-          "level": {
-            "min": 3,
-            "max": 5
-          },
-          "weight": 40
-        },
-        {
-          "id": "minecraft:smite",
-          "level": {
-            "min": 4,
-            "max": 5
-          },
-          "weight": 30
-        },
-        {
-          "id": "minecraft:looting",
-          "level": {
-            "min": 1,
-            "max": 3
-          },
-          "weight": 20
-        },
-        {
-          "id": "minecraft:unbreaking",
-          "level": {
-            "min": 2,
-            "max": 3
-          },
+          "id": "minecraft:knockback",
+          "level": { "min": 1, "max": 2 },
           "weight": 50
+        },
+        {
+          "id": "minecraft:fire_aspect",
+          "level": { "min": 1, "max": 2 },
+          "weight": 30
         }
       ]
     },
     {
-      "target": "minecraft:gold_ingot",
-      "count": {
-        "min": 10,
-        "max": 30
-      },
+      "target": "minecraft:iron_sword",
+      "count": { "min": 1, "max": 1 },
+      "price": 18,
+      "multiplier": false,
+      "weight": 55,
+      "enchantment_count": { "min": 1, "max": 2 },
+      "enchantment": [
+        {
+          "id": "minecraft:sharpness",
+          "level": { "min": 1, "max": 3 },
+          "weight": 60
+        },
+        {
+          "id": "minecraft:smite",
+          "level": { "min": 1, "max": 3 },
+          "weight": 40
+        },
+        {
+          "id": "minecraft:unbreaking",
+          "level": { "min": 1, "max": 2 },
+          "weight": 50
+        },
+        {
+          "id": "minecraft:looting",
+          "level": { "min": 1, "max": 2 },
+          "weight": 25
+        }
+      ]
+    },
+    {
+      "target": "minecraft:diamond_sword",
+      "count": { "min": 1, "max": 1 },
+      "price": 60,
+      "multiplier": false,
+      "weight": 10,
+      "enchantment_count": { "min": 2, "max": 3 },
+      "enchantment": [
+        {
+          "id": "minecraft:sharpness",
+          "level": { "min": 3, "max": 5 },
+          "weight": 40
+        },
+        {
+          "id": "minecraft:smite",
+          "level": { "min": 4, "max": 5 },
+          "weight": 30
+        },
+        {
+          "id": "minecraft:looting",
+          "level": { "min": 1, "max": 3 },
+          "weight": 20
+        },
+        {
+          "id": "minecraft:unbreaking",
+          "level": { "min": 2, "max": 3 },
+          "weight": 50
+        },
+        {
+          "id": "minecraft:sweeping",
+          "level": { "min": 1, "max": 3 },
+          "weight": 35
+        }
+      ]
+    },
+    {
+      "target": "minecraft:iron_chestplate",
+      "count": { "min": 1, "max": 1 },
+      "price": 22,
+      "multiplier": false,
+      "weight": 45,
+      "enchantment_count": { "min": 1, "max": 2 },
+      "enchantment": [
+        {
+          "id": "minecraft:protection",
+          "level": { "min": 1, "max": 3 },
+          "weight": 60
+        },
+        {
+          "id": "minecraft:unbreaking",
+          "level": { "min": 1, "max": 3 },
+          "weight": 50
+        },
+        {
+          "id": "minecraft:thorns",
+          "level": { "min": 1, "max": 2 },
+          "weight": 20
+        }
+      ]
+    },
+    {
+      "target": "minecraft:diamond_chestplate",
+      "count": { "min": 1, "max": 1 },
+      "price": 75,
+      "multiplier": false,
+      "weight": 8,
+      "enchantment_count": { "min": 2, "max": 4 },
+      "enchantment": [
+        {
+          "id": "minecraft:protection",
+          "level": { "min": 3, "max": 4 },
+          "weight": 60
+        },
+        {
+          "id": "minecraft:blast_protection",
+          "level": { "min": 2, "max": 4 },
+          "weight": 30
+        },
+        {
+          "id": "minecraft:unbreaking",
+          "level": { "min": 2, "max": 3 },
+          "weight": 50
+        },
+        {
+          "id": "minecraft:mending",
+          "level": { "min": 1, "max": 1 },
+          "weight": 15
+        },
+        {
+          "id": "minecraft:thorns",
+          "level": { "min": 1, "max": 3 },
+          "weight": 25
+        }
+      ]
+    },
+    {
+      "target": "minecraft:bow",
+      "count": { "min": 1, "max": 1 },
+      "price": 25,
+      "multiplier": false,
+      "weight": 40,
+      "enchantment_count": { "min": 1, "max": 3 },
+      "enchantment": [
+        {
+          "id": "minecraft:power",
+          "level": { "min": 1, "max": 4 },
+          "weight": 60
+        },
+        {
+          "id": "minecraft:punch",
+          "level": { "min": 1, "max": 2 },
+          "weight": 40
+        },
+        {
+          "id": "minecraft:flame",
+          "level": { "min": 1, "max": 1 },
+          "weight": 30
+        },
+        {
+          "id": "minecraft:infinity",
+          "level": { "min": 1, "max": 1 },
+          "weight": 10
+        },
+        {
+          "id": "minecraft:unbreaking",
+          "level": { "min": 1, "max": 3 },
+          "weight": 45
+        }
+      ]
+    },
+    {
+      "target": "minecraft:golden_apple",
+      "count": { "min": 1, "max": 3 },
+      "price": 20,
+      "multiplier": false,
+      "weight": 30
+    },
+    {
+      "target": "minecraft:enchanted_golden_apple",
+      "count": { "min": 1, "max": 1 },
+      "price": 100,
+      "multiplier": false,
+      "weight": 3
+    },
+    {
+      "target": "minecraft:totem_of_undying",
+      "count": { "min": 1, "max": 1 },
+      "price": 120,
+      "multiplier": false,
+      "weight": 2
+    },
+    {
+      "target": "minecraft:ender_pearl",
+      "count": { "min": 4, "max": 12 },
+      "price": 10,
       "multiplier": true,
-      "weight": 80
+      "weight": 50
+    },
+    {
+      "target": "minecraft:lapis_lazuli",
+      "count": { "min": 16, "max": 64 },
+      "price": 5,
+      "multiplier": false,
+      "weight": 65
     }
   ],
   "xp_reward": {
-    "min": 100,
-    "max": 500
+    "min": 50,
+    "max": 800
   },
   "currency_reward": {
-    "min": 200,
-    "max": 1000
+    "min": 100,
+    "max": 2000
   }
 }

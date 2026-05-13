@@ -14,6 +14,7 @@ import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.client.gui.book.components.QuestRewardGridWidget;
 import net.noyji.thequestforge.client.gui.book.components.QuestTaskListWidget;
 import net.noyji.thequestforge.client.gui.components.AnimatedButton;
+import net.noyji.thequestforge.common.init.TheQuestForgeSounds;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -83,6 +84,9 @@ public class QuestBookGui extends Screen {
                     if (manager.removeQuest()) {
                         taskListWidget.setTasks(manager.getCurrentQuestTasks());
                         rewardGridWidget.setRewards(manager.getCurrentQuestRewards(), manager.getQuestXp(), manager.getQuestCurrency());
+                        Minecraft.getInstance().getSoundManager().play(
+                                SimpleSoundInstance.forUI(TheQuestForgeSounds.REMOVE_QUEST.get(), 1.0F, 1.0F)
+                        );
                     } else {
                         taskListWidget.setTasks(null);
                         rewardGridWidget.setRewards(null, -1, -1);
@@ -148,6 +152,7 @@ public class QuestBookGui extends Screen {
 
         drawLeftSidePage(guiGraphics);
         drawRightSidePage(guiGraphics, mouseX, mouseY, partialTick);
+        drawNumbering(guiGraphics);
     }
 
     @Override
@@ -245,6 +250,19 @@ public class QuestBookGui extends Screen {
             guiGraphics.blit(QUEST_BOOK_TEXTURE, (int) (this.width / 2F + (95 * scale)), (int) (this.height / 2F + 55 * scale), (int) (25 * (scale - 0.25F)), (int) (25 * (scale - 0.25F)), 410, 100, 25, 25, 512, 512);
             RenderSystem.disableBlend();
         }
+    }
+
+    private void drawNumbering(GuiGraphics guiGraphics){
+        if (manager.getMaxQuestsCount() == 0) return;
+
+        int x = (this.width / 2 - 3);
+        int y = (int) ((float) this.height / 2 + (95 * scale));
+        String maxQuest = "/ " + manager.getMaxQuestsCount();
+
+        guiGraphics.drawString(this.font, maxQuest, x, y, 0xFFFFFF, false);
+
+        String index = (manager.getQuestIndex() + 1) + " ";
+        guiGraphics.drawString(this.font, index , x - this.font.width(index), y, 0xFFFFFF, false);
     }
 
     private float getFinaleScale(){

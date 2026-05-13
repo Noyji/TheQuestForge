@@ -2,18 +2,24 @@ package net.noyji.thequestforge.client.gui.components;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
+import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.managers.QuestTemplateManager;
 import net.noyji.thequestforge.data.quest.entity.Quest;
 import net.noyji.thequestforge.data.quest.entity.components.QuestDialog;
+import net.noyji.thequestforge.data.quest.player.PlayerQuest;
 import net.noyji.thequestforge.data.template.QuestTemplate;
 import net.noyji.thequestforge.data.template.components.TemplateDialog;
 import net.noyji.thequestforge.data.template.components.TemplateDialogButton;
 import net.noyji.thequestforge.network.ModNetworking;
 import net.noyji.thequestforge.network.c2s.ActionHandlerC2SPacket;
 
-public class DialogManager {
+import java.util.UUID;
 
+public class DialogManager {
     private final Quest quest;
     private final QuestTemplate template;
 
@@ -24,12 +30,14 @@ public class DialogManager {
 
     private final String languageKey;
     private final int entityId;
-    private String currentDialogKey = "start";
+    private String currentDialogKey;
 
     public DialogManager(Entity npcEntity, TypewriterTextWidget textWidget, DialogOptionSelector optionSelector, Runnable onCloseScreen) {
         this.quest = getQuest(npcEntity);
         this.entityId = npcEntity.getId();
         this.template = QuestTemplateManager.INSTANCE.getQuestTemplate(quest.getSourceTemplate());
+
+        this.currentDialogKey = getDialogKey(npcEntity);
 
         this.textWidget = textWidget;
         this.optionSelector = optionSelector;
@@ -44,22 +52,42 @@ public class DialogManager {
 
     private void setupOptionAction() {
         this.optionSelector.setOnSelectAction((TemplateDialogButton selectedButton) -> {
+            Player player = Minecraft.getInstance().player;
+            if (player == null) return;
 
-            //TODO:Доделать обработку действий(Actions)
-
-            if (selectedButton.hasAction("thequestforge:close")) {
+            if (selectedButton.hasAction("thequestforge:close") || selectedButton.hasAction("close")) {
                 if (this.onCloseScreen != null) {
                     this.onCloseScreen.run();
                     return;
                 }
             }
 
-            if (selectedButton.hasActions()){
-                ModNetworking.sendToServer(new ActionHandlerC2SPacket(quest.getSourceTemplate().toString(),
-                        currentDialogKey, optionSelector.getSelectedIndex(), entityId));
-            }
+            boolean transition = true;
 
             String toGo = selectedButton.getToGo();
+
+            if (selectedButton.hasItemToRemove()){
+                for (ItemStack stack : selectedButton.getRemoveItem()){
+                    if (!Util.hasItem(player, stack)){
+                        transition = false;
+                        toGo = selectedButton.getAltToGo();
+                        break;
+                    }
+                }
+            }
+
+            if (selectedButton.hasAction("thequestforge:complete") || selectedButton.hasAction("complete")){
+
+                PlayerQuest playerQuest = CapabilityUtil.getPlayerQuestData(player).getQuest(quest.getId());
+                if (playerQuest == null || !playerQuest.isComplete()) {
+                    transition = false;
+                    toGo = selectedButton.getAltToGo();
+                }
+            }
+
+            if (transition){
+                ModNetworking.sendToServer(new ActionHandlerC2SPacket(quest.getSourceTemplate().toString(), currentDialogKey, optionSelector.getSelectedIndex(), entityId));
+            }
 
             if (toGo != null && !toGo.isEmpty()) {
                 updateDialog(toGo);
@@ -88,5 +116,19 @@ public class DialogManager {
     private Quest getQuest(Entity entity){
         if (entity == null) return null;
         return CapabilityUtil.getEntityQuestData(entity).getQuest();
+    }
+
+    private String getDialogKey(Entity entity){
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return "start";
+        UUID questId = entity.getUUID();
+
+        PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
+
+        String key = playerQuestData.getDialogProgress(questId);
+
+        if (key == null) key = playerQuestData.getSpareDialogStage(questId);
+
+        return key;
     }
 }

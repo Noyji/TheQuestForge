@@ -13,6 +13,7 @@ import net.noyji.thequestforge.data.quest.player.PlayerQuest;
 import net.noyji.thequestforge.network.ModNetworking;
 import net.noyji.thequestforge.network.s2c.SyncSpecificPlayerQuestS2CPacket;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -20,10 +21,96 @@ public class PlayerQuestData {
     private final Map<UUID, PlayerQuest> playerQuestMap = new HashMap<>();
     // --- ResourceLocation(thequestforge:collect) --- ResourceLocation(minecraft:pig) --- questId
     private final Map<ResourceLocation, Map<ResourceLocation, List<UUID>>> questCatalog = new HashMap<>();
+    private final Set<UUID> completedNpcQuests = new HashSet<>();
+
+    private final DialogStage dialogStage = new DialogStage();
+    private long lastResetCycle = 0;
+
+    public long getLastResetCycle() {
+        return lastResetCycle;
+    }
+
+    public void setLastResetCycle(long lastResetCycle) {
+        this.lastResetCycle = lastResetCycle;
+    }
+
+    public boolean isNpcLocked(UUID uuid){
+        return completedNpcQuests.contains(uuid);
+    }
+
+    public void lockNpc(@NotNull UUID uuid){
+        completedNpcQuests.add(uuid);
+    }
+
+    public void clearLockedNpc(){
+        completedNpcQuests.clear();
+    }
 
     //TODO:
     public int sizeQuest(){
         return playerQuestMap.size();
+    }
+
+    public void debugInfoCatalog() {
+        TheQuestForge.LOGGER.info("=== QUEST CATALOG DEBUG ===");
+
+        if (this.questCatalog.isEmpty()) {
+            TheQuestForge.LOGGER.info("Каталог пуст.");
+            TheQuestForge.LOGGER.info("===========================");
+            return;
+        }
+
+        for (Map.Entry<ResourceLocation, Map<ResourceLocation, List<UUID>>> outerEntry : this.questCatalog.entrySet()) {
+            ResourceLocation taskType = outerEntry.getKey(); // Например: thequestforge:kill
+            Map<ResourceLocation, List<UUID>> innerMap = outerEntry.getValue();
+
+            TheQuestForge.LOGGER.info("Тип задачи: [{}]", taskType);
+
+            if (innerMap.isEmpty()) {
+                TheQuestForge.LOGGER.info("  -> Нет зарегистрированных целей.");
+                continue;
+            }
+
+            for (Map.Entry<ResourceLocation, List<UUID>> innerEntry : innerMap.entrySet()) {
+                ResourceLocation target = innerEntry.getKey(); // Например: minecraft:zombie
+                List<UUID> uuids = innerEntry.getValue();
+
+                TheQuestForge.LOGGER.info("  Цель: [{}]", target);
+
+                if (uuids.isEmpty()) {
+                    TheQuestForge.LOGGER.info("    -> Пустой список (возможна утечка, список должен удаляться!)");
+                } else {
+                    TheQuestForge.LOGGER.info("    -> Активные квесты ({} шт.):", uuids.size());
+                    for (UUID uuid : uuids) {
+                        TheQuestForge.LOGGER.info("       - {}", uuid.toString());
+                    }
+                }
+            }
+        }
+        TheQuestForge.LOGGER.info("===========================");
+    }
+    @Nullable
+    public Map<ResourceLocation, List<UUID>> getTargetsCatalog(ResourceLocation taskKey){
+        return questCatalog.get(taskKey);
+    }
+
+    public void checkCollectTasks(Player player, Event event) {
+        ResourceLocation collectKey = TheQuestForge.id("collect");
+
+        Map<ResourceLocation, List<UUID>> collectTargets = questCatalog.get(collectKey);
+
+        if (collectTargets == null || collectTargets.isEmpty()) {
+            return;
+        }
+
+        for (ResourceLocation targetItem : collectTargets.keySet()) {
+            progressUpdate(collectKey, targetItem, event, player);
+        }
+    }
+
+    @Nullable
+    public PlayerQuest getQuest(UUID uuid){
+        return playerQuestMap.get(uuid);
     }
 
     public void debugInfo(){
@@ -34,6 +121,28 @@ public class PlayerQuestData {
                 }
             }
         }
+    }
+
+    public void putDialogProgress(UUID uuid, String stage){
+        dialogStage.put(uuid, stage);
+    }
+
+    public String getDialogProgress(UUID uuid){
+        return dialogStage.get(uuid);
+    }
+
+    public void setSpareDialogStage(UUID uuid, String stage){
+        PlayerQuest quest = playerQuestMap.get(uuid);
+        if (quest == null) return;
+
+        quest.setSpareDialogKey(stage);
+    }
+
+    public String getSpareDialogStage(UUID uuid){
+        PlayerQuest quest = playerQuestMap.get(uuid);
+        if (quest == null) return "start";
+
+        return quest.getSpareDialogKey();
     }
 
     public List<PlayerQuest> getQuests(){
@@ -58,7 +167,7 @@ public class PlayerQuestData {
         List<UUID> uuids = questCatalog.get(taskTypeKey).get(target);
         for (UUID uuid : uuids){
             PlayerQuest quest = playerQuestMap.get(uuid);
-            quest.updateTask(taskTypeKey, target, event);
+            quest.updateTask(taskTypeKey, target, event, player);
 
             if (player instanceof ServerPlayer serverPlayer) {
                 ModNetworking.sendToPlayer(new SyncSpecificPlayerQuestS2CPacket(uuid, quest.serializeNBT()), serverPlayer);
@@ -76,6 +185,8 @@ public class PlayerQuestData {
     public void removeQuest(UUID uuid){
         if (!hasQuest(uuid)) return;
         List<String> locationAndTarget = playerQuestMap.get(uuid).getLocationAndTarget();
+
+        dialogStage.remove(uuid);
 
         for (String string : locationAndTarget){
             String[] values = string.split("-", 2);
@@ -100,6 +211,8 @@ public class PlayerQuestData {
     public CompoundTag serializeNBT() {
         CompoundTag save = new CompoundTag();
 
+        save.putLong("LastResetCycle", lastResetCycle);
+
         CompoundTag playerQuestMapTag = new CompoundTag();
         for (Map.Entry<UUID, PlayerQuest> entry : this.playerQuestMap.entrySet()) {
             playerQuestMapTag.put(entry.getKey().toString(), entry.getValue().serializeNBT());
@@ -122,7 +235,16 @@ public class PlayerQuestData {
 
             catalogTag.put(outerEntry.getKey().toString(), innerMapTag);
         }
+
+        ListTag lockList = new ListTag();
+        for (UUID uuid : completedNpcQuests) {
+            lockList.add(StringTag.valueOf(uuid.toString()));
+        }
+        save.put("LockedNpcs", lockList);
+
         save.put("quest_catalog", catalogTag);
+
+        save.put("dialog_stage", dialogStage.serializeNBT());
 
         return save;
     }
@@ -130,6 +252,8 @@ public class PlayerQuestData {
     public void deserializeNBT(@NotNull CompoundTag nbt) {
         this.playerQuestMap.clear();
         this.questCatalog.clear();
+
+        this.lastResetCycle = nbt.getLong("LastResetCycle");
 
         if (nbt.contains("player_quest_map", Tag.TAG_COMPOUND)) {
             CompoundTag playerQuestMapTag = nbt.getCompound("player_quest_map");
@@ -173,25 +297,37 @@ public class PlayerQuestData {
                 this.questCatalog.put(outerLocation, innerMap);
             }
         }
+
+        if (nbt.contains("dialog_stage", Tag.TAG_COMPOUND)) {
+            dialogStage.deserializeNBT(nbt.getCompound("dialog_stage"));
+        }
+
+        this.completedNpcQuests.clear();
+        if (nbt.contains("LockedNpcs", Tag.TAG_LIST)) {
+            ListTag lockList = nbt.getList("LockedNpcs", Tag.TAG_STRING);
+            for (int i = 0; i < lockList.size(); i++) {
+                completedNpcQuests.add(UUID.fromString(lockList.getString(i)));
+            }
+        }
     }
 
 
-    private void removeUUID (ResourceLocation taskKey, ResourceLocation targetKey, UUID uuidToRemove){
-        Map<ResourceLocation, List<UUID>> innerMap = questCatalog.get(targetKey);
-        if (innerMap == null){
+    private void removeUUID(ResourceLocation taskKey, ResourceLocation targetKey, UUID uuidToRemove) {
+        Map<ResourceLocation, List<UUID>> innerMap = questCatalog.get(taskKey);
+        if (innerMap == null) {
             return;
         }
 
         List<UUID> uuids = innerMap.get(targetKey);
-        if (uuids == null){
+        if (uuids == null) {
             return;
         }
 
-        if (uuids.remove(uuidToRemove)){
-            if (uuids.isEmpty()){
+        if (uuids.remove(uuidToRemove)) {
+            if (uuids.isEmpty()) {
                 innerMap.remove(targetKey);
             }
-            if (innerMap.isEmpty()){
+            if (innerMap.isEmpty()) {
                 questCatalog.remove(taskKey);
             }
         }
