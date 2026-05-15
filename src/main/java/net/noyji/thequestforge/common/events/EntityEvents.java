@@ -14,12 +14,13 @@ public class EntityEvents {
         if (event.getLevel().isClientSide) return;
         Entity entity = event.getEntity();
 
-        EntityQuestHandler.tryCreateEmptyQuest(entity);
+        EntityQuestHandler.tryCreateEmptyQuest(entity, true);
     }
 
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         EntityQuestHandler.immobilize(event);
+        EntityQuestHandler.resetCycle(event);
     }
 
 

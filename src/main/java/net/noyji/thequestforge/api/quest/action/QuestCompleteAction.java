@@ -51,6 +51,10 @@ public class QuestCompleteAction extends AbstractAction{
                 ItemStack currencyStack = new ItemStack(currency, quest.getCurrency());
                 ItemHandlerHelper.giveItemToPlayer(player, currencyStack);
             }
+
+            if (hasNextQuest(quest)){
+                playerQuestData.lockNpc(context.getEntity().getUUID());
+            }
             return true;
         }
         return false;

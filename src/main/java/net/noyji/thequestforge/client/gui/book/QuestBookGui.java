@@ -14,7 +14,7 @@ import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.client.gui.book.components.QuestRewardGridWidget;
 import net.noyji.thequestforge.client.gui.book.components.QuestTaskListWidget;
 import net.noyji.thequestforge.client.gui.components.AnimatedButton;
-import net.noyji.thequestforge.common.init.TheQuestForgeSounds;
+import net.noyji.thequestforge.common.sounds.TheQuestForgeSounds;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

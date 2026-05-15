@@ -9,10 +9,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import net.noyji.thequestforge.TheQuestForge;
-import net.noyji.thequestforge.api.quest.action.AbstractAction;
-import net.noyji.thequestforge.api.quest.action.AcceptQuestAction;
-import net.noyji.thequestforge.api.quest.action.QuestCompleteAction;
-import net.noyji.thequestforge.api.quest.action.SaveDialogStageAction;
+import net.noyji.thequestforge.api.quest.action.*;
 
 import java.util.function.Supplier;
 
@@ -42,4 +39,5 @@ public class ActionRegistry {
     public static final RegistryObject<AbstractAction> QUEST_ACCEPT = registerAction(new AcceptQuestAction());
     public static final RegistryObject<AbstractAction> QUEST_COMPLETE = registerAction(new QuestCompleteAction());
     public static final RegistryObject<AbstractAction> SAVE_DIALOG_PROGRESS = registerAction(new SaveDialogStageAction());
+    public static final RegistryObject<AbstractAction> NEXT_QUES = registerAction(new NextQuestAction());
 }

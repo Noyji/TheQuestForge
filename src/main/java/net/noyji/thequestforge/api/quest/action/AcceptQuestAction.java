@@ -4,7 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.MinecraftForge;
 import net.noyji.thequestforge.TheQuestForge;
+import net.noyji.thequestforge.common.events.custom.QuestAcceptEvent;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.entity.EntityQuestData;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
@@ -19,11 +21,14 @@ public class AcceptQuestAction extends AbstractAction{
         PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(context.getPlayer());
         EntityQuestData entityQuestData = CapabilityUtil.getEntityQuestData(context.getEntity());
 
-        Quest quest = entityQuestData.getQuest();
+        Quest quest = entityQuestData.getQuest(playerQuestData.getChainProgress(context.getEntity().getUUID()));
         if (quest == null) return false;
 
         PlayerQuest playerQuest = quest.copyToPlayerQuest();
         playerQuestData.addQuest(playerQuest);
+
+        MinecraftForge.EVENT_BUS.post(new QuestAcceptEvent(context.getPlayer(), quest));
+
         ModNetworking.sendToPlayer(new AddPlayerQuestS2CPacket(playerQuest.serializeNBT()), (ServerPlayer) context.getPlayer());
         return true;
     }

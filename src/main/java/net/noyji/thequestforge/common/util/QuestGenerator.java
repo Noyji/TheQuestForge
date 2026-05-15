@@ -169,8 +169,8 @@ public class QuestGenerator {
         Map<String, QuestDialog> dialogMap = template.getQuestDialog(RANDOM);
         ResourceLocation sourceTemplate = template.getThisId();
         UUID questId = getQuestId(entity);
-        int timeLimit = template.hasTimeLimit() ? template.getTimeLimit(RANDOM) : -1;
-        QuestType type = QuestType.LOCAL;
+        int timeLimit = template.hasTimeLimit() ? template.getTimeLimit(RANDOM) : -2;
+        QuestType type = template.getType();
         int nameIndex = template.getNameIndex(RANDOM);
         int descriptionIndex = template.getDescription(RANDOM);
         int xp = group.getXp(RANDOM);

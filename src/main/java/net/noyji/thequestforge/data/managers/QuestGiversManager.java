@@ -18,7 +18,9 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class QuestGiversManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new Gson();
@@ -61,6 +63,17 @@ public class QuestGiversManager extends SimpleJsonResourceReloadListener {
     public boolean hasEntity(Entity entity){
         ResourceLocation entityKey = Util.getEntityResourceLocation(entity);
         return hasEntity(entityKey);
+    }
+
+    public Set<String> getAllGiverIds(){
+        Set<String> result = new HashSet<>();
+
+        result.add("minecraft:villager");
+
+        for (ResourceLocation entityId : entityPools.keySet()){
+            result.add(entityId.toString());
+        }
+        return result;
     }
 
     public boolean thisQuestGiverOrVillager(Entity entity){

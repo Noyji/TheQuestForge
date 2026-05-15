@@ -18,5 +18,15 @@
   "overlay.thequestforge.interact_message": "to talk",
 
   "key.categories.thequestforge": "TheQuestForge control",
-  "key.thequestforge.interact": "NPC interact key"
+  "key.thequestforge.interact": "NPC interact key",
+
+  "command.thequestforge.reset.is_not_quest_giver": "This entity is not a quest giver",
+  "command.thequestforge.reset.success": "This quest giver has been reset",
+  "command.thequestforge.reset.success_player": "Player has been reset",
+
+  "command.thequestforge.spawn.entity_type_is_null": "Entity type is null",
+  "command.thequestforge.spawn.entity_not_mob": "Entity is not mob",
+  "command.thequestforge.spawn.template_not_found": "Quest template not found",
+  "command.thequestforge.spawn.player_is_null": "Player is null",
+  "command.thequestforge.spawn.success": "Quest giver created"
 }

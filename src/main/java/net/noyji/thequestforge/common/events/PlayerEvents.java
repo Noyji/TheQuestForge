@@ -73,13 +73,24 @@ public class PlayerEvents {
 
         Player player = event.player;
 
+        CapabilityUtil.getPlayerQuestData(player).updateQuestDays(player);
+        checkResetCycle(event);
+    }
+
+    private static void checkResetCycle(TickEvent.PlayerTickEvent event){
+        if (ServerConfig.TIME_TO_RESET_NPCS.get() == 501) return;
+
+        Player player = event.player;
+
         if ((player.tickCount + player.getId()) % 20 == 0){
             PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
 
             long currentCycle = player.level().getGameTime() / (ServerConfig.TIME_TO_RESET_NPCS.get() * 24_000);
 
-            if (currentCycle > playerQuestData.getLastResetCycle()){
-                playerQuestData.clearLockedNpc();
+            if (playerQuestData.getLastResetCycle() < currentCycle){
+                playerQuestData.clearChain();
+                playerQuestData.unlockAllNpc();
+                playerQuestData.reset(false);
                 playerQuestData.setLastResetCycle(currentCycle);
 
                 TheQuestForge.LOGGER.debug("NPC reset!");

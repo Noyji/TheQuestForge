@@ -15,10 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class QuestTemplateManager extends SimpleJsonResourceReloadListener {
 
@@ -60,6 +57,15 @@ public class QuestTemplateManager extends SimpleJsonResourceReloadListener {
             }
         });
         TheQuestForge.LOGGER.debug(QUEST_TEMPLATES_MARKER, "Total quest templates loaded: {}", templateMap.size());
+    }
+
+    public Set<String> getTemplatesIds(){
+        Set<String> result = new HashSet<>();
+
+        for (ResourceLocation id : templateMap.keySet()){
+            result.add(id.toString());
+        }
+        return result;
     }
 
     public QuestTemplate getRandomQuestTemplate(String pool){

@@ -30,6 +30,10 @@ public class DialogStage {
         dialogProgress.remove(uuid);
     }
 
+    public void clear(){
+        dialogProgress.clear();
+    }
+
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
         ListTag dialogList = new ListTag();

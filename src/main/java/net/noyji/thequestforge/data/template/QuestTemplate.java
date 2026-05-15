@@ -16,6 +16,7 @@ import net.noyji.thequestforge.api.quest.registry.RequirementRegistry;
 import net.noyji.thequestforge.common.util.QuestGenerator;
 import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.quest.entity.components.QuestDialog;
+import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import net.noyji.thequestforge.data.template.components.Range;
 import net.noyji.thequestforge.data.template.components.TemplateDialog;
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +30,7 @@ public class QuestTemplate implements IWeighable {
     private String thisId;
     private String pool;
     private int weight;
+    private QuestType type;
     @SerializedName("time_limit")
     private Range timeLimit;
     private List<String> requirement;
@@ -42,7 +44,12 @@ public class QuestTemplate implements IWeighable {
     @SerializedName("max_reward")
     private int maxReward;
     private Map<String, TemplateDialog> dialogs;
+    @SerializedName("next_quest")
     private String nextQuest;
+
+    public QuestType getType(){
+        return (type == null) ? QuestType.LOCAL : type;
+    }
 
     @Nullable
     public ResourceLocation getNextQuest(){
@@ -172,6 +179,10 @@ public class QuestTemplate implements IWeighable {
         nbt.putString("group", this.group != null ? this.group : "");
         nbt.putString("nextQuest", this.nextQuest != null ? this.nextQuest : "");
 
+        if (this.type != null) {
+            nbt.putString("QuestType", this.type.name());
+        }
+
         if (this.timeLimit != null) nbt.put("timeLimit", this.timeLimit.serializeNBT());
         if (this.taskCount != null) nbt.put("taskCount", this.taskCount.serializeNBT());
 
@@ -233,6 +244,16 @@ public class QuestTemplate implements IWeighable {
         this.group = nbt.getString("group");
         this.nextQuest = nbt.getString("nextQuest");
         this.maxReward = nbt.getInt("rewardCount");
+
+        if (nbt.contains("QuestType")) {
+            try {
+                this.type = QuestType.valueOf(nbt.getString("QuestType"));
+            } catch (IllegalArgumentException e) {
+                this.type = QuestType.LOCAL;
+            }
+        } else {
+            this.type = QuestType.LOCAL;
+        }
 
         if (nbt.contains("timeLimit", Tag.TAG_COMPOUND)) {
             this.timeLimit = new Range();

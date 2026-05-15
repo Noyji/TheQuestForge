@@ -44,7 +44,7 @@ public class ServerConfig {
         SPAWN_QUEST_GIVER_CHANCE = BUILDER.defineInRange("quest_giver_chance", 80, 30, 100);
         ATTEMPTS_TO_CREATE_QUEST = BUILDER.defineInRange("attempts_to_create", 50, 10, 300);
         MAX_REMEMBERED_NPCS = BUILDER.defineInRange("max_remembered_npcs", 128, 2, 1024);
-        TIME_TO_RESET_NPCS = BUILDER.defineInRange("time_to_reset_npcs", 40, 1, 500);
+        TIME_TO_RESET_NPCS = BUILDER.defineInRange("time_to_reset_npcs", 40, 1, 501);
 
         UNCOMMON_QUEST_CHANCE = BUILDER.defineInRange("uncommon_quest_rarity", 30, 0, 100);
         RARE_QUEST_CHANCE = BUILDER.defineInRange("rare_quest_rarity", 25, 0, 100);

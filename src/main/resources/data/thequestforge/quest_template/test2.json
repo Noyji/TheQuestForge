@@ -1,10 +1,7 @@
 {
   "pool": "none",
+  "type": "STORY",
   "weight": 75,
-  "time_limit": {
-    "max": 7,
-    "min": 6
-  },
   "requirement": [],
   "name": {
     "en_us": [

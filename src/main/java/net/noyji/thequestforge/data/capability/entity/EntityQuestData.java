@@ -1,22 +1,53 @@
 package net.noyji.thequestforge.data.capability.entity;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.noyji.thequestforge.data.quest.entity.Quest;
 
-public class EntityQuestData {
-    //TODO: ахитектура не годится для квестовой цепочки!!
+import java.util.ArrayList;
+import java.util.List;
 
-    private Quest entityQuest = null;
+public class EntityQuestData {
+    private List<Quest> entityQuests = new ArrayList<>();
     private boolean isQuestGiver = false;
     private boolean isCheck = false;
+    private long lastResetCycle = 0;
+
+
+    public boolean isEmpty(){
+        return ((entityQuests == null || entityQuests.isEmpty()) && !isQuestGiver && !isCheck && lastResetCycle == 0);
+    }
+
+    public void resetQuest(){
+        entityQuests.clear();
+    }
+
+    public long getLastResetCycle() {
+        return lastResetCycle;
+    }
+
+    public void setLastResetCycle(long lastResetCycle) {
+        this.lastResetCycle = lastResetCycle;
+    }
 
     public boolean hasQuest(){
-        return (entityQuest != null);
+        return (entityQuests != null && !entityQuests.isEmpty());
     }
 
     public Quest getQuest(){
-        return entityQuest;
+        if (entityQuests == null || entityQuests.isEmpty()) return null;
+        return entityQuests.get(0);
+    }
+
+    public Quest getQuest(int index){
+        if (entityQuests == null || entityQuests.isEmpty()) return null;
+
+        if (index < 0 || index >= entityQuests.size()) {
+            return null;
+        }
+
+        return entityQuests.get(index);
     }
 
     public boolean isQuestGiver(){
@@ -35,29 +66,43 @@ public class EntityQuestData {
         isCheck = true;
     }
 
+    public int getChainLength(){
+        return entityQuests.size();
+    }
+
     public void addQuest(Quest quest){
         if (quest == null) return;
-        entityQuest = quest;
+        entityQuests.add(quest);
     }
 
     public CompoundTag serializeNBT() {
         CompoundTag save = new CompoundTag();
-        if (entityQuest != null) save.put("quest", entityQuest.serializeNBT());
+
+        ListTag questListTag = new ListTag();
+        for (Quest quest : entityQuests) {
+            questListTag.add(quest.serializeNBT());
+        }
+        save.put("quests", questListTag);
+
         save.putBoolean("is_quest_giver", isQuestGiver);
         save.putBoolean("is_check", isCheck);
+        save.putLong("LastResetCycle", lastResetCycle);
 
         return save;
     }
 
     public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("quest", Tag.TAG_COMPOUND)){
-            Quest quest = new Quest();
-            quest.deserializeNBT(nbt.getCompound("quest"));
-            entityQuest = quest;
-        } else {
-            entityQuest = null;
+        this.entityQuests.clear();
+        if (nbt.contains("quests", Tag.TAG_LIST)){
+            ListTag questListTag = nbt.getList("quests", Tag.TAG_COMPOUND);
+            for (int i = 0; i < questListTag.size(); i++) {
+                Quest quest = new Quest();
+                quest.deserializeNBT(questListTag.getCompound(i));
+                this.entityQuests.add(quest);
+            }
         }
         isQuestGiver = nbt.getBoolean("is_quest_giver");
         isCheck = nbt.getBoolean("is_check");
+        lastResetCycle = nbt.getLong("LastResetCycle");
     }
 }

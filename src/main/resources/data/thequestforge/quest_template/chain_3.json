@@ -1,0 +1,81 @@
+{
+  "pool": "none",
+  "weight": 0,
+  "time_limit": {
+    "max": 120,
+    "min": 60
+  },
+  "requirement": [],
+  "name": {
+    "en_us": ["Chain Debug: Part 3 (Final)"],
+    "ru_ru": ["Цепочка дебаг: Часть 3 (Финал)"]
+  },
+  "description": {
+    "en_us": ["The final quest in the chain. Finish strong!"],
+    "ru_ru": ["Финальный квест в цепочке. Заверши его достойно!"]
+  },
+  "requirement_items": [],
+  "group": "thequestforge:test",
+  "task_count": {
+    "max": 2,
+    "min": 1
+  },
+  "max_reward": 3,
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": ["This is the final task. Complete it and the chain will be done."],
+        "ru_ru": ["Это последнее задание. Выполни его и цепочка будет завершена."]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Accept"],
+            "ru_ru": ["Принять"]
+          },
+          "toGo": "complete",
+          "actions": ["accept", "save"]
+        },
+        {
+          "text": {
+            "en_us": ["Decline"],
+            "ru_ru": ["Отказаться"]
+          },
+          "toGo": "exit",
+          "actions": ["close"]
+        }
+      ]
+    },
+    "complete": {
+      "text": {
+        "en_us": ["Outstanding! You have completed the entire chain. The debug test is a success!"],
+        "ru_ru": ["Превосходно! Ты завершил всю цепочку. Тест отладки прошёл успешно!"]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Collect reward"],
+            "ru_ru": ["Забрать награду"]
+          },
+          "toGo": "exit",
+          "actions": ["complete", "save"]
+        }
+      ]
+    },
+    "exit": {
+      "text": {
+        "en_us": ["Farewell."],
+        "ru_ru": ["Прощай."]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Close"],
+            "ru_ru": ["Закрыть"]
+          },
+          "actions": ["close"]
+        }
+      ]
+    }
+  }
+}

@@ -90,6 +90,17 @@ public class ClientHandlerNetwork {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
 
+        PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
+        PlayerQuest playerQuest = playerQuestData.getQuest(questId);
+        if (playerQuest == null) return;
+
+        ResourceLocation sourceUuid = playerQuest.getSourceTemplate();
+
+        QuestTemplate template = QuestTemplateManager.INSTANCE.getQuestTemplate(sourceUuid);
+        if (template.getNextQuest() == null) {
+            playerQuestData.lockNpc(questId);
+        }
+
         CapabilityUtil.getPlayerQuestData(player).removeQuest(questId);
     }
 
@@ -120,7 +131,21 @@ public class ClientHandlerNetwork {
         Minecraft.getInstance().getToasts().addToast(new QuestToast(questName));
     }
 
+    public static void addChainProgress(UUID questId){
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        CapabilityUtil.getPlayerQuestData(player).advanceChainProgress(questId);
+    }
+
     public static void closeGui(){
         Minecraft.getInstance().setScreen(null);
+    }
+
+    public static void unlockNpc(UUID entityId){
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        CapabilityUtil.getPlayerQuestData(player).unlockNpc(entityId);
     }
 }

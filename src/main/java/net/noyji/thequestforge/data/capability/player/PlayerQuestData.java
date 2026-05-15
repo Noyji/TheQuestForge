@@ -10,7 +10,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.data.quest.player.PlayerQuest;
+import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.s2c.RemovePlayerQuestS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncSpecificPlayerQuestS2CPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,12 +21,91 @@ import java.util.*;
 
 public class PlayerQuestData {
     private final Map<UUID, PlayerQuest> playerQuestMap = new HashMap<>();
+    private final Map<UUID, Integer> npcChainProgress = new HashMap<>();
     // --- ResourceLocation(thequestforge:collect) --- ResourceLocation(minecraft:pig) --- questId
     private final Map<ResourceLocation, Map<ResourceLocation, List<UUID>>> questCatalog = new HashMap<>();
     private final Set<UUID> completedNpcQuests = new HashSet<>();
 
     private final DialogStage dialogStage = new DialogStage();
     private long lastResetCycle = 0;
+    private long lastDayProcessed = -1;
+
+    public void advanceChainProgress(UUID npcId) {
+        int current = getChainProgress(npcId);
+        npcChainProgress.put(npcId, current + 1);
+    }
+
+    public void updateQuestDays(Player player) {
+        long currentTotalDays = player.level().getDayTime() / 24000L;
+
+        if (currentTotalDays > lastDayProcessed) {
+            lastDayProcessed = currentTotalDays;
+            Set<UUID> questToRemove = new HashSet<>();
+
+            TheQuestForge.LOGGER.info("Наступил новый день ({}). Обновляем лимиты времени у квестов!", currentTotalDays);
+
+            for (PlayerQuest quest : playerQuestMap.values()) {
+                int currentDays = quest.getTimeLimit();
+
+                if (currentDays == -2) continue;
+
+                if (currentDays > -1) {
+                    quest.setTimeLimit(currentDays - 1);
+                    ModNetworking.sendToPlayer(new SyncSpecificPlayerQuestS2CPacket(quest.getId(), quest.serializeNBT()), player);
+                }
+
+                if (quest.getTimeLimit() == -1) {
+                   questToRemove.add(quest.getId());
+                }
+            }
+
+            for (UUID uuid : questToRemove){
+                removeQuest(uuid);
+                lockNpc(uuid);
+                ModNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(uuid), player);
+            }
+        }
+    }
+
+    public int getChainProgress(UUID uuid){
+        return npcChainProgress.getOrDefault(uuid, 0);
+    }
+
+    public void reset(boolean all) {
+        if (all){
+            playerQuestMap.clear();
+            questCatalog.clear();
+            completedNpcQuests.clear();
+            dialogStage.clear();
+        } else {
+            List<UUID> uuidsToRemove = new ArrayList<>();
+
+            for (Map.Entry<UUID, PlayerQuest> entry : playerQuestMap.entrySet()) {
+                if (entry.getValue().getType() != QuestType.STORY) {
+                    uuidsToRemove.add(entry.getKey());
+                }
+            }
+
+            if (uuidsToRemove.isEmpty()) return;
+
+            for (UUID uuid : uuidsToRemove) {
+                playerQuestMap.remove(uuid);
+            }
+
+            for (Map<ResourceLocation, List<UUID>> innerMap : questCatalog.values()) {
+
+                for (List<UUID> uuidList : innerMap.values()) {
+                    uuidList.removeAll(uuidsToRemove);
+                }
+                innerMap.values().removeIf(List::isEmpty);
+            }
+            questCatalog.values().removeIf(Map::isEmpty);
+        }
+    }
+
+    public void clearChain(){
+        npcChainProgress.clear();
+    }
 
     public long getLastResetCycle() {
         return lastResetCycle;
@@ -42,8 +123,12 @@ public class PlayerQuestData {
         completedNpcQuests.add(uuid);
     }
 
-    public void clearLockedNpc(){
+    public void unlockAllNpc(){
         completedNpcQuests.clear();
+    }
+
+    public void unlockNpc(@NotNull UUID uuid){
+        completedNpcQuests.remove(uuid);
     }
 
     //TODO:
@@ -212,6 +297,7 @@ public class PlayerQuestData {
         CompoundTag save = new CompoundTag();
 
         save.putLong("LastResetCycle", lastResetCycle);
+        save.putLong("LastDayProcessed", lastDayProcessed);
 
         CompoundTag playerQuestMapTag = new CompoundTag();
         for (Map.Entry<UUID, PlayerQuest> entry : this.playerQuestMap.entrySet()) {
@@ -221,20 +307,17 @@ public class PlayerQuestData {
 
         CompoundTag catalogTag = new CompoundTag();
         for (Map.Entry<ResourceLocation, Map<ResourceLocation, List<UUID>>> outerEntry : this.questCatalog.entrySet()) {
-
             CompoundTag innerMapTag = new CompoundTag();
             for (Map.Entry<ResourceLocation, List<UUID>> innerEntry : outerEntry.getValue().entrySet()) {
-
                 ListTag uuidListTag = new ListTag();
                 for (UUID uuid : innerEntry.getValue()) {
                     uuidListTag.add(StringTag.valueOf(uuid.toString()));
                 }
-
                 innerMapTag.put(innerEntry.getKey().toString(), uuidListTag);
             }
-
             catalogTag.put(outerEntry.getKey().toString(), innerMapTag);
         }
+        save.put("quest_catalog", catalogTag);
 
         ListTag lockList = new ListTag();
         for (UUID uuid : completedNpcQuests) {
@@ -242,7 +325,11 @@ public class PlayerQuestData {
         }
         save.put("LockedNpcs", lockList);
 
-        save.put("quest_catalog", catalogTag);
+        CompoundTag chainProgressTag = new CompoundTag();
+        for (Map.Entry<UUID, Integer> entry : this.npcChainProgress.entrySet()) {
+            chainProgressTag.putInt(entry.getKey().toString(), entry.getValue());
+        }
+        save.put("npc_chain_progress", chainProgressTag);
 
         save.put("dialog_stage", dialogStage.serializeNBT());
 
@@ -252,18 +339,19 @@ public class PlayerQuestData {
     public void deserializeNBT(@NotNull CompoundTag nbt) {
         this.playerQuestMap.clear();
         this.questCatalog.clear();
+        this.completedNpcQuests.clear();
+        this.npcChainProgress.clear();
 
         this.lastResetCycle = nbt.getLong("LastResetCycle");
+        this.lastDayProcessed = nbt.getLong("LastDayProcessed");
 
         if (nbt.contains("player_quest_map", Tag.TAG_COMPOUND)) {
             CompoundTag playerQuestMapTag = nbt.getCompound("player_quest_map");
-
             for (String key : playerQuestMapTag.getAllKeys()) {
                 try {
                     UUID uuid = UUID.fromString(key);
                     PlayerQuest quest = new PlayerQuest();
                     quest.deserializeNBT(playerQuestMapTag.getCompound(key));
-
                     this.playerQuestMap.put(uuid, quest);
                 } catch (IllegalArgumentException e) {
                     //Skip
@@ -273,7 +361,6 @@ public class PlayerQuestData {
 
         if (nbt.contains("quest_catalog", Tag.TAG_COMPOUND)) {
             CompoundTag catalogTag = nbt.getCompound("quest_catalog");
-
             for (String outerKey : catalogTag.getAllKeys()) {
                 ResourceLocation outerLocation = ResourceLocation.parse(outerKey);
                 CompoundTag innerMapTag = catalogTag.getCompound(outerKey);
@@ -298,16 +385,28 @@ public class PlayerQuestData {
             }
         }
 
-        if (nbt.contains("dialog_stage", Tag.TAG_COMPOUND)) {
-            dialogStage.deserializeNBT(nbt.getCompound("dialog_stage"));
-        }
-
-        this.completedNpcQuests.clear();
         if (nbt.contains("LockedNpcs", Tag.TAG_LIST)) {
             ListTag lockList = nbt.getList("LockedNpcs", Tag.TAG_STRING);
             for (int i = 0; i < lockList.size(); i++) {
                 completedNpcQuests.add(UUID.fromString(lockList.getString(i)));
             }
+        }
+
+        if (nbt.contains("npc_chain_progress", Tag.TAG_COMPOUND)) {
+            CompoundTag chainProgressTag = nbt.getCompound("npc_chain_progress");
+            for (String key : chainProgressTag.getAllKeys()) {
+                try {
+                    UUID uuid = UUID.fromString(key);
+                    int progress = chainProgressTag.getInt(key);
+                    this.npcChainProgress.put(uuid, progress);
+                } catch (IllegalArgumentException e) {
+                    //Skip
+                }
+            }
+        }
+
+        if (nbt.contains("dialog_stage", Tag.TAG_COMPOUND)) {
+            dialogStage.deserializeNBT(nbt.getCompound("dialog_stage"));
         }
     }
 

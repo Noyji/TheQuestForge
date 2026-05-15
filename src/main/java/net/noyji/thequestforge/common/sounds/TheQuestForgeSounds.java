@@ -1,4 +1,4 @@
-package net.noyji.thequestforge.common.init;
+package net.noyji.thequestforge.common.sounds;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;

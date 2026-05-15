@@ -114,6 +114,22 @@ public class ModNetworking {
                 ClosePlayerGuiS2CPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT)
         );
+        CHANNEL.registerMessage(
+                id(),
+                ChainProgressUpdateS2CPacket.class,
+                ChainProgressUpdateS2CPacket::encode,
+                ChainProgressUpdateS2CPacket::decode,
+                ChainProgressUpdateS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                UnlockNpcS2CPacket.class,
+                UnlockNpcS2CPacket::encode,
+                UnlockNpcS2CPacket::decode,
+                UnlockNpcS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
 
         //C2S
         CHANNEL.registerMessage(
@@ -154,21 +170,25 @@ public class ModNetworking {
         TheQuestForge.LOGGER.debug("Sync! {}", string);
     }
 
-    public static void sendToPlayer(Object message, Player player){
+    public static <MSG> void sendToPlayer(MSG message, Player player){
         if (player instanceof ServerPlayer serverPlayer){
             sendToPlayer(message, serverPlayer);
         }
     }
 
-    public static void sendToPlayer(Object message, ServerPlayer serverPlayer){
+    public static <MSG> void sendToPlayer(MSG message, ServerPlayer serverPlayer){
         CHANNEL.send(PacketDistributor.PLAYER.with(() -> serverPlayer), message);
     }
 
-    public static void sendToServer(Object message){
+    public static <MSG> void sendToServer(MSG message){
         CHANNEL.sendToServer(message);
     }
 
-    public static void sendToTracking(Object message, Entity entity){
+    public static <MSG> void sendToAll(MSG message) {
+        CHANNEL.send(PacketDistributor.ALL.noArg(), message);
+    }
+
+    public static <MSG> void sendToTrackingEntity(MSG message, Entity entity){
         CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), message);
     }
 }

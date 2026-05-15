@@ -1,7 +1,6 @@
 package net.noyji.thequestforge.client.gui.entity;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -12,7 +11,7 @@ import net.noyji.thequestforge.client.gui.components.DialogManager;
 import net.noyji.thequestforge.client.gui.components.DialogOptionSelector;
 import net.noyji.thequestforge.client.gui.components.TypewriterTextWidget;
 import net.noyji.thequestforge.client.render.DialogueCameraManager;
-import net.noyji.thequestforge.common.init.TheQuestForgeSounds;
+import net.noyji.thequestforge.common.sounds.TheQuestForgeSounds;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -75,7 +74,7 @@ public class QuestGiverGUI extends Screen {
 
     private void createTypewriterTextWidget(){
         int dialogWidth = Math.min(this.width - 80, 318);
-        int dialogX = (this.width ) / 2 - 205;
+        int dialogX = (this.width ) / 2 - 210;
         int dialogY = this.height - 100;
 
         if (typewriterTextWidget == null) {

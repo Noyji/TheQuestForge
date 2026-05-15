@@ -28,12 +28,14 @@ public class DialogManager {
 
     private final Runnable onCloseScreen;
 
+    private final Player player;
     private final String languageKey;
     private final int entityId;
     private String currentDialogKey;
 
     public DialogManager(Entity npcEntity, TypewriterTextWidget textWidget, DialogOptionSelector optionSelector, Runnable onCloseScreen) {
-        this.quest = getQuest(npcEntity);
+        this.player = Minecraft.getInstance().player;
+        this.quest = getQuest(npcEntity, player);
         this.entityId = npcEntity.getId();
         this.template = QuestTemplateManager.INSTANCE.getQuestTemplate(quest.getSourceTemplate());
 
@@ -52,7 +54,6 @@ public class DialogManager {
 
     private void setupOptionAction() {
         this.optionSelector.setOnSelectAction((TemplateDialogButton selectedButton) -> {
-            Player player = Minecraft.getInstance().player;
             if (player == null) return;
 
             if (selectedButton.hasAction("thequestforge:close") || selectedButton.hasAction("close")) {
@@ -113,13 +114,18 @@ public class DialogManager {
         this.optionSelector.setOptions(templateDialog.getButtons(), questDialog.getButtonIndices());
     }
 
-    private Quest getQuest(Entity entity){
-        if (entity == null) return null;
-        return CapabilityUtil.getEntityQuestData(entity).getQuest();
+    private Quest getQuest(Entity entity, Player player){
+        if (entity == null || player == null) return null;
+
+        if (CapabilityUtil.getEntityQuestData(entity).getChainLength() == 1){
+            return CapabilityUtil.getEntityQuestData(entity).getQuest();
+        }
+
+        int index = CapabilityUtil.getPlayerQuestData(player).getChainProgress(entity.getUUID());
+        return CapabilityUtil.getEntityQuestData(entity).getQuest(index);
     }
 
     private String getDialogKey(Entity entity){
-        Player player = Minecraft.getInstance().player;
         if (player == null) return "start";
         UUID questId = entity.getUUID();
 

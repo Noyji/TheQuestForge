@@ -1,0 +1,82 @@
+{
+  "pool": "none",
+  "weight": 100,
+  "time_limit": {
+    "max": 120,
+    "min": 60
+  },
+  "requirement": [],
+  "name": {
+    "en_us": ["Chain Debug: Part 1"],
+    "ru_ru": ["Цепочка дебаг: Часть 1"]
+  },
+  "description": {
+    "en_us": ["The first quest in a chain. Complete it to unlock the next one."],
+    "ru_ru": ["Первый квест в цепочке. Выполни его, чтобы открыть следующий."]
+  },
+  "requirement_items": [],
+  "group": "thequestforge:test",
+  "task_count": {
+    "max": 2,
+    "min": 1
+  },
+  "max_reward": 2,
+  "next_quest": "thequestforge:chain_2",
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": ["I have a task for you. It is the first of three. Are you ready?"],
+        "ru_ru": ["У меня есть задание для тебя. Это первое из трёх. Готов?"]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Accept"],
+            "ru_ru": ["Принять"]
+          },
+          "toGo": "complete",
+          "actions": ["accept", "save"]
+        },
+        {
+          "text": {
+            "en_us": ["Decline"],
+            "ru_ru": ["Отказаться"]
+          },
+          "toGo": "exit",
+          "actions": ["close"]
+        }
+      ]
+    },
+    "complete": {
+      "text": {
+        "en_us": ["Well done! You have completed the first part. The next task awaits."],
+        "ru_ru": ["Отлично! Ты выполнил первую часть. Следующее задание ждёт тебя."]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Collect reward"],
+            "ru_ru": ["Забрать награду"]
+          },
+          "toGo": "exit",
+          "actions": ["complete", "next_quest"]
+        }
+      ]
+    },
+    "exit": {
+      "text": {
+        "en_us": ["Farewell."],
+        "ru_ru": ["Прощай."]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Close"],
+            "ru_ru": ["Закрыть"]
+          },
+          "actions": ["close"]
+        }
+      ]
+    }
+  }
+}

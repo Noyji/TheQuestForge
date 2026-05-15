@@ -1,0 +1,82 @@
+{
+  "pool": "none",
+  "weight": 0,
+  "time_limit": {
+    "max": 120,
+    "min": 60
+  },
+  "requirement": [],
+  "name": {
+    "en_us": ["Chain Debug: Part 2"],
+    "ru_ru": ["Цепочка дебаг: Часть 2"]
+  },
+  "description": {
+    "en_us": ["The second quest in the chain. You are halfway there!"],
+    "ru_ru": ["Второй квест в цепочке. Ты уже на полпути!"]
+  },
+  "requirement_items": [],
+  "group": "thequestforge:test",
+  "task_count": {
+    "max": 2,
+    "min": 1
+  },
+  "max_reward": 2,
+  "next_quest": "thequestforge:chain_3",
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": ["You made it to part two. Keep going — one more after this."],
+        "ru_ru": ["Ты добрался до второй части. Продолжай — после этого ещё одна."]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Accept"],
+            "ru_ru": ["Принять"]
+          },
+          "toGo": "complete",
+          "actions": ["accept", "save"]
+        },
+        {
+          "text": {
+            "en_us": ["Decline"],
+            "ru_ru": ["Отказаться"]
+          },
+          "toGo": "exit",
+          "actions": ["close"]
+        }
+      ]
+    },
+    "complete": {
+      "text": {
+        "en_us": ["Good work! Two down, one to go. The final task is ready for you."],
+        "ru_ru": ["Хорошая работа! Два выполнено, осталось одно. Финальное задание готово."]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Collect reward"],
+            "ru_ru": ["Забрать награду"]
+          },
+          "toGo": "start",
+          "actions": ["complete", "save", "next_quest"]
+        }
+      ]
+    },
+    "exit": {
+      "text": {
+        "en_us": ["Farewell."],
+        "ru_ru": ["Прощай."]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": ["Close"],
+            "ru_ru": ["Закрыть"]
+          },
+          "actions": ["close"]
+        }
+      ]
+    }
+  }
+}

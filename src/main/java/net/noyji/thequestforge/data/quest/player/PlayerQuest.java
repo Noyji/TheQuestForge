@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Event;
@@ -12,7 +11,6 @@ import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
 import net.noyji.thequestforge.api.quest.task.TaskType;
 import net.noyji.thequestforge.api.quest.registry.TaskHandlerRegistry;
-import net.noyji.thequestforge.client.gui.toast.QuestToast;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import net.noyji.thequestforge.network.ModNetworking;
@@ -56,6 +54,10 @@ public class PlayerQuest {
         this.rewards = rewards;
     }
 
+    public QuestType getType() {
+        return type;
+    }
+
     public String getSpareDialogKey() {
         return (spareDialogKey == null) ? "start" : spareDialogKey;
     }
@@ -94,6 +96,10 @@ public class PlayerQuest {
 
     public int getTimeLimit(){
         return timeLimit;
+    }
+
+    public void setTimeLimit(int timeLimit){
+        this.timeLimit = timeLimit;
     }
 
     public boolean updateTask(ResourceLocation taskTypeKey, ResourceLocation target, Event event, Player player){
