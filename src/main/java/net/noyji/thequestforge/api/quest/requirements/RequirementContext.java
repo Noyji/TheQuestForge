@@ -47,6 +47,10 @@ public class RequirementContext {
         }
     }
 
+    public boolean getBooleanValue(){
+        return Boolean.parseBoolean(value);
+    }
+
     public void setValue(String value) {
         this.value = value;
     }

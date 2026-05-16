@@ -1,8 +1,8 @@
 {
   "pool": "none",
   "type": "STORY",
-  "weight": 75,
-  "requirement": [],
+  "weight": 200,
+  "requirement": ["thequestforge:entity_is_not:minecraft:pig"],
   "name": {
     "en_us": [
       "Debug Quest: The Ancient Ruins",

@@ -4,6 +4,8 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.noyji.thequestforge.common.commands.command.ResetCommand;
+import net.noyji.thequestforge.common.commands.command.SpawnQuestGiverCommand;
 
 public class ModCommands {
 

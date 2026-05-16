@@ -9,8 +9,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import net.noyji.thequestforge.TheQuestForge;
-import net.noyji.thequestforge.api.quest.requirements.AbstractRequirement;
-import net.noyji.thequestforge.api.quest.requirements.EntityIsRequirement;
+import net.noyji.thequestforge.api.quest.requirements.*;
 
 import java.util.function.Supplier;
 
@@ -42,5 +41,22 @@ public class RequirementRegistry {
         return getRequirement(resourceLocation);
     }
 
+    public static void requirementsLogger(ResourceLocation resourceLocation, boolean returnValue){
+        TheQuestForge.LOGGER.debug("{} : {}", resourceLocation, returnValue);
+    }
+
     public static final RegistryObject<AbstractRequirement> ENTITY_IS = registerRequirement(new EntityIsRequirement());
+    public static final RegistryObject<AbstractRequirement> ENTITY_IS_NOT = registerRequirement(new EntityIsNotRequirement());
+    public static final RegistryObject<AbstractRequirement> ENTITY_TAG_IS = registerRequirement(new EntityTagIsRequirement());
+    public static final RegistryObject<AbstractRequirement> ENTITY_TAG_IS_NOT = registerRequirement(new EntityTagIsNotRequirement());
+    public static final RegistryObject<AbstractRequirement> IS_BABY = registerRequirement(new IsBabyRequirement());
+
+    public static final RegistryObject<AbstractRequirement> BIOME_IS = registerRequirement(new BiomeIsRequirement());
+    public static final RegistryObject<AbstractRequirement> BIOME_IS_NOT = registerRequirement(new BiomeIsNotRequirement());
+    public static final RegistryObject<AbstractRequirement> BIOME_TAG_IS = registerRequirement(new BiomeTagIsRequirement());
+    public static final RegistryObject<AbstractRequirement> BIOME_TAG_IS_NOT = registerRequirement(new BiomeTagIsNotRequirement());
+
+    public static final RegistryObject<AbstractRequirement> DIMENSION_IS = registerRequirement(new DimensionIsRequirement());
+    public static final RegistryObject<AbstractRequirement> DIMENSION_IS_NOT = registerRequirement(new DimensionIsNotRequirement());
+
 }

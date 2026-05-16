@@ -9,7 +9,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.noyji.thequestforge.api.quest.IWeighable;
 import net.noyji.thequestforge.common.util.Util;
-import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.template.components.Range;
 import org.jetbrains.annotations.Nullable;

@@ -9,10 +9,9 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.network.c2s.ActionHandlerC2SPacket;
-import net.noyji.thequestforge.network.c2s.RunFunctionsC2SPacket;
-import net.noyji.thequestforge.network.s2c.AddDialogStageS2CPacket;
 import net.noyji.thequestforge.network.c2s.InteractNpcC2SPacket;
 import net.noyji.thequestforge.network.c2s.RemovePlayerQuestC2SPacket;
+import net.noyji.thequestforge.network.c2s.RunFunctionsC2SPacket;
 import net.noyji.thequestforge.network.s2c.*;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package net.noyji.thequestforge.common.commands;
+package net.noyji.thequestforge.common.commands.command;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;

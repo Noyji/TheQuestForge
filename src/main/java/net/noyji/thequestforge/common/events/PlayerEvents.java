@@ -7,11 +7,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.noyji.thequestforge.TheQuestForge;
-import net.noyji.thequestforge.common.util.EntityQuestHandler;
 import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
@@ -25,15 +23,6 @@ import net.noyji.thequestforge.network.s2c.SyncQuestTemplateS2CPacket;
 
 @Mod.EventBusSubscriber
 public class PlayerEvents {
-    @SubscribeEvent
-    public static void onPlayerInteractEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (event.getLevel().isClientSide()) return;
-
-        Player player = event.getEntity();
-        Entity target = event.getTarget();
-
-        EntityQuestHandler.onEntityInteract(player, target);
-    }
 
     @SubscribeEvent
     public static void onPlayerStartTracking(PlayerEvent.StartTracking event) {

@@ -1,7 +1,6 @@
 package net.noyji.thequestforge.common.util;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
@@ -24,8 +23,6 @@ import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import net.noyji.thequestforge.network.ModNetworking;
 import net.noyji.thequestforge.network.s2c.*;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class EntityQuestHandler {
     private static final RandomSource RANDOM = RandomSource.create();

@@ -1,5 +1,5 @@
 {
-  "pool": "none",
+  "pool": "farmer",
   "weight": 100,
   "time_limit": {
     "max": 120,

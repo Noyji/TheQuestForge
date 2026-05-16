@@ -1,4 +1,4 @@
-package net.noyji.thequestforge.common.commands;
+package net.noyji.thequestforge.common.commands.command;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -12,13 +12,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.noyji.thequestforge.common.util.EntityQuestHandler;
 import net.noyji.thequestforge.common.util.QuestGenerator;
 import net.noyji.thequestforge.common.util.Util;
-import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.entity.EntityQuestData;
 import net.noyji.thequestforge.data.managers.QuestGiversManager;
