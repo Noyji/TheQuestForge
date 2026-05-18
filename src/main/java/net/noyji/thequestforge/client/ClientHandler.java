@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.event.InputEvent;
 import net.noyji.thequestforge.data.managers.QuestGiversManager;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.c2s.InteractNpcC2SPacket;
 
 public class ClientHandler {
@@ -20,7 +20,7 @@ public class ClientHandler {
 
             if (!QuestGiversManager.INSTANCE.thisQuestGiverOrVillager(target)) return;
 
-            ModNetworking.sendToServer(new InteractNpcC2SPacket(target.getId()));
+            TheQuestForgeNetworking.sendToServer(new InteractNpcC2SPacket(target.getId()));
         }
     }
 

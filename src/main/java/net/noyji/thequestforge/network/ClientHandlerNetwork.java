@@ -148,4 +148,14 @@ public class ClientHandlerNetwork {
 
         CapabilityUtil.getPlayerQuestData(player).unlockNpc(entityId);
     }
+
+    public static void syncGiverPos(UUID questId ,CompoundTag data){
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        PlayerQuest playerQuest = CapabilityUtil.getPlayerQuestData(player).getQuest(questId);
+        if (playerQuest == null) return;
+
+        playerQuest.setGiverDataAndSync(data);
+    }
 }

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.noyji.thequestforge.api.client.registry.PlaceholderRegistry;
 import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
@@ -14,7 +15,7 @@ import net.noyji.thequestforge.data.quest.player.PlayerQuest;
 import net.noyji.thequestforge.data.template.QuestTemplate;
 import net.noyji.thequestforge.data.template.components.TemplateDialog;
 import net.noyji.thequestforge.data.template.components.TemplateDialogButton;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.c2s.ActionHandlerC2SPacket;
 
 import java.util.UUID;
@@ -29,23 +30,26 @@ public class DialogManager {
     private final Runnable onCloseScreen;
 
     private final Player player;
+    private final Entity entity;
+
     private final String languageKey;
-    private final int entityId;
     private String currentDialogKey;
 
     public DialogManager(Entity npcEntity, TypewriterTextWidget textWidget, DialogOptionSelector optionSelector, Runnable onCloseScreen) {
         this.player = Minecraft.getInstance().player;
-        this.quest = getQuest(npcEntity, player);
-        this.entityId = npcEntity.getId();
-        this.template = QuestTemplateManager.INSTANCE.getQuestTemplate(quest.getSourceTemplate());
-
+        this.entity = npcEntity;
+        this.quest = getQuest();
+        this.template = getTemplate();
         this.currentDialogKey = getDialogKey(npcEntity);
-
         this.textWidget = textWidget;
+
         this.optionSelector = optionSelector;
+        this.optionSelector.setEntity(entity);
+        this.optionSelector.setPlayer(player);
+        this.optionSelector.setQuest(quest);
+
         this.onCloseScreen = onCloseScreen;
         this.languageKey = Minecraft.getInstance().options.languageCode;
-
 
         setupOptionAction();
 
@@ -87,7 +91,7 @@ public class DialogManager {
             }
 
             if (transition){
-                ModNetworking.sendToServer(new ActionHandlerC2SPacket(quest.getSourceTemplate().toString(), currentDialogKey, optionSelector.getSelectedIndex(), entityId));
+                TheQuestForgeNetworking.sendToServer(new ActionHandlerC2SPacket(quest.getSourceTemplate().toString(), currentDialogKey, optionSelector.getSelectedIndex(), entity.getId()));
             }
 
             if (toGo != null && !toGo.isEmpty()) {
@@ -108,13 +112,15 @@ public class DialogManager {
         if (questDialog == null) return;
 
         String dialogText = templateDialog.getTranslateText(languageKey, questDialog.getTextIndex());
+        dialogText = dialogText.replace('&', '\u00A7');
+        dialogText = PlaceholderRegistry.parse(dialogText, player, entity, quest);
 
-        this.textWidget.setText(dialogText.replace('&', '\u00A7'));
+        this.textWidget.setText(dialogText);
 
         this.optionSelector.setOptions(templateDialog.getButtons(), questDialog.getButtonIndices());
     }
 
-    private Quest getQuest(Entity entity, Player player){
+    private Quest getQuest(){
         if (entity == null || player == null) return null;
 
         if (CapabilityUtil.getEntityQuestData(entity).getChainLength() == 1){
@@ -136,5 +142,10 @@ public class DialogManager {
         if (key == null) key = playerQuestData.getSpareDialogStage(questId);
 
         return key;
+    }
+
+    private QuestTemplate getTemplate(){
+        if (quest == null) return null;
+        return QuestTemplateManager.INSTANCE.getQuestTemplate(quest.getSourceTemplate());
     }
 }

@@ -9,6 +9,10 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.noyji.thequestforge.api.client.registry.PlaceholderRegistry;
+import net.noyji.thequestforge.data.quest.entity.Quest;
 import net.noyji.thequestforge.data.template.components.TemplateDialogButton;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
@@ -42,6 +46,10 @@ public class DialogOptionSelector extends AbstractWidget {
     private int colorInactive = 0x888888;
     private String languageKey;
 
+    private Player player;
+    private Entity entity;
+    private Quest quest;
+
     private Runnable onSelectSound = null;
     private Consumer<TemplateDialogButton> onSelectAction = null;
 
@@ -53,6 +61,18 @@ public class DialogOptionSelector extends AbstractWidget {
 
     public static Builder builder(int x, int y, int width, int height) {
         return new Builder(x, y, width, height);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    public void setQuest(Quest quest) {
+        this.quest = quest;
     }
 
     public int getSelectedIndex(){
@@ -108,7 +128,9 @@ public class DialogOptionSelector extends AbstractWidget {
         for (int i = 0; i < options.size(); i++) {
             int currentTextIndex = (textIndices.size() > i) ? textIndices.get(i) : 0;
             String rawText = options.get(i).getTranslateText(languageKey, currentTextIndex);
-            Component textComp = Component.literal(rawText.replace('&', '\u00A7'));
+            rawText = rawText.replace('&', '\u00A7');
+            rawText = PlaceholderRegistry.parse(rawText, player, entity, quest);
+            Component textComp = Component.literal(rawText);
 
             List<FormattedCharSequence> lines = font.split(textComp, maxWidth);
             splitLines.add(lines);

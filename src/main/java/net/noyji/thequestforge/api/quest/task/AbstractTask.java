@@ -27,6 +27,8 @@ public abstract class AbstractTask<T extends Event> {
 
     public abstract void inComplete(Player player);
 
+    public abstract String getTargetName();
+
     public abstract void serializeNBT(CompoundTag nbt);
 
     public abstract void deserializeNBT(CompoundTag nbt);

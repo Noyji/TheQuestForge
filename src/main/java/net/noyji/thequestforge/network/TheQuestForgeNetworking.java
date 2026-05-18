@@ -8,15 +8,12 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.noyji.thequestforge.TheQuestForge;
-import net.noyji.thequestforge.network.c2s.ActionHandlerC2SPacket;
-import net.noyji.thequestforge.network.c2s.InteractNpcC2SPacket;
-import net.noyji.thequestforge.network.c2s.RemovePlayerQuestC2SPacket;
-import net.noyji.thequestforge.network.c2s.RunFunctionsC2SPacket;
+import net.noyji.thequestforge.network.c2s.*;
 import net.noyji.thequestforge.network.s2c.*;
 
 import java.util.Optional;
 
-public class ModNetworking {
+public class TheQuestForgeNetworking {
     private static final String PROTOCOL_VERSION = "1";
     private static int packetId = 0;
 
@@ -129,6 +126,14 @@ public class ModNetworking {
                 UnlockNpcS2CPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT)
         );
+        CHANNEL.registerMessage(
+                id(),
+                SyncGiverPosS2CPacket.class,
+                SyncGiverPosS2CPacket::encode,
+                SyncGiverPosS2CPacket::decode,
+                SyncGiverPosS2CPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+        );
 
         //C2S
         CHANNEL.registerMessage(
@@ -161,6 +166,14 @@ public class ModNetworking {
                 RunFunctionsC2SPacket::encode,
                 RunFunctionsC2SPacket::decode,
                 RunFunctionsC2SPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+        );
+        CHANNEL.registerMessage(
+                id(),
+                SetTargetCompassC2SPacket.class,
+                SetTargetCompassC2SPacket::encode,
+                SetTargetCompassC2SPacket::decode,
+                SetTargetCompassC2SPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER)
         );
     }

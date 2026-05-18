@@ -15,7 +15,7 @@ import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.managers.QuestTemplateManager;
 import net.noyji.thequestforge.data.quest.player.PlayerQuest;
 import net.noyji.thequestforge.data.template.QuestTemplate;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.RemovePlayerQuestS2CPacket;
 
 public class QuestCompleteAction extends AbstractAction{
@@ -35,7 +35,7 @@ public class QuestCompleteAction extends AbstractAction{
             }
             playerQuestData.removeQuest(quest.getId());
 
-            ModNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(quest.getId()), serverPlayer);
+            TheQuestForgeNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(quest.getId()), serverPlayer);
 
             for (ItemStack targetStack : quest.getRewards()){
                ItemHandlerHelper.giveItemToPlayer(player, targetStack);

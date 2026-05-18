@@ -18,6 +18,7 @@ import net.noyji.thequestforge.data.managers.QuestGroupManager;
 import net.noyji.thequestforge.data.managers.QuestTemplateManager;
 import net.noyji.thequestforge.data.quest.entity.Quest;
 import net.noyji.thequestforge.data.quest.entity.components.QuestDialog;
+import net.noyji.thequestforge.data.quest.player.components.GiverData;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import net.noyji.thequestforge.data.template.QuestTemplate;
@@ -176,10 +177,15 @@ public class QuestGenerator {
         int xp = group.getXp(RANDOM);
         int currency = group.getCurrencyReward(RANDOM);
 
+        GiverData giverData = new GiverData();
+        giverData.setGiverPos(entity.getOnPos());
+        giverData.setDimension(entity.level().dimension());
+        giverData.setEntityId(entity.getId());
+
         TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Quest created: {}, source template: {}", questId, sourceTemplate);
 
         Quest quest = new Quest(sourceTemplate, questId, timeLimit, type, rarity, nameIndex,
-                descriptionIndex, xp, currency, false, tasks, rewards, dialogMap);
+                descriptionIndex, xp, currency, false, tasks, rewards, dialogMap, giverData);
 
         quest.questInfo();
 

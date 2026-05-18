@@ -10,7 +10,7 @@ import net.noyji.thequestforge.data.capability.entity.EntityQuestData;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.quest.entity.Quest;
 import net.noyji.thequestforge.data.quest.player.PlayerQuest;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.AddPlayerQuestS2CPacket;
 
 public class AcceptQuestAction extends AbstractAction{
@@ -27,7 +27,7 @@ public class AcceptQuestAction extends AbstractAction{
 
         MinecraftForge.EVENT_BUS.post(new QuestAcceptEvent(context.getPlayer(), quest));
 
-        ModNetworking.sendToPlayer(new AddPlayerQuestS2CPacket(playerQuest.serializeNBT()), (ServerPlayer) context.getPlayer());
+        TheQuestForgeNetworking.sendToPlayer(new AddPlayerQuestS2CPacket(playerQuest.serializeNBT()), (ServerPlayer) context.getPlayer());
         return true;
     }
 

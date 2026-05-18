@@ -20,7 +20,7 @@ import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.managers.QuestGiversManager;
 import net.noyji.thequestforge.data.quest.entity.Quest;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -94,7 +94,7 @@ public class EntityQuestHandler {
 
         if (entityQuestData.hasQuest()) {
             TheQuestForge.LOGGER.debug("Quest is already have!");
-            ModNetworking.sendToPlayer(new OpenQuestGuiS2CPacket(target.getId()), serverPlayer);
+            TheQuestForgeNetworking.sendToPlayer(new OpenQuestGuiS2CPacket(target.getId()), serverPlayer);
             return;
         }
 
@@ -119,8 +119,8 @@ public class EntityQuestHandler {
 
         entityQuestData.addQuest(quest);
 
-        ModNetworking.sendToPlayer(new SyncEntityQuestDataS2CPacket(target.getId(), entityQuestData.serializeNBT(), true), serverPlayer);
-        ModNetworking.debugInfo("Quest after generation!");
+        TheQuestForgeNetworking.sendToPlayer(new SyncEntityQuestDataS2CPacket(target.getId(), entityQuestData.serializeNBT(), true), serverPlayer);
+        TheQuestForgeNetworking.debugInfo("Quest after generation!");
     }
 
     public static void resetCycle(LivingEvent.LivingTickEvent event){
@@ -128,9 +128,9 @@ public class EntityQuestHandler {
 
         Entity entity = event.getEntity();
 
-        if (entity.tickCount % 20 != 0) return;
-
         if (entity.level().isClientSide) return;
+
+        if (entity.tickCount % 20 != 0) return;
 
         EntityQuestData entityQuestData = CapabilityUtil.getEntityQuestData(entity);
         if (!entityQuestData.isQuestGiver()) return;
@@ -157,18 +157,18 @@ public class EntityQuestHandler {
                 TheQuestForge.LOGGER.debug("Player {} update quest!", serverPlayer.getTabListDisplayName());
 
                 playerQuestData.removeQuest(entity.getUUID());
-                ModNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(entity.getUUID()), serverPlayer);
+                TheQuestForgeNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(entity.getUUID()), serverPlayer);
 
             }
 
             Player talkingPlayer = DialogSessionManager.getTalkingPlayer((Mob) entity);
             if (talkingPlayer != null){
                 DialogSessionManager.stopDialog((Mob) entity);
-                ModNetworking.sendToPlayer(new ClosePlayerGuiS2CPacket(), talkingPlayer);
+                TheQuestForgeNetworking.sendToPlayer(new ClosePlayerGuiS2CPacket(), talkingPlayer);
             }
 
-            ModNetworking.sendToTrackingEntity(new SyncEntityQuestDataS2CPacket(entity.getId(), entityQuestData.serializeNBT(), false), entity);
-            ModNetworking.sendToAll(new UnlockNpcS2CPacket(entity.getUUID()));
+            TheQuestForgeNetworking.sendToTrackingEntity(new SyncEntityQuestDataS2CPacket(entity.getId(), entityQuestData.serializeNBT(), false), entity);
+            TheQuestForgeNetworking.sendToAll(new UnlockNpcS2CPacket(entity.getUUID()));
 
             TheQuestForge.LOGGER.debug("New cycle");
         }

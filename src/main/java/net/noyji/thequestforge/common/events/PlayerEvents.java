@@ -1,6 +1,7 @@
 package net.noyji.thequestforge.common.events;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -15,10 +16,13 @@ import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.managers.QuestGiversManager;
 import net.noyji.thequestforge.data.managers.QuestTemplateManager;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.data.quest.player.PlayerQuest;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.SyncEntityQuestDataS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncPlayerAllQuestS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncQuestTemplateS2CPacket;
+
+import java.util.List;
 
 
 @Mod.EventBusSubscriber
@@ -32,9 +36,9 @@ public class PlayerEvents {
         if (target == null || !QuestGiversManager.INSTANCE.thisQuestGiverOrVillager(target)) return;
 
         CompoundTag data = CapabilityUtil.getEntityQuestData(target).serializeNBT();
-        ModNetworking.sendToPlayer(new SyncEntityQuestDataS2CPacket(target.getId(), data, false), serverPlayer);
+        TheQuestForgeNetworking.sendToPlayer(new SyncEntityQuestDataS2CPacket(target.getId(), data, false), serverPlayer);
 
-        ModNetworking.debugInfo("Quest info in Start tracing event");
+        TheQuestForgeNetworking.debugInfo("Quest info in Start tracing event");
     }
 
     @SubscribeEvent
@@ -42,7 +46,7 @@ public class PlayerEvents {
         Player player = event.getEntity();
         if (!(player instanceof ServerPlayer serverPlayer)) return;
 
-        ModNetworking.sendToPlayer(new SyncQuestTemplateS2CPacket(QuestTemplateManager.INSTANCE.serializeNBT()), serverPlayer);
+        TheQuestForgeNetworking.sendToPlayer(new SyncQuestTemplateS2CPacket(QuestTemplateManager.INSTANCE.serializeNBT()), serverPlayer);
     }
 
     @SubscribeEvent
@@ -52,7 +56,7 @@ public class PlayerEvents {
         if (!(entity instanceof ServerPlayer serverPlayer)) return;
 
         PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(serverPlayer);
-        ModNetworking.sendToPlayer(new SyncPlayerAllQuestS2CPacket(playerQuestData.serializeNBT()), serverPlayer);
+        TheQuestForgeNetworking.sendToPlayer(new SyncPlayerAllQuestS2CPacket(playerQuestData.serializeNBT()), serverPlayer);
         playerQuestData.debugInfoCatalog();
     }
 
@@ -63,13 +67,12 @@ public class PlayerEvents {
         Player player = event.player;
 
         CapabilityUtil.getPlayerQuestData(player).updateQuestDays(player);
-        checkResetCycle(event);
+        checkResetCycle(player);
+        updateNpcPos(player);
     }
 
-    private static void checkResetCycle(TickEvent.PlayerTickEvent event){
+    private static void checkResetCycle(Player player){
         if (ServerConfig.TIME_TO_RESET_NPCS.get() == 501) return;
-
-        Player player = event.player;
 
         if ((player.tickCount + player.getId()) % 20 == 0){
             PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
@@ -83,6 +86,26 @@ public class PlayerEvents {
                 playerQuestData.setLastResetCycle(currentCycle);
 
                 TheQuestForge.LOGGER.debug("NPC reset!");
+            }
+        }
+    }
+    private static void updateNpcPos(Player player){
+
+        if ((player.tickCount + player.getId()) % 20 == 0) {
+
+            PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
+
+            List<PlayerQuest> playerQuests = playerQuestData.getQuests();
+            if (playerQuests == null || playerQuests.isEmpty()) return;
+
+            ServerLevel serverLevel = (ServerLevel) player.level();
+
+            for (PlayerQuest playerQuest : playerQuests) {
+                Entity entity = serverLevel.getEntity(playerQuest.getId());
+
+                if (entity == null) continue;
+
+                playerQuest.setGiverDataAndSync(entity.getOnPos(), entity.level().dimension(), entity.getId(), player);
             }
         }
     }

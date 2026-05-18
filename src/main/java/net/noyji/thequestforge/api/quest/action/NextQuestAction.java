@@ -12,7 +12,7 @@ import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.managers.QuestTemplateManager;
 import net.noyji.thequestforge.data.quest.entity.Quest;
 import net.noyji.thequestforge.data.template.QuestTemplate;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.ChainProgressUpdateS2CPacket;
 import net.noyji.thequestforge.network.s2c.ClosePlayerGuiS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncEntityQuestDataS2CPacket;
@@ -34,7 +34,7 @@ public class NextQuestAction extends AbstractAction{
         Quest npcQuest = npcData.getQuest(playerData.getChainProgress(npcId));
 
         playerData.advanceChainProgress(npcId);
-        ModNetworking.sendToPlayer(new ChainProgressUpdateS2CPacket(npcQuest.getId()), player);
+        TheQuestForgeNetworking.sendToPlayer(new ChainProgressUpdateS2CPacket(npcQuest.getId()), player);
 
         QuestTemplate template = QuestTemplateManager.INSTANCE.getQuestTemplate(npcQuest.getSourceTemplate());
         if (template == null) {
@@ -49,14 +49,14 @@ public class NextQuestAction extends AbstractAction{
 
             if (newQuest != null) {
                 npcData.addQuest(newQuest);
-                ModNetworking.sendToPlayer(new SyncEntityQuestDataS2CPacket(context.getEntity().getId(), npcData.serializeNBT(), true), player);
+                TheQuestForgeNetworking.sendToPlayer(new SyncEntityQuestDataS2CPacket(context.getEntity().getId(), npcData.serializeNBT(), true), player);
             }
         } else {
             playerData.lockNpc(npcId);
 
             player.sendSystemMessage(Component.literal("Цепочка заданий завершена!").withStyle(style -> style.withColor(0x00FFCC)));
 
-            ModNetworking.sendToPlayer(new ClosePlayerGuiS2CPacket(), player);
+            TheQuestForgeNetworking.sendToPlayer(new ClosePlayerGuiS2CPacket(), player);
         }
         return true;
     }

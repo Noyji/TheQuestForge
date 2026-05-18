@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.data.quest.player.PlayerQuest;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.RemovePlayerQuestS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncSpecificPlayerQuestS2CPacket;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +51,7 @@ public class PlayerQuestData {
 
                 if (currentDays > -1) {
                     quest.setTimeLimit(currentDays - 1);
-                    ModNetworking.sendToPlayer(new SyncSpecificPlayerQuestS2CPacket(quest.getId(), quest.serializeNBT()), player);
+                    TheQuestForgeNetworking.sendToPlayer(new SyncSpecificPlayerQuestS2CPacket(quest.getId(), quest.serializeNBT()), player);
                 }
 
                 if (quest.getTimeLimit() == -1) {
@@ -62,7 +62,7 @@ public class PlayerQuestData {
             for (UUID uuid : questToRemove){
                 removeQuest(uuid);
                 lockNpc(uuid);
-                ModNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(uuid), player);
+                TheQuestForgeNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(uuid), player);
             }
         }
     }
@@ -255,7 +255,7 @@ public class PlayerQuestData {
             quest.updateTask(taskTypeKey, target, event, player);
 
             if (player instanceof ServerPlayer serverPlayer) {
-                ModNetworking.sendToPlayer(new SyncSpecificPlayerQuestS2CPacket(uuid, quest.serializeNBT()), serverPlayer);
+                TheQuestForgeNetworking.sendToPlayer(new SyncSpecificPlayerQuestS2CPacket(uuid, quest.serializeNBT()), serverPlayer);
             }
         }
     }

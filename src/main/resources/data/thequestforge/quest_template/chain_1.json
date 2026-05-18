@@ -25,13 +25,13 @@
   "dialogs": {
     "start": {
       "text": {
-        "en_us": ["I have a task for you. It is the first of three. Are you ready?"],
+        "en_us": ["I have a task for you. It is the first of three. %target-1% | %target% | %target-30% Are you %reward-1% ready %npc_name-no_hide%?"],
         "ru_ru": ["У меня есть задание для тебя. Это первое из трёх. Готов?"]
       },
       "buttons": [
         {
           "text": {
-            "en_us": ["Accept"],
+            "en_us": ["Accept %npc_name%?"],
             "ru_ru": ["Принять"]
           },
           "toGo": "complete",

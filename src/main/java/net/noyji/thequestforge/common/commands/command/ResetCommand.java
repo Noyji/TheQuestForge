@@ -14,7 +14,7 @@ import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.entity.EntityQuestData;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.RemovePlayerQuestS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncEntityQuestDataS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncPlayerAllQuestS2CPacket;
@@ -34,7 +34,7 @@ public class ResetCommand {
         if (entity instanceof Player player) {
             PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(player);
             playerQuestData.reset(true);
-            ModNetworking.sendToPlayer(new SyncPlayerAllQuestS2CPacket(playerQuestData.serializeNBT()), player);
+            TheQuestForgeNetworking.sendToPlayer(new SyncPlayerAllQuestS2CPacket(playerQuestData.serializeNBT()), player);
             source.sendSuccess(() -> Component.translatable("command.thequestforge.reset.success_player"), true);
             return 1;
         }
@@ -60,12 +60,12 @@ public class ResetCommand {
             TheQuestForge.LOGGER.debug("Player {} update quest!", serverPlayer.getTabListDisplayName());
 
             playerQuestData.removeQuest(entity.getUUID());
-            ModNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(entity.getUUID()), serverPlayer);
+            TheQuestForgeNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(entity.getUUID()), serverPlayer);
 
         }
 
-        ModNetworking.sendToTrackingEntity(new SyncEntityQuestDataS2CPacket(entity.getId(), entityQuestData.serializeNBT(), false), entity);
-        ModNetworking.sendToAll(new UnlockNpcS2CPacket(entity.getUUID()));
+        TheQuestForgeNetworking.sendToTrackingEntity(new SyncEntityQuestDataS2CPacket(entity.getId(), entityQuestData.serializeNBT(), false), entity);
+        TheQuestForgeNetworking.sendToAll(new UnlockNpcS2CPacket(entity.getUUID()));
 
         source.sendSuccess(() -> Component.translatable("command.thequestforge.reset.success"), true);
 

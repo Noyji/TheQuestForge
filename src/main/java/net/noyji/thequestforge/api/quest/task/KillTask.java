@@ -100,6 +100,11 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
     }
 
     @Override
+    public String getTargetName() {
+        return goal + " " + target.getDescription().getString();
+    }
+
+    @Override
     public void serializeNBT(CompoundTag nbt) {
         nbt.putInt("Goal", this.goal);
         nbt.putInt("Progress", this.progress);

@@ -6,12 +6,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
+import net.noyji.thequestforge.common.items.TheQuestForgeItems;
+import net.noyji.thequestforge.common.items.custom.QuestCompassItem;
+import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.managers.QuestTemplateManager;
 import net.noyji.thequestforge.data.quest.player.PlayerQuest;
 import net.noyji.thequestforge.data.template.QuestTemplate;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.c2s.RemovePlayerQuestC2SPacket;
+import net.noyji.thequestforge.network.c2s.SetTargetCompassC2SPacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -20,6 +24,8 @@ public class QuestBookManager {
     private int questIndex = 0;
 
     private final String languageKey = Minecraft.getInstance().options.languageCode;
+
+    private final Player player = Minecraft.getInstance().player;
 
     private List<PlayerQuest> playerQuests;
     private PlayerQuest selectQuest;
@@ -119,7 +125,7 @@ public class QuestBookManager {
         Player player = Minecraft.getInstance().player;
         if (player == null) return false;
 
-        ModNetworking.sendToServer(new RemovePlayerQuestC2SPacket(selectQuest.getId()));
+        TheQuestForgeNetworking.sendToServer(new RemovePlayerQuestC2SPacket(selectQuest.getId()));
         CapabilityUtil.getPlayerQuestData(player).removeQuest(selectQuest.getId());
 
         playerQuests = CapabilityUtil.getPlayerQuestData(player).getQuests();
@@ -137,6 +143,17 @@ public class QuestBookManager {
 
         updateQuest();
         return true;
+    }
+
+    public boolean targetQuestForCompass(){
+        if (player == null || selectQuest == null) return false;
+
+        ItemStack compass = Util.findItemInInventory(player, TheQuestForgeItems.QUEST_COMPASS.get());
+        if (compass == null) return false;
+
+        TheQuestForgeNetworking.sendToServer(new SetTargetCompassC2SPacket(selectQuest.getId()));
+        return true;
+
     }
 
     public int getQuestIndex() {

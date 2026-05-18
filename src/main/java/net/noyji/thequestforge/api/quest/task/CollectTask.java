@@ -60,6 +60,11 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     }
 
     @Override
+    public String getTargetName() {
+        return itemStack.getCount() + " " +  itemStack.getDisplayName().getString().replace("[", "").replace("]", "");
+    }
+
+    @Override
     public void handle(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
 

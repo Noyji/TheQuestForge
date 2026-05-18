@@ -191,6 +191,18 @@ public class Util {
         return false;
     }
 
+    @Nullable
+    public static ItemStack findItemInInventory(Player player, Item targetItem) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack slotStack = player.getInventory().getItem(i);
+
+            if (!slotStack.isEmpty() && slotStack.is(targetItem)) {
+                return slotStack;
+            }
+        }
+        return null;
+    }
+
     private static boolean isSameItem(ItemStack stack1, ItemStack stack2) {
         if (stack1.isEmpty() || stack2.isEmpty()) return false;
         return ItemStack.isSameItemSameTags(stack1, stack2);

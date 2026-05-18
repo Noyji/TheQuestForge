@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.noyji.thequestforge.api.client.placeholder.QuestPlaceholders;
 import net.noyji.thequestforge.api.quest.registry.ActionRegistry;
 import net.noyji.thequestforge.api.quest.registry.RequirementRegistry;
 import net.noyji.thequestforge.api.quest.registry.TaskHandlerRegistry;
@@ -21,7 +22,7 @@ import net.noyji.thequestforge.common.sounds.TheQuestForgeSounds;
 import net.noyji.thequestforge.config.ClientConfig;
 import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.capability.AttachCapabilities;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -60,7 +61,10 @@ public class TheQuestForge {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(ModNetworking::register);
+        event.enqueueWork( () -> {
+            TheQuestForgeNetworking.register();
+            QuestPlaceholders.register();
+        });
     }
 
     public static ResourceLocation id (@NotNull String path){

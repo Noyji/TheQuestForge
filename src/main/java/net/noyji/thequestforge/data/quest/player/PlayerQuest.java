@@ -1,20 +1,26 @@
 package net.noyji.thequestforge.data.quest.player;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.Event;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.registry.TaskHandlerRegistry;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
 import net.noyji.thequestforge.api.quest.task.TaskType;
+import net.noyji.thequestforge.data.quest.player.components.GiverData;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.QuestToastS2CPacket;
+import net.noyji.thequestforge.network.s2c.SyncGiverPosS2CPacket;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +39,14 @@ public class PlayerQuest {
     protected boolean complete;
     protected List<AbstractTask<?>> tasks;
     protected List<ItemStack> rewards;
+    private GiverData giverData;
 
     private String spareDialogKey;
 
     public PlayerQuest(){}
 
     public PlayerQuest(ResourceLocation sourceTemplate, UUID id, int timeLimit, QuestType type, QuestRarity rarity, int nameIndex, int descriptionIndex,
-                       int xp, int currency, boolean complete, List<AbstractTask<?>> tasks, List<ItemStack> rewards) {
+                       int xp, int currency, boolean complete, List<AbstractTask<?>> tasks, List<ItemStack> rewards, GiverData giverData) {
         this.sourceTemplate = sourceTemplate;
         this.id = id;
         this.timeLimit = timeLimit;
@@ -52,6 +59,22 @@ public class PlayerQuest {
         this.complete = complete;
         this.tasks = tasks;
         this.rewards = rewards;
+        this.giverData = giverData;
+    }
+
+    public GiverData getGiverData(){
+        return giverData;
+    }
+
+    public void setGiverDataAndSync(BlockPos blockPos, ResourceKey<Level> dimension, int entityId, Player player){
+        giverData.setGiverPos(blockPos);
+        giverData.setDimension(dimension);
+        giverData.setEntityId(entityId);
+        TheQuestForgeNetworking.sendToPlayer(new SyncGiverPosS2CPacket(id, giverData.serializeNBT()), player);
+    }
+
+    public void setGiverDataAndSync(CompoundTag data){
+        giverData.deserializeNBT(data);
     }
 
     public QuestType getType() {
@@ -70,6 +93,12 @@ public class PlayerQuest {
         return rewards;
     }
 
+    public ItemStack getReward(int index){
+        if (rewards == null || rewards.isEmpty()) return null;
+        if (index < 0 || index > rewards.size() - 1) return null;
+        return rewards.get(index);
+    }
+
     public int getXp() {
         return xp;
     }
@@ -80,6 +109,12 @@ public class PlayerQuest {
 
     public List<AbstractTask<?>> getTasks(){
         return tasks;
+    }
+    @Nullable
+    public AbstractTask<?> getTask(int index){
+        if (tasks == null || tasks.isEmpty()) return null;
+        if (index < 0 || index > tasks.size() - 1) return null;
+        return tasks.get(index);
     }
 
     public int getNameIndex(){
@@ -124,7 +159,7 @@ public class PlayerQuest {
             this.complete = (completedCount == this.tasks.size());
 
             if (complete) {
-                ModNetworking.sendToPlayer(new QuestToastS2CPacket(this.id), player);
+                TheQuestForgeNetworking.sendToPlayer(new QuestToastS2CPacket(this.id), player);
             }
 
         } else {
@@ -197,6 +232,10 @@ public class PlayerQuest {
         }
         save.put("rewards", rewards);
 
+        if (giverData != null){
+            save.put("giver_pos_data", giverData.serializeNBT());
+        }
+
         return save;
     }
 
@@ -254,6 +293,11 @@ public class PlayerQuest {
                     this.tasks.add(task);
                 }
             }
+        }
+
+        this.giverData = new GiverData();
+        if (nbt.contains("giver_pos_data")){
+            this.giverData.deserializeNBT(nbt.getCompound("giver_pos_data"));
         }
     }
 

@@ -34,6 +34,7 @@ public class QuestBookGui extends Screen {
     private AnimatedButton leftPageButton;
     private AnimatedButton rightPageButton;
     private AnimatedButton removeQuestButton;
+    private AnimatedButton targetQuestButton;
 
     private QuestTaskListWidget taskListWidget;
     private QuestRewardGridWidget rewardGridWidget;
@@ -139,6 +140,22 @@ public class QuestBookGui extends Screen {
                 .build();
 
         this.addRenderableWidget(rightPageButton);
+
+        targetQuestButton = new AnimatedButton.Builder()
+                .position((int) (this.width / 2f - (100 * scale)), (int) (this.height / 2f + 65 * scale))
+                .size(20, 45)
+                .scale(scale)
+                .texture(QUEST_BOOK_TEXTURE)
+                .textureSize(512, 512)
+                .uv(322, 41)
+                .animation(AnimatedButton.AnimationDirection.DOWN, 10.0F, 2.55F)
+                .easing(AnimatedButton.EasingType.EASE_OUT)
+                .onPress(button -> {
+                    if (!manager.targetQuestForCompass()){}
+                })
+                .build();
+
+        this.addRenderableWidget(targetQuestButton);
     }
 
     @Override
@@ -168,6 +185,7 @@ public class QuestBookGui extends Screen {
         leftPageButton.render(guiGraphics, mouseX, mouseY, partialTick);
         rightPageButton.render(guiGraphics, mouseX, mouseY, partialTick);
         removeQuestButton.render(guiGraphics, mouseX, mouseY, partialTick);
+        targetQuestButton.render(guiGraphics, mouseX, mouseY, partialTick);
 
         RenderSystem.enableBlend();
         guiGraphics.blit(QUEST_BOOK_TEXTURE, (int) (this.width / 2F - (138 * scale)), (int) (this.height / 2f + 30 * scale),

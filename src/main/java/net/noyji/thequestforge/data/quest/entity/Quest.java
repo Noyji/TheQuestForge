@@ -8,6 +8,7 @@ import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
 import net.noyji.thequestforge.data.quest.entity.components.QuestDialog;
 import net.noyji.thequestforge.data.quest.player.PlayerQuest;
+import net.noyji.thequestforge.data.quest.player.components.GiverData;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import org.jetbrains.annotations.Nullable;
@@ -24,8 +25,8 @@ public class Quest extends PlayerQuest {
 
     public Quest(ResourceLocation sourceTemplate, UUID id, int timeLimit, QuestType type, QuestRarity rarity, int nameIndex,
                  int descriptionIndex, int xp, int currency, boolean complete, List<AbstractTask<?>> tasks, List<ItemStack> rewards,
-                 Map<String, QuestDialog> dialogs) {
-        super(sourceTemplate, id, timeLimit, type, rarity, nameIndex, descriptionIndex, xp, currency, complete, tasks, rewards);
+                 Map<String, QuestDialog> dialogs, GiverData giverData) {
+        super(sourceTemplate, id, timeLimit, type, rarity, nameIndex, descriptionIndex, xp, currency, complete, tasks, rewards, giverData);
         this.dialogs = dialogs;
     }
 

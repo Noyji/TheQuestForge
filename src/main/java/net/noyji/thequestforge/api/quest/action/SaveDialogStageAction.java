@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
-import net.noyji.thequestforge.network.ModNetworking;
+import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.s2c.AddDialogStageS2CPacket;
 
 import java.util.UUID;
@@ -22,7 +22,7 @@ public class SaveDialogStageAction extends AbstractAction{
         playerQuestData.putDialogProgress(uuid, key);
         playerQuestData.setSpareDialogStage(uuid, key);
 
-        ModNetworking.sendToPlayer(new AddDialogStageS2CPacket(uuid, key), (ServerPlayer) context.getPlayer());
+        TheQuestForgeNetworking.sendToPlayer(new AddDialogStageS2CPacket(uuid, key), (ServerPlayer) context.getPlayer());
         return true;
     }
 
