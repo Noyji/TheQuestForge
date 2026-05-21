@@ -22,9 +22,7 @@ import net.noyji.thequestforge.network.s2c.QuestToastS2CPacket;
 import net.noyji.thequestforge.network.s2c.SyncGiverPosS2CPacket;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerQuest {
     protected ResourceLocation sourceTemplate;
@@ -37,9 +35,12 @@ public class PlayerQuest {
     protected int xp;
     protected int currency;
     protected boolean complete;
-    protected List<AbstractTask<?>> tasks;
-    protected List<ItemStack> rewards;
-    private GiverData giverData;
+    protected List<AbstractTask<?>> tasks = new ArrayList<>();
+    protected List<ItemStack> rewards = new ArrayList<>();
+    private GiverData giverData = new GiverData();
+
+    protected Map<String, String> customData = new HashMap<>();
+
 
     private String spareDialogKey;
 
@@ -71,6 +72,24 @@ public class PlayerQuest {
         giverData.setDimension(dimension);
         giverData.setEntityId(entityId);
         TheQuestForgeNetworking.sendToPlayer(new SyncGiverPosS2CPacket(id, giverData.serializeNBT()), player);
+    }
+
+    public void setCustomData(Map<String, String> customData) {
+        this.customData = customData;
+    }
+
+    public void addCustomData(String key, String data){
+        if (key == null || key.isEmpty()) return;
+        if (data == null || data.isEmpty()) return;
+
+        customData.put(key, data);
+    }
+
+    @Nullable
+    public String getCustomData(String key){
+        if (key == null || key.isEmpty()) return null;
+
+        return customData.get(key);
     }
 
     public void setGiverDataAndSync(CompoundTag data){
@@ -196,44 +215,72 @@ public class PlayerQuest {
     public CompoundTag serializeNBT() {
         CompoundTag save = new CompoundTag();
 
-        if (sourceTemplate != null) save.putString("source_template", sourceTemplate.toString());
-        if (id != null) save.putUUID("id", id);
-        save.putInt("time_limit", timeLimit);
-        save.putString("type", type.name());
-        save.putString("rarity", rarity.name());
-        save.putInt("name_index", nameIndex);
-        save.putInt("description_index", descriptionIndex);
-        save.putInt("xp", xp);
-        save.putInt("currency", currency);
-        save.putBoolean("complete", complete);
-
-        if (spareDialogKey != null && !spareDialogKey.isEmpty()) save.putString("spare_dialog_key", spareDialogKey);
-
-        ListTag tasks = new ListTag();
-        for (AbstractTask<?> abstractTask : this.tasks){
-
-            if (abstractTask == null) continue;
-            CompoundTag taskTag = new CompoundTag();
-            taskTag.putString("task_type", abstractTask.getLocation().toString());
-
-            CompoundTag taskData = new CompoundTag();
-            abstractTask.serializeNBT(taskData);
-            taskTag.put("task_data", taskData);
-
-            tasks.add(taskTag);
+        if (this.sourceTemplate != null) {
+            save.putString("source_template", this.sourceTemplate.toString());
         }
-        save.put("tasks", tasks);
-
-        ListTag rewards = new ListTag();
-        for (ItemStack itemStack : this.rewards){
-            if (itemStack.isEmpty()) continue;
-
-            rewards.add(itemStack.save(new CompoundTag()));
+        if (this.id != null) {
+            save.putUUID("id", this.id);
         }
-        save.put("rewards", rewards);
 
-        if (giverData != null){
-            save.put("giver_pos_data", giverData.serializeNBT());
+        save.putInt("time_limit", this.timeLimit);
+        save.putString("type", this.type.name());
+        save.putString("rarity", this.rarity.name());
+        save.putInt("name_index", this.nameIndex);
+        save.putInt("description_index", this.descriptionIndex);
+        save.putInt("xp", this.xp);
+        save.putInt("currency", this.currency);
+        save.putBoolean("complete", this.complete);
+
+        if (this.spareDialogKey != null && !this.spareDialogKey.isEmpty()) {
+            save.putString("spare_dialog_key", this.spareDialogKey);
+        }
+
+        if (!this.customData.isEmpty()) {
+            CompoundTag customDataTag = new CompoundTag();
+            for (Map.Entry<String, String> entry : this.customData.entrySet()) {
+                if (entry.getKey() != null && !entry.getKey().isEmpty() &&
+                        entry.getValue() != null && !entry.getValue().isEmpty()) {
+                    customDataTag.putString(entry.getKey(), entry.getValue());
+                }
+            }
+            if (!customDataTag.isEmpty()) {
+                save.put("custom_data", customDataTag);
+            }
+        }
+
+        if (!this.tasks.isEmpty()) {
+            ListTag tasksList = new ListTag();
+            for (AbstractTask<?> task : this.tasks) {
+                if (task == null || task.getLocation() == null) continue;
+
+                CompoundTag taskTag = new CompoundTag();
+                taskTag.putString("task_type", task.getLocation().toString());
+
+                CompoundTag taskData = new CompoundTag();
+                task.serializeNBT(taskData);
+                taskTag.put("task_data", taskData);
+
+                tasksList.add(taskTag);
+            }
+            if (!tasksList.isEmpty()) {
+                save.put("tasks", tasksList);
+            }
+        }
+
+        if (!this.rewards.isEmpty()) {
+            ListTag rewardsList = new ListTag();
+            for (ItemStack itemStack : this.rewards) {
+                if (itemStack != null && !itemStack.isEmpty()) {
+                    rewardsList.add(itemStack.save(new CompoundTag()));
+                }
+            }
+            if (!rewardsList.isEmpty()) {
+                save.put("rewards", rewardsList);
+            }
+        }
+
+        if (this.giverData != null) {
+            save.put("giver_pos_data", this.giverData.serializeNBT());
         }
 
         return save;
@@ -252,20 +299,30 @@ public class PlayerQuest {
         }
 
         if (nbt.contains("source_template", Tag.TAG_STRING)) {
-            this.sourceTemplate = ResourceLocation.parse(nbt.getString("source_template"));
+            this.sourceTemplate = ResourceLocation.tryParse(nbt.getString("source_template"));
         }
 
         if (nbt.contains("type", Tag.TAG_STRING)) {
-            this.type = QuestType.valueOf(nbt.getString("type"));
+            try {
+                this.type = QuestType.valueOf(nbt.getString("type"));
+            } catch (IllegalArgumentException e) {
+                this.type = QuestType.LOCAL;
+            }
         }
+
         if (nbt.contains("rarity", Tag.TAG_STRING)) {
-            this.rarity = QuestRarity.valueOf(nbt.getString("rarity"));
+            try {
+                this.rarity = QuestRarity.valueOf(nbt.getString("rarity"));
+            } catch (IllegalArgumentException e) {
+                this.rarity = QuestRarity.COMMON;
+            }
         }
+
         if (nbt.contains("spare_dialog_key", Tag.TAG_STRING)) {
             this.spareDialogKey = nbt.getString("spare_dialog_key");
         }
 
-        this.rewards = new ArrayList<>();
+        if (this.rewards != null) this.rewards.clear();
         if (nbt.contains("rewards", Tag.TAG_LIST)) {
             ListTag rewardsList = nbt.getList("rewards", Tag.TAG_COMPOUND);
             for (int i = 0; i < rewardsList.size(); i++) {
@@ -275,29 +332,40 @@ public class PlayerQuest {
                 }
             }
         }
-        this.tasks = new ArrayList<>();
+
+
+        if (this.tasks != null) this.tasks.clear();
         if (nbt.contains("tasks", Tag.TAG_LIST)) {
             ListTag taskList = nbt.getList("tasks", Tag.TAG_COMPOUND);
             for (int i = 0; i < taskList.size(); i++) {
                 CompoundTag taskTag = taskList.getCompound(i);
+                ResourceLocation typeId = ResourceLocation.tryParse(taskTag.getString("task_type"));
 
-                ResourceLocation typeId = ResourceLocation.parse(taskTag.getString("task_type"));
+                if (typeId != null) {
+                    TaskType<?> taskType = TaskHandlerRegistry.REGISTRY.get().getValue(typeId);
 
-                TaskType<?> taskType = TaskHandlerRegistry.REGISTRY.get().getValue(typeId);
-
-                if (taskType != null) {
-                    AbstractTask<?> task = taskType.createInstance();
-
-                    task.deserializeNBT(taskTag.getCompound("task_data"));
-
-                    this.tasks.add(task);
+                    if (taskType != null) {
+                        AbstractTask<?> task = taskType.createInstance();
+                        if (task != null) {
+                            task.deserializeNBT(taskTag.getCompound("task_data"));
+                            this.tasks.add(task);
+                        }
+                    }
                 }
             }
         }
 
         this.giverData = new GiverData();
-        if (nbt.contains("giver_pos_data")){
+        if (nbt.contains("giver_pos_data", Tag.TAG_COMPOUND)) {
             this.giverData.deserializeNBT(nbt.getCompound("giver_pos_data"));
+        }
+
+        this.customData.clear();
+        if (nbt.contains("custom_data", Tag.TAG_COMPOUND)) {
+            CompoundTag dataTag = nbt.getCompound("custom_data");
+            for (String key : dataTag.getAllKeys()) {
+                this.customData.put(key, dataTag.getString(key));
+            }
         }
     }
 

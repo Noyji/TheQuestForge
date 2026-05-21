@@ -1,5 +1,6 @@
 package net.noyji.thequestforge.api.client.placeholder;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.client.registry.PlaceholderRegistry;
@@ -8,9 +9,8 @@ import net.noyji.thequestforge.api.quest.task.AbstractTask;
 public class QuestPlaceholders{
 
     public static void register(){
-        PlaceholderRegistry.register("player", (player, entity, quest, args) -> {
-            return player.getName().getString();
-        });
+        PlaceholderRegistry.register("player", (player, entity, quest, args)
+                -> player.getName().getString());
 
         PlaceholderRegistry.register("npc_name", (player, entity, quest, args) -> {
             String arg = "null";
@@ -53,6 +53,11 @@ public class QuestPlaceholders{
             } catch (Exception e) {
                 return "Wrong number";
             }
+        });
+
+        PlaceholderRegistry.register("direction", (player, entity, quest, args) -> {
+            String direction = quest.getCustomData("direction");
+            return (direction == null) ? "Direction not found" : Component.translatable(direction).getString();
         });
     }
 }

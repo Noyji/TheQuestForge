@@ -2,6 +2,7 @@ package net.noyji.thequestforge.common.events;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,5 +24,9 @@ public class EntityEvents {
         EntityQuestHandler.resetCycle(event);
     }
 
+    @SubscribeEvent
+    public static void onLivingDeath(LivingDeathEvent event) {
+        EntityQuestHandler.removeQuestAfterDeath(event);
+    }
 
 }

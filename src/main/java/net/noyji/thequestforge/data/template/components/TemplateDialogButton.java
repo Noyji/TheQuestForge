@@ -1,5 +1,6 @@
 package net.noyji.thequestforge.data.template.components;
 
+import com.google.gson.annotations.SerializedName;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -28,7 +29,9 @@ public class TemplateDialogButton {
     private List<SimplyItemStack> give;
     private List<SimplyItemStack> remove;
     private List<String> functions;
+    @SerializedName("to_go")
     private String toGo;
+    @SerializedName("alt_to_go")
     private String altToGo;
     private List<String> actions;
 

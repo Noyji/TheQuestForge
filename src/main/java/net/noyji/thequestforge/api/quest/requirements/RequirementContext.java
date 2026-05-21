@@ -6,16 +6,20 @@ import net.minecraft.world.entity.player.Player;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 
+import java.util.Map;
+
 public class RequirementContext {
     private final Player player;
     private final Entity entity;
     private final QuestRarity rarity;
+    private final Map<String, String> customData;
     private String value;
 
-    public RequirementContext(Player player, Entity entity, QuestRarity rarity) {
+    public RequirementContext(Player player, Entity entity, QuestRarity rarity, Map<String, String> customData) {
         this.player = player;
         this.entity = entity;
         this.rarity = rarity;
+        this.customData = customData;
     }
 
     public Player getPlayer() {
@@ -47,11 +51,19 @@ public class RequirementContext {
         }
     }
 
+    public void addCustomData(String key, String data) {
+        customData.put(key, data);
+    }
+
+    public String getCustomData(String key){
+        return customData.get(key);
+    }
+
     public boolean getBooleanValue(){
         return Boolean.parseBoolean(value);
     }
 
     public void setValue(String value) {
-        this.value = value;
+        this.value = value.toLowerCase().trim();
     }
 }

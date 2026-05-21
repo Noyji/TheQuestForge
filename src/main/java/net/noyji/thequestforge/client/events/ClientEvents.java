@@ -12,7 +12,6 @@ import net.noyji.thequestforge.client.render.AdditionalRenders;
 import net.noyji.thequestforge.client.render.DialogueCameraManager;
 import net.noyji.thequestforge.client.render.DialogueGuiManager;
 import net.noyji.thequestforge.client.render.RenderQuestIcons;
-import net.noyji.thequestforge.common.items.properties.TheQuestForgeProperties;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientEvents {
@@ -59,7 +58,6 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onFMLClientSetup(FMLClientSetupEvent event) {
         TaskRendererRegistry.init(event);
-        TheQuestForgeProperties.register(event);
     }
 
 }

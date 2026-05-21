@@ -10,6 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.config.ServerConfig;
@@ -76,7 +77,7 @@ public class EntityQuestHandler {
         if (target.distanceTo(player) > 4.0f) return;
 
         if (CapabilityUtil.getPlayerQuestData(player).isNpcLocked(target.getUUID())) {
-            player.sendSystemMessage(Component.literal("Я пока не нуждаюсь в твоей помощи. Приходи позже."));
+            player.sendSystemMessage(Component.translatable("chat.thequestforge.npc_lock_message"));
             return;
         }
 
@@ -113,13 +114,13 @@ public class EntityQuestHandler {
         Quest quest = QuestGenerator.generateQuest(player, target, pool);
 
         if (quest == null) {
-            player.sendSystemMessage(Component.literal("У меня сейчас нет для тебя подходящих заданий..."));
             return;
         }
 
         entityQuestData.addQuest(quest);
 
-        TheQuestForgeNetworking.sendToPlayer(new SyncEntityQuestDataS2CPacket(target.getId(), entityQuestData.serializeNBT(), true), serverPlayer);
+        TheQuestForgeNetworking.sendToTrackingEntity(new SyncEntityQuestDataS2CPacket(target.getId(), entityQuestData.serializeNBT(), false), target);
+        TheQuestForgeNetworking.sendToPlayer(new OpenQuestGuiS2CPacket(target.getId()), player);
         TheQuestForgeNetworking.debugInfo("Quest after generation!");
     }
 
@@ -171,6 +172,26 @@ public class EntityQuestHandler {
             TheQuestForgeNetworking.sendToAll(new UnlockNpcS2CPacket(entity.getUUID()));
 
             TheQuestForge.LOGGER.debug("New cycle");
+        }
+    }
+
+    public static void removeQuestAfterDeath(LivingDeathEvent event){
+        Entity entity = event.getEntity();
+        if (entity.level().isClientSide) return;
+
+        EntityQuestData entityQuestData = CapabilityUtil.getEntityQuestData(entity);
+        if (!entityQuestData.isQuestGiver()) return;
+
+        MinecraftServer minecraftServer = entity.level().getServer();
+        if (minecraftServer == null) return;
+
+        for (ServerPlayer serverPlayer : minecraftServer.getPlayerList().getPlayers()){
+            PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(serverPlayer);
+
+            if (!playerQuestData.hasQuest(entity.getUUID())) return;
+
+            playerQuestData.removeQuest(entity.getUUID());
+            TheQuestForgeNetworking.sendToPlayer(new RemovePlayerQuestS2CPacket(entity.getUUID()), serverPlayer);
         }
     }
 }

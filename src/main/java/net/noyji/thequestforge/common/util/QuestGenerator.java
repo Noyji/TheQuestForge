@@ -26,10 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class QuestGenerator {
     private static final RandomSource RANDOM = RandomSource.create();
@@ -40,9 +37,10 @@ public class QuestGenerator {
         QuestRarity rarity = getRarity();
         QuestTemplate template = QuestTemplateManager.EMPTY_TEMPLATE;
         int attempts = ServerConfig.ATTEMPTS_TO_CREATE_QUEST.get();
+        Map<String, String> customData = new HashMap<>();
 
         for (int i = 0; i < attempts; i++) {
-            RequirementContext context = new RequirementContext(player, entity, rarity);
+            RequirementContext context = new RequirementContext(player, entity, rarity, customData);
             QuestTemplate temp = QuestTemplateManager.INSTANCE.getRandomQuestTemplate(pool);
 
             if (temp == null) {
@@ -61,7 +59,7 @@ public class QuestGenerator {
             return null;
         }
 
-        return buildQuestFromTemplate(template, entity, rarity);
+        return buildQuestFromTemplate(template, entity, rarity, customData);
     }
 
     @Nullable
@@ -74,11 +72,11 @@ public class QuestGenerator {
             return null;
         }
 
-        return buildQuestFromTemplate(template, entity, rarity);
+        return buildQuestFromTemplate(template, entity, rarity, null);
     }
 
     @Nullable
-    private static Quest buildQuestFromTemplate(QuestTemplate template, Entity entity, QuestRarity rarity) {
+    private static Quest buildQuestFromTemplate(QuestTemplate template, Entity entity, QuestRarity rarity, Map<String, String> customData) {
         Group group = QuestGroupManager.INSTANCE.getGroup(template.getGroupKey());
         if (group == null) {
             TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Error, group is null! Group key: {}", template.getGroupKey());
@@ -186,6 +184,10 @@ public class QuestGenerator {
 
         Quest quest = new Quest(sourceTemplate, questId, timeLimit, type, rarity, nameIndex,
                 descriptionIndex, xp, currency, false, tasks, rewards, dialogMap, giverData);
+
+        if (customData != null && !customData.isEmpty()){
+            quest.setCustomData(customData);
+        }
 
         quest.questInfo();
 

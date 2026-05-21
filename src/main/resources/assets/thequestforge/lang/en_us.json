@@ -1,5 +1,6 @@
 {
   "item.thequestforge.quest_book": "Quest book",
+  "item.thequestforge.quest_compass": "Quest compass",
 
   "toast.thequestforge.completed": "Quest completed!",
 
@@ -14,6 +15,16 @@
   "gui.thequestforge.quest.time_limit": "Today",
   "gui.thequestforge.book.task": "Task",
   "gui.thequestforge.book.reward": "Reward",
+  "gui.thequestforge.book.target_compass": "Target compass",
+
+  "dialog.thequestforge.direction_placeholder.east": "east",
+  "dialog.thequestforge.direction_placeholder.southeast": "southeast",
+  "dialog.thequestforge.direction_placeholder.south": "south",
+  "dialog.thequestforge.direction_placeholder.southwest": "southwest",
+  "dialog.thequestforge.direction_placeholder.west": "west",
+  "dialog.thequestforge.direction_placeholder.northwest": "northwest",
+  "dialog.thequestforge.direction_placeholder.north": "north",
+  "dialog.thequestforge.direction_placeholder.northeast": "northeast",
 
   "overlay.thequestforge.interact_message": "to talk",
 
@@ -28,5 +39,7 @@
   "command.thequestforge.spawn.entity_not_mob": "Entity is not mob",
   "command.thequestforge.spawn.template_not_found": "Quest template not found",
   "command.thequestforge.spawn.player_is_null": "Player is null",
-  "command.thequestforge.spawn.success": "Quest giver created"
+  "command.thequestforge.spawn.success": "Quest giver created",
+
+  "chat.thequestforge.npc_lock_message": "I don't need your help yet. Come back later."
 }

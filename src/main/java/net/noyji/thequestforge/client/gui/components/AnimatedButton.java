@@ -3,7 +3,6 @@ package net.noyji.thequestforge.client.gui.components;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
@@ -42,6 +41,7 @@ public class AnimatedButton extends AbstractButton {
     private final long reverseDelayMs;
 
     private final OnPress onPress;
+    private final Component tooltipMessage;
 
     public AnimatedButton(int x, int y, int width, int height,
                           ResourceLocation texture, int textureWidth, int textureHeight,
@@ -49,7 +49,7 @@ public class AnimatedButton extends AbstractButton {
                           AnimationDirection direction, float animationDistance,
                           float animationSpeed, EasingType easingType,
                           OnPress onPress, SoundEvent hoverSound, SoundEvent clickSound,
-                          long reverseDelayMs) {
+                          long reverseDelayMs, Component tooltipMessage) {
         super(x, y, (int)(width * scale), (int)(height * scale), Component.empty());
 
         this.texture = texture;
@@ -71,6 +71,7 @@ public class AnimatedButton extends AbstractButton {
         this.hoverSound = hoverSound;
         this.clickSound = clickSound;
         this.reverseDelayMs = reverseDelayMs;
+        this.tooltipMessage = tooltipMessage;
     }
 
     public void startAnimation() {
@@ -163,6 +164,13 @@ public class AnimatedButton extends AbstractButton {
                 textureWidth, textureHeight
         );
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+
+        if (this.isHovered() && this.tooltipMessage != null) {
+            graphics.pose().pushPose();
+            graphics.pose().translate(0.0F, 0.0F, 500.0F);
+            graphics.renderTooltip(Minecraft.getInstance().font, this.tooltipMessage, mouseX, mouseY);
+            graphics.pose().popPose();
+        }
     }
 
     private void playHoverSound() {
@@ -274,7 +282,7 @@ public class AnimatedButton extends AbstractButton {
         private long reverseDelayMs = 170L;
 
         @Nullable
-        private Tooltip tooltip = null;
+        private Component tooltipMessage = null;
 
         public Builder position(int x, int y) {
             this.x = x;
@@ -343,21 +351,15 @@ public class AnimatedButton extends AbstractButton {
         }
 
         public Builder tooltip(Component message) {
-            this.tooltip = Tooltip.create(message);
+            this.tooltipMessage = message;
             return this;
         }
 
         public AnimatedButton build() {
-            AnimatedButton button = new AnimatedButton(x, y, width, height, texture,
+            return new AnimatedButton(x, y, width, height, texture,
                     textureWidth, textureHeight, u, v, scale,
                     direction, distance, speed, easing,
-                    onPress, hoverSound, clickSound, reverseDelayMs);
-
-            if (this.tooltip != null) {
-                button.setTooltip(this.tooltip);
-            }
-
-            return button;
+                    onPress, hoverSound, clickSound, reverseDelayMs, tooltipMessage);
         }
     }
 }

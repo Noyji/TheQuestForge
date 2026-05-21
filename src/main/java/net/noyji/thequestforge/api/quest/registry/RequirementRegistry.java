@@ -55,6 +55,7 @@ public class RequirementRegistry {
     public static final RegistryObject<AbstractRequirement> BIOME_IS_NOT = registerRequirement(new BiomeIsNotRequirement());
     public static final RegistryObject<AbstractRequirement> BIOME_TAG_IS = registerRequirement(new BiomeTagIsRequirement());
     public static final RegistryObject<AbstractRequirement> BIOME_TAG_IS_NOT = registerRequirement(new BiomeTagIsNotRequirement());
+    public static final RegistryObject<AbstractRequirement> IS_BIOME_NEARBY = registerRequirement(new IsBiomeNearbyRequirement());
 
     public static final RegistryObject<AbstractRequirement> DIMENSION_IS = registerRequirement(new DimensionIsRequirement());
     public static final RegistryObject<AbstractRequirement> DIMENSION_IS_NOT = registerRequirement(new DimensionIsNotRequirement());

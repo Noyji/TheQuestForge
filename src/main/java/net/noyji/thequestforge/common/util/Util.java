@@ -1,13 +1,20 @@
 package net.noyji.thequestforge.common.util;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.QuartPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.noyji.thequestforge.api.quest.IWeighable;
 import net.noyji.thequestforge.config.ServerConfig;
@@ -19,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class Util {
     @Nullable
@@ -201,6 +209,65 @@ public class Util {
             }
         }
         return null;
+    }
+    @Nullable
+    public static BlockPos findBiomePosLocate(Level level, BlockPos centerPos, Predicate<Holder<Biome>> predicate, int radius) {
+        if (!(level instanceof ServerLevel serverLevel)) return null;
+
+        BiomeSource biomeSource = serverLevel.getChunkSource().getGenerator().getBiomeSource();
+
+        int quartX = QuartPos.fromBlock(centerPos.getX());
+        int quartY = QuartPos.fromBlock(centerPos.getY());
+        int quartZ = QuartPos.fromBlock(centerPos.getZ());
+        int quartRadius = QuartPos.fromBlock(radius);
+
+        int step = 8;
+
+        for (int r = 0; r <= quartRadius; r += step) {
+            for (int x = -r; x <= r; x += step) {
+                boolean isEdgeX = Math.abs(x) == r;
+
+                for (int z = -r; z <= r; z += step) {
+                    boolean isEdgeZ = Math.abs(z) == r;
+
+                    if (!isEdgeX && !isEdgeZ) continue;
+
+                    int checkX = quartX + x;
+                    int checkZ = quartZ + z;
+
+                    Holder<Biome> biomeHolder = biomeSource.getNoiseBiome(checkX, quartY, checkZ, serverLevel.getChunkSource().randomState().sampler());
+
+                    if (predicate.test(biomeHolder)) {
+                        return new BlockPos(checkX * 4, centerPos.getY(), checkZ * 4);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private static final String[] DIRECTIONS = {
+            "dialog.thequestforge.direction_placeholder.east",
+            "dialog.thequestforge.direction_placeholder.southeast",
+            "dialog.thequestforge.direction_placeholder.south",
+            "dialog.thequestforge.direction_placeholder.southwest",
+            "dialog.thequestforge.direction_placeholder.west",
+            "dialog.thequestforge.direction_placeholder.northwest",
+            "dialog.thequestforge.direction_placeholder.north",
+            "dialog.thequestforge.direction_placeholder.northeast"
+    };
+
+    public static String getDirectionText(BlockPos fromPos, BlockPos toPos) {
+        double dX = toPos.getX() - fromPos.getX();
+        double dZ = toPos.getZ() - fromPos.getZ();
+
+        double angle = Math.atan2(dZ, dX) * 180.0 / Math.PI;
+
+        angle = (angle + 360.0) % 360.0;
+
+        int index = (int) Math.round(angle / 45.0) % 8;
+
+        return DIRECTIONS[index];
     }
 
     private static boolean isSameItem(ItemStack stack1, ItemStack stack2) {

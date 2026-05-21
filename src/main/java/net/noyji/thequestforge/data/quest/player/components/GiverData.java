@@ -62,7 +62,7 @@ public class GiverData {
         }
 
         if (nbt.contains("giver_dimension")) {
-            String dimString = nbt.getString("GiverDimension");
+            String dimString = nbt.getString("giver_dimension");
             ResourceLocation dimLocation = ResourceLocation.parse(dimString);
             this.dimension = ResourceKey.create(Registries.DIMENSION, dimLocation);
         } else {

@@ -150,6 +150,7 @@ public class QuestBookGui extends Screen {
                 .uv(322, 41)
                 .animation(AnimatedButton.AnimationDirection.DOWN, 10.0F, 2.55F)
                 .easing(AnimatedButton.EasingType.EASE_OUT)
+                .tooltip(Component.translatable("gui.thequestforge.book.target_compass"))
                 .onPress(button -> {
                     if (!manager.targetQuestForCompass()){}
                 })
