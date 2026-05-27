@@ -4,7 +4,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.client.placeholder.IPlaceholderResolver;
-import net.noyji.thequestforge.data.quest.entity.Quest;
 import net.noyji.thequestforge.data.quest.player.PlayerQuest;
 
 import java.util.Map;
