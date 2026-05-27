@@ -35,20 +35,23 @@ public class TemplateDialogButton {
     private String altToGo;
     private List<String> actions;
 
+    public void runAction(ActionContext context, ResourceLocation actionLoc){
+        AbstractAction abstractAction = ActionRegistry.getAction(actionLoc);
+
+        if (abstractAction == null) {
+            TheQuestForge.LOGGER.debug("Action : {} not found", actionLoc);
+            return;
+        }
+        TheQuestForge.LOGGER.debug("Action : {} running!", actionLoc);
+        if (!abstractAction.handler(context)){
+            TheQuestForge.LOGGER.debug("Action failed.");
+        }
+    }
+
     public void runActions(ActionContext context){
         for (String action : actions){
-
-            ResourceLocation loc = TheQuestForge.parse(action);
-            AbstractAction abstractAction = ActionRegistry.getAction(loc);
-
-            if (abstractAction == null) {
-                TheQuestForge.LOGGER.debug("Action : {} not found", action);
-                continue;
-            }
-            TheQuestForge.LOGGER.debug("Action : {} running!", action);
-            if (!abstractAction.handler(context)){
-                TheQuestForge.LOGGER.debug("Action failed.");
-            }
+            ResourceLocation actionLoc = TheQuestForge.parse(action);
+            runAction(context, actionLoc);
         }
     }
 

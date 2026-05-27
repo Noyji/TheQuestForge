@@ -1,0 +1,328 @@
+{
+  "id": "villager_plains_materials_3",
+  "tasks": [
+    {
+      "task_type": "thequestforge:collect",
+      "value": 3,
+      "target": "minecraft:wheat",
+      "multiplier": true,
+      "weight": 20,
+      "count": {
+        "min": 15,
+        "max": 40
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 4,
+      "target": "minecraft:egg",
+      "multiplier": true,
+      "weight": 20,
+      "count": {
+        "min": 8,
+        "max": 16
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 5,
+      "target": "minecraft:sugar_cane",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 10,
+        "max": 25
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 4,
+      "target": "minecraft:pumpkin",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 3,
+        "max": 10
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 3,
+      "target": "minecraft:carrot",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 15,
+        "max": 30
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 3,
+      "target": "minecraft:potato",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 15,
+        "max": 30
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 3,
+      "target": "minecraft:beetroot",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 15,
+        "max": 30
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 6,
+      "target": "minecraft:brown_mushroom",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 6,
+      "target": "minecraft:red_mushroom",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 15,
+      "target": "minecraft:milk_bucket",
+      "multiplier": false,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 3
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 5,
+      "target": "minecraft:apple",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 12
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 4,
+      "target": "minecraft:sweet_berries",
+      "multiplier": true,
+      "weight": 17,
+      "count": {
+        "min": 15,
+        "max": 35
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 2,
+      "target": "minecraft:melon_slice",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 10,
+        "max": 30
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 5,
+      "target": "minecraft:cocoa_beans",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 6,
+      "target": "minecraft:beef",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 6,
+      "target": "minecraft:porkchop",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 5,
+      "target": "minecraft:chicken",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 12,
+      "target": "minecraft:honey_bottle",
+      "multiplier": false,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 2,
+      "target": "minecraft:bowl",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 4,
+        "max": 16
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "target": "minecraft:iron_ingot",
+      "multiplier": true,
+      "price": 15,
+      "weight": 15,
+      "count": {
+        "min": 2,
+        "max": 8
+      }
+    },
+    {
+      "target": "minecraft:gold_nugget",
+      "multiplier": true,
+      "price": 5,
+      "weight": 18,
+      "count": {
+        "min": 5,
+        "max": 20
+      }
+    },
+    {
+      "target": "minecraft:iron_hoe",
+      "multiplier": false,
+      "price": 30,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "enchantment": [
+        {
+          "id": "minecraft:unbreaking",
+          "level": {
+            "min": 1,
+            "max": 2
+          },
+          "weight": 10
+        }
+      ],
+      "enchantment_count": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    {
+      "target": "minecraft:shears",
+      "multiplier": false,
+      "price": 25,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    {
+      "target": "minecraft:bone_meal",
+      "multiplier": true,
+      "price": 4,
+      "weight": 15,
+      "count": {
+        "min": 10,
+        "max": 32
+      }
+    },
+    {
+      "target": "minecraft:cookie",
+      "multiplier": true,
+      "price": 5,
+      "weight": 12,
+      "count": {
+        "min": 4,
+        "max": 12
+      }
+    },
+    {
+      "target": "minecraft:bread",
+      "multiplier": true,
+      "price": 8,
+      "weight": 15,
+      "count": {
+        "min": 2,
+        "max": 6
+      }
+    },
+    {
+      "target": "minecraft:pumpkin_pie",
+      "multiplier": true,
+      "price": 15,
+      "weight": 12,
+      "count": {
+        "min": 1,
+        "max": 3
+      }
+    },
+    {
+      "target": "minecraft:cake",
+      "multiplier": false,
+      "price": 40,
+      "weight": 5,
+      "count": {
+        "min": 1,
+        "max": 1
+      }
+    }
+  ],
+  "xp_reward": {
+    "min": 5,
+    "max": 12
+  },
+  "currency_reward": {
+    "min": 5,
+    "max": 12
+  }
+}

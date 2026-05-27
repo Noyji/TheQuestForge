@@ -105,7 +105,8 @@ public class PlayerEvents {
 
                 if (entity == null) continue;
 
-                playerQuest.setGiverDataAndSync(entity.getOnPos(), entity.level().dimension(), entity.getId(), player);
+                String name = entity.hasCustomName() ? entity.getCustomName().getString() : entity.getName().getString();
+                playerQuest.setGiverDataAndSync(entity.getOnPos(), entity.level().dimension(), entity.getId(), name, player);
             }
         }
     }

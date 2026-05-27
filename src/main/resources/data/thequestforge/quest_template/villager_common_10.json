@@ -1,0 +1,406 @@
+{
+  "pool": "none",
+  "type": "LOCAL",
+  "weight": 100,
+  "requirement": [],
+  "name": {
+    "en_us": [
+      "Night Terrors",
+      "Creatures of the Dark",
+      "Nocturnal Menace",
+      "Dangerous Moonlight",
+      "Monsters at the Door",
+      "Under the Cover of Night",
+      "Fear of the Dark",
+      "Dreadful Howls",
+      "Purge the Night",
+      "Safe Sleep",
+      "Midnight Hunt",
+      "Shadows in the Yard",
+      "Until Sunrise",
+      "Defenders of the Village",
+      "Restless Shadows"
+    ],
+    "ru_ru": [
+      "Ночные кошмары",
+      "Твари во тьме",
+      "Ночная угроза",
+      "Опасный лунный свет",
+      "Монстры у дверей",
+      "Под покровом ночи",
+      "Страх темноты",
+      "Жуткие завывания",
+      "Очистить ночь",
+      "Безопасный сон",
+      "Полночная охота",
+      "Тени во дворе",
+      "До рассвета",
+      "Защитники деревни",
+      "Тревожные тени"
+    ]
+  },
+  "description": {
+    "en_us": [
+      "With the onset of darkness, dangerous monsters gather near the village. %npc_name% is terrified to sleep and asks you to hunt down the creatures lurking right outside his windows.",
+      "The night has become too dangerous. %npc_name% claims that monsters are pacing around the houses after sunset. Hunt them down so the villagers can sleep in peace.",
+      "%npc_name% begs a passing warrior to protect his family from nocturnal predators. Eliminate the threats before the sun comes up. No emeralds, only useful combat supplies.",
+      "The courtyard of %npc_name% is besieged by monsters every single night. Clear the area of the dangerous beasts and secure the village borders.",
+      "Help %npc_name% get a good night's rest! Monsters are scratching at his walls from dusk till dawn. Purge the neighborhood of these unwelcome guests."
+    ],
+    "ru_ru": [
+      "С наступлением темноты у деревни собираются опасные монстры. %npc_name% боится спать и просит вас уничтожить тварей, бродящих прямо под его окнами.",
+      "Ночи стали слишком опасными. %npc_name% жалуется, что после заката вокруг домов бродят чудовища. Перебейте их, чтобы в деревню вернулся спокойный сон.",
+      "%npc_name% умоляет проходящего мимо воина защитить его семью от ночных хищников. Уничтожьте угрозу под покровом тьмы. Никаких изумрудов, только полезные припасы.",
+      "Двор %npc_name% каждую ночь осаждают монстры. Очистите территорию от опасных тварей и обеспечьте безопасность на границах деревни.",
+      "Помогите %npc_name% наконец-то выспаться! Монстры скребутся в его стены от заката до рассвета. Очистите окрестности от этих непрошеных гостей."
+    ]
+  },
+  "max_reward": 3,
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": [
+          "Greetings, traveler... I look terrible, right? That's because I haven't slept properly in days. It's impossible with those things outside!",
+          "Hello. You look like someone who doesn't mind a bit of danger. Tell me, do you hunt monsters by any chance?",
+          "Shh... Do you hear that? The sun is still up, but I can already feel them waiting for the dark. I can't take this anxiety anymore.",
+          "Good day! Thank goodness an armed traveler is passing by. The nights here have become a total nightmare recently.",
+          "Greetings! Tell me, friend, is your sword ready for a real midnight hunt? Because my house is basically surrounded every night."
+        ],
+        "ru_ru": [
+          "Приветствую, путник... Выгляжу паршиво, да? Это всё потому, что я уже несколько дней нормально не спал. С этими тварями за окном уснуть невозможно!",
+          "Здорово бывали. Выглядишь как человек, которому опасности нипочём. Скажи, тебе случаем не приходилось охотиться на чудовищ?",
+          "Тсс... Слышишь? Солнце ещё высоко, а я уже прямо кожей чувствую, как они ждут темноты. У меня больше нет сил жить в этом страхе.",
+          "День добрый! Слава небу, мимо идёт вооруженный путник. Ночи в наших краях в последнее время превратились в настоящий кошмар.",
+          "Приветствую! Скажи мне, приятель, твой меч готов к настоящей полуночной охоте? А то мой дом каждую ночь натурально берут в осаду."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "What monsters?",
+              "Who is prowling out there?",
+              "Tell me what happens at night."
+            ],
+            "ru_ru": [
+              "Что за монстры?",
+              "Кто там бродит?",
+              "Расскажи, что происходит ночью."
+            ]
+          },
+          "to_go": "dialog_1"
+        },
+        {
+          "text": {
+            "en_us": [
+              "I'll keep the night safe.",
+              "They won't survive this night.",
+              "I'll purge them, don't worry."
+            ],
+            "ru_ru": [
+              "Я сделаю эту ночь безопасной.",
+              "Они не переживут этот рассвет.",
+              "Я истреблю их, не переживай."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        }
+      ]
+    },
+    "dialog_1": {
+      "text": {
+        "en_us": [
+          "As soon as twilight falls, the area crawls with monsters! They prowl near the fences, moan, rattle their bones, and scratch at the doors. My family is terrified to even look through the windows!",
+          "It's the same thing every night. Dark shadows rise from the fields and gather around my courtyard. If someone doesn't thin their numbers, they might actually break in one day.",
+          "The night air is full of horrible sounds. Those vicious creatures are coming from the dark plains, pacing right outside. I'm a peaceful householder, I can't fight them off myself!",
+          "I don't know where they come from, but as soon as the moon rises, the streets become deadly. They growl under my windows and stomp around until dawn. We need a real hunter to clear them out.",
+          "They are aggressive, vile, and numerous! They trap us in our own homes from sunset till sunrise. Someone strong needs to teach those midnight stalkers a lesson."
+        ],
+        "ru_ru": [
+          "Как только сгущаются сумерки, вся округа заполняется тварями! Они бродят у самых заборов, воют, гремят костями и скребутся в двери. Мои домашние боятся даже в окна смотреть!",
+          "Каждую ночь одно и то же. Мрачные тени поднимаются с полей и собираются вокруг моего двора. Если кто-то не проредит их ряды, они однажды просто выломают двери.",
+          "Ночной воздух полон ужасных звуков. Эти злобные твари приходят из тёмных равнин и караулят снаружи. Я обычный мирный житель, я не могу отбиться от них сам!",
+          "Я не знаю, откуда они берутся, но как только встаёт луна, улицы становятся смертельно опасными. Они рычат под окнами до самого рассвета. Нам нужен охотник, чтобы очистить двор.",
+          "Они агрессивны, опасны и их слишком много! Они запирают нас в собственных домах от заката до рассвета. Кто-то сильный должен проучить этих ночных обитателей."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Whom do I need to kill?",
+              "Give me the targets.",
+              "Who is on the list?"
+            ],
+            "ru_ru": [
+              "Кого именно нужно убить?",
+              "Давай список целей.",
+              "Кто в списке на уничтожение?"
+            ]
+          },
+          "to_go": "dialog_2"
+        },
+        {
+          "text": {
+            "en_us": [
+              "What's my reward?",
+              "What will you pay for a quiet night?"
+            ],
+            "ru_ru": [
+              "Какова моя награда?",
+              "Что заплатишь за тихую ночь?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    },
+    "dialog_2": {
+      "text": {
+        "en_us": [
+          "To make the nights quiet again, you must destroy %target-1%%target-2%%target-3%. Can you handle them?",
+          "Look for %target-1%%target-2%%target-3% when the darkness falls. Eliminate them, and the village will breathe a sigh of relief.",
+          "My family's sleep depends on this. Slay %target-1%%target-2%%target-3%, please. Put an end to this siege.",
+          "You need to hunt down %target-1%%target-2%%target-3%. Deal with them before they hurt anyone.",
+          "If you want to secure our windows, find and smash %target-1%%target-2%%target-3%. Are you ready for a midnight hunt?"
+        ],
+        "ru_ru": [
+          "Чтобы ночи снова стали тихими, ты должен уничтожить %target-1%%target-2%%target-3%. Справишься с ними?",
+          "Ищи %target-1%%target-2%%target-3%, как только стемнеет. Ликвидируй их, и деревня вздохнёт с облегчением.",
+          "Сон моей семьи зависит от этого. Пожалуйста, сокруши %target-1%%target-2%%target-3%. Положи конец этой осаде.",
+          "Тебе нужно выследить и перебить %target-1%%target-2%%target-3%. Разберись с ними, пока они никому не навредили.",
+          "Если хочешь обезопасить наши окна, найди и разгроми %target-1%%target-2%%target-3%. Готов к полуночной охоте?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll destroy them.",
+              "Consider it done.",
+              "I'm on it."
+            ],
+            "ru_ru": [
+              "Я уничтожу их.",
+              "Считай, уже сделано.",
+              "Я в деле."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "And the payment?"
+            ],
+            "ru_ru": [
+              "А оплата?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    },
+    "dialog_3": {
+      "text": {
+        "en_us": [
+          "I have no emeralds, but I'll empty my storage chests for you! You'll get %reward-1%%reward-2%%reward-3%. Deal?",
+          "For a peaceful and quiet night, I am ready to hand over %reward-1%%reward-2%%reward-3%. It's a fair price for safety.",
+          "I'll share my useful tools and fresh supplies. %reward-1%%reward-2%%reward-3% is waiting for you once the job is done.",
+          "A hunter deserves good gear. I offer %reward-1%%reward-2%%reward-3% for clearing the neighborhood.",
+          "My offer contains solid survival items: %reward-1%%reward-2%%reward-3%. A fair exchange for a quiet sleep, right?"
+        ],
+        "ru_ru": [
+          "Изумрудов у меня нет, зато я вытряхну ради тебя свои запасы! Получишь %reward-1%%reward-2%%reward-3%. По рукам?",
+          "За мирную и спокойную ночь я готов расстаться с %reward-1%%reward-2%%reward-3%. За безопасность это честная цена.",
+          "Поделюсь полезными инструментами и свежими припасами. %reward-1%%reward-2%%reward-3% ждут тебя, как только закончишь.",
+          "Охотнику положено хорошее снаряжение. Предлагаю %reward-1%%reward-2%%reward-3% за очистку окрестностей.",
+          "Моё предложение включает добротные вещи для выживания: %reward-1%%reward-2%%reward-3%. Честный обмен за спокойный сон, верно?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll destroy them.",
+              "Consider it done.",
+              "I'm on it."
+            ],
+            "ru_ru": [
+              "Я уничтожу их.",
+              "Считай, уже сделано.",
+              "Я в деле."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "What exactly do you need?"
+            ],
+            "ru_ru": [
+              "Что именно нужно?"
+            ]
+          },
+          "to_go": "dialog_2"
+        }
+      ]
+    },
+    "dialog_4": {
+      "text": {
+        "en_us": [
+          "May the moonlight light your path! Go out when the stars appear and cleanse our yard. I'll be waiting.",
+          "Thank you, brave soul. Please, be careful—nocturnal beasts are aggressive and ruthless. Return safely!",
+          "Go, and strike true. Until those monsters are dealt with, this house remains a trap. Good luck.",
+          "Remember, clear them out completely. Bring back peace to our neighborhood, and I'll get your reward ready.",
+          "I believe in your strength. Slay the stalkers, and let the long-awaited quiet return to our windows."
+        ],
+        "ru_ru": [
+          "Пусть лунный свет освещает твой путь! Выходи, как только загорятся звёзды, и очисти наш двор. Жду тебя.",
+          "Спасибо тебе, храбрая душа. Пожалуйста, будь осторожнее — ночные бестии агрессивны и беспощадны. Возвращайся целым!",
+          "Ступай и рази без промаха. Пока с этими чудовищами не покончено, наш дом остаётся ловушкой. Удачи.",
+          "Помни, зачисти их полностью. Верни покой в наши окрестности, а я пока подготовлю твои вещи.",
+          "Верю в твою силу. Срази ночных преследователей, и пусть долгожданная тишина наконец вернётся к нашим окнам."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Alright"
+            ],
+            "ru_ru": [
+              "Хорошо"
+            ]
+          },
+          "to_go": "dialog_5",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_5": {
+      "text": {
+        "en_us": [
+          "Ah, welcome back! Tell me, is the dark courtyard safe now? Are the monsters gone?",
+          "Well? Did you manage to track down and defeat those night crawlers? Can we sleep?",
+          "I thought I heard fewer growls... Did you eliminate all the threats from the list?",
+          "Welcome back, hunter! Have you cleared our borders of those dreadful creatures?",
+          "Speak to me! Is the night safe again? Did you get rid of them all?"
+        ],
+        "ru_ru": [
+          "А, с возвращением! Скажи мне, теперь во дворе безопасно? Монстры исчезли?",
+          "Ну что? Получилось выследить и одолеть тех ночных тварей? Мы можем спать спокойно?",
+          "Мне показалось, рычания стало меньше... Ты ликвидировал все угрозы из списка?",
+          "С возвращением, охотник! Удалось очистить наши границы от этих жутких созданий?",
+          "Ответь мне! Ночь снова безопасна? Ты избавился от них всех?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Yes"
+            ],
+            "ru_ru": [
+              "Да"
+            ]
+          },
+          "to_go": "dialog_7",
+          "actions": [
+            "thequestforge:complete"
+          ],
+          "alt_to_go": "dialog_6"
+        }
+      ]
+    },
+    "dialog_6": {
+      "text": {
+        "en_us": [
+          "No, I can still hear scratching sounds outside! Some of them are still alive. Finish them, please!",
+          "It's not over yet. I saw a dark silhouette right near the fence. Destroy the rest or they'll come back!",
+          "You only did part of the job. We agreed on a complete cleanup! Go back into the dark and show no mercy.",
+          "They are still pacing under the windows! Some targets are still breathing. Go back out there.",
+          "Oh no, it's still dangerous. You missed some of the monsters. Return only when the night is empty!"
+        ],
+        "ru_ru": [
+          "Нет, я всё ещё слышу скрежет снаружи! Кое-кто из них всё ещё жив. Добей их, пожалуйста!",
+          "Ещё не всё кончено. Я видел тёмный силуэт прямо у забора. Уничтожь остальных, иначе они опять соберутся!",
+          "Ты выполнил лишь часть работы. Мы договаривались на полную очистку! Возвращайся во тьму и не знай жалости.",
+          "Они всё ещё ходят под окнами! Кое-кто из списка всё ещё дышит. Ступай обратно.",
+          "Ох нет, там всё ещё опасно. Ты упустил кого-то из монстров. Возвращайся только тогда, когда ночь станет пустой!"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll finish the job."
+            ],
+            "ru_ru": [
+              "Я закончу дело."
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_7": {
+      "text": {
+        "en_us": [
+          "Incredible! The streets are quiet, and those terrifying growls have completely stopped. Thank you, you saved our sleep! Take your well-deserved reward.",
+          "Ah, silence... beautiful, sweet silence! They are gone, and we can finally close our eyes without fear. Thank you, traveler. Take this.",
+          "You did it, you actually cleared our courtyard. The borders are safe, and my family is grateful. Enjoy your loot.",
+          "The night is quiet once more. Your blade has brought peace to our windows. My deepest respect, hunter. Here is your payment.",
+          "Finally, the dread is gone. Thank you for your strength and heavy hand. May this reward serve you well on your travels!"
+        ],
+        "ru_ru": [
+          "Невероятно! На улицах воцарилась тишина, а эти жуткие рыки прекратились вовсе. Спасибо тебе, ты спас наш сон! Забирай свою заслуженную награду.",
+          "Ах, тишина... прекрасная, сладкая тишина! Они исчезли, и мы можем наконец закрыть глаза без страха. Спасибо тебе, путник. Держи вещи.",
+          "Ты сделал это, ты действительно очистил наш двор. Границы в безопасности, вся моя семья тебе благодарна. Пользуйся лутом на здоровье.",
+          "В ночи снова воцарился мир. Твой клинок вернул покой к нашим окнам. Моё глубочайшее почтение, охотник. Вот твоя плата.",
+          "Наконец-то страх отступил. Спасибо за твою отвагу и тяжелую руку. Пусть эта награда сослужит тебе добрую службу в дорогах!"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Thank you!"
+            ],
+            "ru_ru": [
+              "Спасибо!"
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    }
+  },
+  "group": "thequestforge:default_mobs",
+  "task_count": {
+    "min": 1,
+    "max": 3
+  }
+}

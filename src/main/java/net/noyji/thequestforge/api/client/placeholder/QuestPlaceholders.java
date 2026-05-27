@@ -17,10 +17,14 @@ public class QuestPlaceholders{
             if (args.length != 0){
                 arg = args[0];
             }
-            if (arg.equals("no_hide")){
-                return entity.hasCustomName() ? entity.getCustomName().getString() : entity.getName().getString();
+            if (entity != null) {
+                if (arg.equals("no_hide")) {
+                    return entity.hasCustomName() ? entity.getCustomName().getString() : entity.getName().getString();
+                } else {
+                    return entity.hasCustomName() ? entity.getCustomName().getString() : "";
+                }
             } else {
-                return entity.hasCustomName() ? entity.getCustomName().getString() : "";
+                return quest.getGiverData().getName();
             }
         });
 
@@ -32,7 +36,7 @@ public class QuestPlaceholders{
                 AbstractTask<?> task = quest.getTask(targetIndex);
                 if (task == null) return "";
 
-                return task.getTargetName();
+                return " " + task.getTargetName() + ",";
             } catch (NumberFormatException e) {
                 return "Wrong number";
             }
@@ -47,9 +51,10 @@ public class QuestPlaceholders{
                 ItemStack stack = quest.getReward(rewardIndex);
                 if (stack == null) return "";
 
-                return stack.getCount() + " " + stack.getDisplayName().getString()
+                return " " + stack.getCount() + " " + stack.getDisplayName().getString()
                         .replace("[", "")
-                        .replace("]", "");
+                        .replace("]", "")
+                        + ",";
             } catch (Exception e) {
                 return "Wrong number";
             }
@@ -58,6 +63,14 @@ public class QuestPlaceholders{
         PlaceholderRegistry.register("direction", (player, entity, quest, args) -> {
             String direction = quest.getCustomData("direction");
             return (direction == null) ? "Direction not found" : Component.translatable(direction).getString();
+        });
+
+        PlaceholderRegistry.register("time", (player, entity, quest, args) -> {
+            if (quest.getTimeLimit() > -1){
+                return Component.literal(quest.getTimeLimit() + " ").append(Component.translatable("dialog.thequestforge.direction_placeholder.days")).getString();
+            } else {
+                return "";
+            }
         });
     }
 }

@@ -34,6 +34,8 @@ public class QuestGenerator {
 
     @Nullable
     public static Quest generateQuest(Player player, Entity entity, String pool) {
+        TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Starting quest generation for pool: '{}'", pool);
+
         QuestRarity rarity = getRarity();
         QuestTemplate template = QuestTemplateManager.EMPTY_TEMPLATE;
         int attempts = ServerConfig.ATTEMPTS_TO_CREATE_QUEST.get();
@@ -44,18 +46,24 @@ public class QuestGenerator {
             QuestTemplate temp = QuestTemplateManager.INSTANCE.getRandomQuestTemplate(pool);
 
             if (temp == null) {
-                TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Error template not found for quest. Pool: {}", pool);
-                return null;
+                if (!ServerConfig.GENERATE_ANYWAY.get()) return null;
+
+                if (pool.equals("none")) break;
+
+                TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Generation failed: Template not found in pool '{}', set pool none", pool);
+                pool = "none";
+                continue;
             }
 
             if (temp.checkRequirement(context)) {
                 template = temp;
+                TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Template '{}' selected after {} attempts.", template.getThisId(), (i + 1));
                 break;
             }
         }
 
         if (template.isEmpty()) {
-            TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Error, could not find a matching template. Pool: {}", pool);
+            TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Generation failed: No matching template found in pool '{}' after {} attempts.", pool, attempts);
             return null;
         }
 
@@ -64,11 +72,13 @@ public class QuestGenerator {
 
     @Nullable
     public static Quest generateQuest(Entity entity, ResourceLocation templateId) {
+        TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Starting targeted quest generation for template ID: {}", templateId);
+
         QuestRarity rarity = getRarity();
         QuestTemplate template = QuestTemplateManager.INSTANCE.getQuestTemplate(templateId);
 
         if (template == null || template.isEmpty()) {
-            TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Error, template not found or empty! ID: {}", templateId);
+            TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Generation failed: Target template '{}' not found or is empty.", templateId);
             return null;
         }
 
@@ -77,14 +87,19 @@ public class QuestGenerator {
 
     @Nullable
     private static Quest buildQuestFromTemplate(QuestTemplate template, Entity entity, QuestRarity rarity, Map<String, String> customData) {
+        TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Building quest from template '{}'. Assigned rarity: {}", template.getThisId(), rarity.name());
+
         Group group = QuestGroupManager.INSTANCE.getGroup(template.getGroupKey());
         if (group == null) {
-            TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Error, group is null! Group key: {}", template.getGroupKey());
+            TheQuestForge.LOGGER.error(QUEST_GENERATOR, "Build failed: Missing group '{}' for template '{}'.", template.getGroupKey(), template.getThisId());
             return null;
         }
 
         List<JsonTask> allTasks = new ArrayList<>(group.getTasks());
-        if (allTasks.isEmpty()) return null;
+        if (allTasks.isEmpty()) {
+            TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Build failed: Group '{}' has no tasks available.", template.getGroupKey());
+            return null;
+        }
 
         int totalValue = 0;
         int taskCount = template.getTaskCount(RANDOM);
@@ -93,6 +108,7 @@ public class QuestGenerator {
         List<JsonTask> selectedTask = new ArrayList<>();
 
         if (requirementTargets != null && !requirementTargets.isEmpty()) {
+            TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Processing {} targeted requirements.", requirementTargets.size());
             for (String reqTarget : requirementTargets) {
                 if (taskCount <= 0) break;
 
@@ -102,6 +118,7 @@ public class QuestGenerator {
                         selectedTask.add(jsonTask);
                         taskToRemove = jsonTask;
                         taskCount--;
+                        TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Targeted task matched: {}", jsonTask.getTaskType());
                         break;
                     }
                 }
@@ -116,11 +133,12 @@ public class QuestGenerator {
             List<JsonTask> randomTasks = Util.getWeightList(allTasks, taskCount, RANDOM);
             if (randomTasks != null) {
                 selectedTask.addAll(randomTasks);
+                TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Added {} random tasks based on weights.", randomTasks.size());
             }
         }
 
         if (selectedTask.isEmpty()) {
-            TheQuestForge.LOGGER.debug("Error select task is empty!");
+            TheQuestForge.LOGGER.warn(QUEST_GENERATOR, "Build failed: No valid tasks selected for quest.");
             return null;
         }
 
@@ -131,9 +149,30 @@ public class QuestGenerator {
                 tasks.add(abstractTask);
             }
         }
+        TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Successfully built {} tasks. Total accumulated quest value: {}", tasks.size(), totalValue);
 
         List<JsonReward> allRewards = new ArrayList<>(group.getRewards());
         List<ItemStack> rewards = new ArrayList<>();
+        List<String> guaranteedTargets = new ArrayList<>(template.getGuaranteedReward());
+
+        if (!guaranteedTargets.isEmpty()) {
+            TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Processing {} guaranteed rewards.", guaranteedTargets.size());
+            for (String rewardTarget : guaranteedTargets) {
+                JsonReward toRemove = null;
+                for (JsonReward reward : allRewards) {
+                    if (!reward.targetIs(rewardTarget)) continue;
+
+                    int count = reward.getCount(RANDOM, rarity);
+                    ItemStack itemStack = Util.parseItemStack(reward, count, RANDOM);
+                    rewards.add(itemStack);
+                    totalValue -= (count * reward.getPrice());
+                    toRemove = reward;
+                    TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Guaranteed reward assigned: {} x{}", itemStack.getItem(), count);
+                    break;
+                }
+                allRewards.remove(toRemove);
+            }
+        }
 
         while (totalValue > 0 && !allRewards.isEmpty()) {
             int finaleValue = totalValue;
@@ -142,7 +181,10 @@ public class QuestGenerator {
                     .filter(item -> item.getPrice() <= finaleValue)
                     .toList();
 
-            if (affordable.isEmpty()) break;
+            if (affordable.isEmpty()) {
+                TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "No more affordable rewards available. Remaining value: {}", totalValue);
+                break;
+            }
 
             JsonReward chosen = Util.getWeightItem(affordable, RANDOM);
             if (chosen == null) return null;
@@ -161,8 +203,12 @@ public class QuestGenerator {
 
             ItemStack itemReward = Util.parseItemStack(chosen, finalCount, RANDOM);
             rewards.add(itemReward);
+            TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Reward assigned: {} x{}. Remaining value: {}", itemReward.getItem(), finalCount, totalValue);
 
-            if (rewards.size() >= template.getRewardCount()) break;
+            if (rewards.size() >= template.getRewardCount()) {
+                TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Max reward count ({}) reached.", template.getRewardCount());
+                break;
+            }
         }
 
         Map<String, QuestDialog> dialogMap = template.getQuestDialog(RANDOM);
@@ -179,8 +225,7 @@ public class QuestGenerator {
         giverData.setGiverPos(entity.getOnPos());
         giverData.setDimension(entity.level().dimension());
         giverData.setEntityId(entity.getId());
-
-        TheQuestForge.LOGGER.debug(QUEST_GENERATOR, "Quest created: {}, source template: {}", questId, sourceTemplate);
+        giverData.setName(entity.hasCustomName() ? entity.getCustomName().getString() : entity.getName().getString());
 
         Quest quest = new Quest(sourceTemplate, questId, timeLimit, type, rarity, nameIndex,
                 descriptionIndex, xp, currency, false, tasks, rewards, dialogMap, giverData);
@@ -190,6 +235,7 @@ public class QuestGenerator {
         }
 
         quest.questInfo();
+        TheQuestForge.LOGGER.info(QUEST_GENERATOR, "Quest '{}' successfully finalized and created for entity ID: {}", questId, entity.getId());
 
         return quest;
     }
@@ -200,7 +246,6 @@ public class QuestGenerator {
 
     private static QuestRarity getRarity() {
         int roll = RANDOM.nextInt(100);
-        System.out.println(roll);
 
         int currentThreshold = ServerConfig.legendaryQuestChance;
         if (roll < currentThreshold) return QuestRarity.LEGENDARY;
@@ -223,7 +268,7 @@ public class QuestGenerator {
         TaskType<?> taskType = TaskHandlerRegistry.REGISTRY.get().getValue(taskTypeId);
 
         if (taskType == null) {
-            TheQuestForge.LOGGER.error("Error loading quest: Unknown task type {}", taskTypeId);
+            TheQuestForge.LOGGER.error(QUEST_GENERATOR, "Task build failed: Unknown task type '{}'", taskTypeId);
             return null;
         }
 

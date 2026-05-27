@@ -1,0 +1,557 @@
+{
+  "pool": "none",
+  "type": "LOCAL",
+  "weight": 100,
+  "requirement": [],
+  "name": {
+    "en_us": [
+      "Held Together by Hope",
+      "Can't Do Without It",
+      "One Step from Breaking",
+      "Old Cracks",
+      "What No Longer Serves",
+      "Time Has Taken Its Toll",
+      "On the Verge of Collapse",
+      "Can't Hold Much Longer",
+      "Marks of Many Years",
+      "Before It Breaks for Good",
+      "Won't Survive Another Winter",
+      "Something Isn't Right",
+      "Worn to the Limit",
+      "The Last of Its Strength",
+      "About to Fall Apart",
+      "An Old Problem",
+      "Needs a Steady Hand",
+      "Getting Worse Each Day",
+      "Not What It Used to Be",
+      "Still Holding Together"
+    ],
+    "ru_ru": [
+      "Всё держится на честном слове",
+      "Без этого не обойтись",
+      "Ещё немного - и конец",
+      "Старые трещины",
+      "То, что перестало служить",
+      "Время взяло своё",
+      "На грани развала",
+      "Уже не выдерживает",
+      "Следы долгих лет",
+      "Пока окончательно не сломалось",
+      "Не переживёт ещё одну зиму",
+      "Что-то здесь не так",
+      "Изношено до предела",
+      "Последние остатки прочности",
+      "Скоро рассыпется",
+      "Давняя проблема",
+      "Требует крепких рук",
+      "С каждым днём всё хуже",
+      "Уже не то, что раньше",
+      "Пока ещё держится"
+    ]
+  },
+  "description": {
+    "en_us": [
+      "%npc_name% needs help around the house. He's discovered a serious problem in his yard that he's been putting off for a long time, and when he decided to fix it, he couldn't find the necessary materials. You need to find the right resources and help him fix it. A reasonable fee is offered for the work.",
+      "%npc_name% is having problems with one of the buildings in his yard. Due to the constant delays in repairs, the situation has become critical, and the farm has no supplies left for repairs. We need to find the necessary materials to help the owner get the yard back in order. We will pay for the work.",
+      "%npc_name% is looking for someone to help him fix a problem in the yard. He doesn't have any repair materials of his own. His task is to obtain resources, help with the repair, and receive a well-deserved reward.",
+      "%npc_name%'s farm has been in trouble—there's something broken in the yard that needs urgent repairs. He's been holding off until the last minute and now lacks the necessary materials for the repairs. He needs help with resources and repairs for a fair price.",
+      "%npc_name% started repairing the yard, but ran out of building materials. He needs a helper to get everything he needs and help fix the problem. Of course, it won't be for free.",
+      "It seems %npc_name% isn't a very good owner: he's been putting off fixing the yard for so long that things have gotten worse, and he doesn't have the necessary materials on hand. It might be worth helping him fix this problem for a reasonable fee.",
+      "%npc_name% is asking for help fixing a problem in the courtyard. He doesn't have any repair materials of his own. He needs to gather resources, complete the repair, and collect the reward.",
+      "One of the buildings in %npc_name%'s yard requires major repairs. Due to a shortage of materials and labor, work has stalled. Your goal is to obtain everything necessary for the repairs and help the owner restore the yard to its former glory. Payment is required for the work.",
+      "Help %npc_name% with repairs in the yard.\nDue to the owner's negligence, the damage has been ignored for a long time, and the resources to fix it are lacking. You need to deliver the materials and complete the repairs. A reward is guaranteed.",
+      "Something always breaks in %npc_name%'s yard, but this time it's reached a critical point. There's nothing to fix it with—all the materials are long gone. I need to get some resources, help them put them to use, and get some coin in return."
+    ],
+    "ru_ru": [
+      "%npc_name% требуется помощь по хозяйству. У него во дворе обнаружилась серьезная поломка, которую он долго откладывал, а когда решил починить - не нашёл нужных материалов. Необходимо раздобыть подходящие ресурсы и помочь ему всё исправить. За работу обещена разумная плата.",
+      "У %npc_name% во дворе возникли проблемы с одной из построек. Из-за того, что ремонт постоянно откладывался, ситуация стала критической, а в хозяйстве не осталось никаких запасов для починки. Нужно разыскать необходимые материалы, чтобы помочь хозяину привести двор в порядок. Работа будет оплачена.",
+      "%npc_name% ищет того, кто поможет ему устранить поломку во дворе. Собственных материалов для ремонта у него не оказалось. Задача - раздобыть ресурсы, помочь с починкой и получить заслуженную награду.",
+      "В хозяйстве %npc_name% случилась неприятность - во дворе обнаружилась поломка, требующая срочного ремонта. Сам он дотянул до последнего и теперь остался без необходимых для починки материалов. Нужно помочь ему с ресурсами и ремонтом за честную плату.",
+      "%npc_name% запустил ремонт во дворе, но в процессе у него закончились строительные материалы. Ему нужен помощник, который добудет всё необходимое и поможет исправить поломку. Разумеется, не бесплатно.",
+      "Похоже, %npc_name% не очень хороший хозяин: он так долго откладывал починку во дворе, что теперь дело приняло скверный оборот, а нужных материалов под рукой не оказалось. Стоит помочь ему разобраться с этой поломкой за разумное вознаграждение.",
+      "%npc_name% просит помочь с устранением поломки во дворе. Своих материалов для ремонта у него нет. Требуется собрать ресурсы, завершить починку и забрать награду.",
+      "Одной из построек во дворе %npc_name% требуется капитальный ремонт. Из-за нехватки материалов и рабочих рук дело встало. Задача - раздобыть всё необходимое для починки и помочь хозяину вернуть двору прежний вид. За работу положена плата.",
+      "Оказать помощь %npc_name% в ремонте во дворе.\nИз-за халатности хозяина поломка долгое время игнорировалась, а ресурсы для её устранения отсутствуют. Необходимо доставить материалы и завершить ремонт. Награда гарантирована.",
+      "У %npc_name% во дворе вечно что-то ломается, но в этот раз дело дошло до критической точки. Чинить нечем - все материалы давно закончились. Нужно раздобыть ресурсы, помочь пристроить их к делу и получить за это монету."
+    ]
+  },
+  "max_reward": 3,
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": [
+          "Hello, looking at your appearance I can assume that you travel a lot around the world, am I right?",
+          "Greetings. Listen, I'm looking at you, at your gear... I can immediately tell you're someone who's traveled the world a lot. Am I right? I could really use a handyman like that right now.",
+          "It's been a while. I look at you and think: you're clearly one of those people who spends half their lives on the road and has seen the world, right? I have a job for you, just right for a seasoned traveler.",
+          "Greetings, traveler. Judging by your appearance, you're a seasoned man, well-traveled and worldly. Am I right? If so, I've run into a bit of a snag. Perhaps you could help?",
+          "Greetings! Listen, from the outside looking in, you're clearly one of those people who's been through this world from top to bottom. Right? I've got a problem here in my yard that's just right for a seasoned person like you.",
+          "Good afternoon. Looking at your appearance, your traveling clothes, it's immediately obvious that you don't just sit at home on the stove, but travel a lot around the world. Am I right? I need someone who's been on the road and isn't afraid of difficulties."
+        ],
+        "ru_ru": [
+          "Приветствую, смотря на твой вид могу предположить что ты много путешествуешь по миру, я прав?",
+          "Приветствую. Слушай, смотрю я на тебя, на твою экипировку... Сразу видно человека, который много путешествует по миру. Я прав? Как раз такой умелец мне бы сейчас очень пригодился",
+          "Здорово бывали. Гляжу я на твой вид и думаю: ты ведь явно из тех, кто в дорогах полжизни проводит и мир повидал, верно? Дело к тебе есть, как раз для бывалого путника",
+          "Приветствую, путник. Судя по твоему виду, ты человек тёртый, много где бывал и мир повидал. Я не ошибся? Если так, то у меня тут одна загвоздка образовалась, может, поможешь?",
+          "Приветствую! Слушай, со стороны посмотреть — так ты явно из тех, кто исходил этот мир вдоль и поперёк. Угадал? У меня тут во дворе дело одно встало, как раз для такого бывалого человека, как ты",
+          "День добрый. Гляжу на твой вид, на одежду дорожную — сразу видно, что ты дома на печи не сидишь, а много путешествуешь по миру. Прав я? Мне как раз нужен человек, который в дорогах бывал и трудностей не боится"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Yes, you're right, so what?",
+              "Yes, there is such a thing, but what?",
+              "Well, yes, do you need something?"
+            ],
+            "ru_ru": [
+              "Да ты прав, а что?",
+              "Да есть такое, а что?",
+              "Ну да, что-то нужно?"
+            ]
+          },
+          "to_go": "dialog_1",
+          "actions": []
+        }
+      ]
+    },
+    "dialog_1": {
+      "text": {
+        "en_us": [
+          "Yes, I just need help. The well at home is completely broken, and it needs to be patched, otherwise the water will drain away completely. I could see the frame was rotting, but I kept putting it off. Finally, when I rushed to fix it, I found I couldn't find the materials I needed at home. So I was looking for someone to help me with it. For a reasonable fee, of course.",
+          "I just need your help. The well in the yard is in really bad shape—it needs cleaning and shoring up before it crumbles. I kept putting it off, thinking, \"I'll do it tomorrow.\" But when I finally got around to it, I couldn't find any suitable materials around the house. Can you help me figure it out? Sure, for a reasonable fee, we'll come to an agreement.",
+          "Yes, I need help. The well in the yard needs repairs; it's barely usable anymore. I knew I needed to get it done, but I kept putting it off until tomorrow. I rushed to get started today, but I don't have the necessary materials on hand, and everything's gone. So I was hoping someone would help me with the repairs for a reasonable fee.",
+          "Yeah, I just need some help. The fence at home is completely buckled, and I need to patch it up, otherwise a couple of sections are already falling to the ground. I could see the posts were rotten, but I kept putting it off. Finally, when I rushed to fix it, I found I couldn't even find any decent boards at home. So I was looking for someone to help me with it. For a reasonable fee, of course.",
+          "I just need your help. The fence in the yard is in really bad shape—it's all slanted, it's about to collapse, and the whole yard is wide open. I kept putting off repairs, thinking, \"I'll do it tomorrow.\" But when I finally got around to it, I couldn't find any suitable materials around the house—no fasteners, no lumber. Can you help me figure it out? Of course, for a reasonable fee, we'll come to an agreement.",
+          "Yes, I need help. The fence in the yard needs repair; it's completely falling apart in places. I knew I needed to get it done, but I kept putting it off until tomorrow. I rushed to get started today, but I didn't have the necessary materials on hand, and everything ran out. So I was hoping someone would help me with the repairs for a reasonable fee.",
+          "Yes, I just need help. The roof at home is completely caved in, and it needs patching, because last time it rained, it was already dripping from above. I could see it was coming loose, but I kept putting it off. Finally, when I rushed to fix it, I found I couldn't find the necessary materials at home. So I was looking for someone to help me with it. For a reasonable fee, of course.",
+          "I just need your help. The roof on the house is in really bad shape—it's sagging in places, and it's about to leak and ruin the entire ceiling. I kept putting it off, thinking, \"I'll do it tomorrow.\" But when I finally got around to it, I couldn't find any decent materials around the house—no boards, no decent flooring. Can you help me figure it out? Sure, for a reasonable fee, we'll come to an agreement.",
+          "Yes, I need help. The roof on my house needs repair; it's completely loose after the winds. I knew I needed to get started, but I kept putting it off until tomorrow. I rushed to get started today, but I don't have the materials I need, and it's all gone. So I was hoping someone would help me with the repairs for a reasonable fee."
+        ],
+        "ru_ru": [
+          "Да, мне просто помощь нужна. Дома колодец загнулся окончательно, латать надо, а то вода совсем уйдёт. А я ведь видел, что сруб подгнивает, но всё откладывал и откладывал починку. В итоге, как кинулся делать, оказалось, что материалов нужных дома не сыскал. Вот и искал того, кто поможет мне с этим делом. За разумную плату, разумеется",
+          "Да мне просто помощь твоя нужна. Колодец во дворе совсем плох стал — и почистить надо, и стенки укрепить, пока не осыпались. Я всё откладывал ремонт на потом, думал: \"завтра займусь\". А как прижало делать, так материалов толковых в хозяйстве не сыскал. Поможешь разобраться? Само собой, за разумную плату, договоримся",
+          "Да, помощь нужна. Во дворе колодец ремонта требует, пользоваться им уже толком нельзя. Я ведь знал, что надо заняться, но всё откладывал починку на завтра. Кинулся сегодня делать, а материалов нужных под рукой нет, всё закончилось. Вот и рассчитывал на того, кто поможет мне с ремонтом за разумную плату",
+          "Да, мне просто помощь нужна. Дома забор загнулся окончательно, латать надо, а то пара секций уже на землю просится. А я ведь видел, что столбы подгнили, но всё откладывал и откладывал починку. В итоге, как кинулся делать, оказалось, что даже досок нормальных дома не сыскал. Вот и искал того, кто поможет мне с этим делом. За разумную плату, разумеется",
+          "Да мне просто помощь твоя нужна. Забор во дворе совсем плох стал — покосился весь, того и гляди рухнет, весь двор нараспашку. Я всё откладывал ремонт на потом, думал: \"завтра займусь\". А как прижало делать, так материалов толковых в хозяйстве не сыскал — ни крепежа, ни бруса. Поможешь разобраться? Само собой, за разумную плату, договоримся",
+          "Да, помощь нужна. Во дворе забор ремонта требует, местами совсем развалился. Я ведь знал, что надо заняться, но всё откладывал починку на завтра. Кинулся сегодня делать, а материалов нужных под рукой нет, всё закончилось. Вот и рассчитывал на того, кто поможет мне с ремонтом за разумную плату",
+          "Да, мне просто помощь нужна. Дома крыша загнулась окончательно, латать надо, а то в прошлый дождь уже закапало сверху. А я ведь видел, что кровля отходит, но всё откладывал и откладывал починку. В итоге, как кинулся делать, оказалось, что материалов нужных дома не сыскал. Вот и искал того, кто поможет мне с этим делом. За разумную плату, разумеется",
+          "Да мне просто помощь твоя нужна. Крыша на доме совсем плоха стала — местами просела, того и гляди течь даст, весь потолок испортит. Я всё откладывал ремонт на потом, думал: \"завтра займусь\". А как прижало делать, так материалов толковых в хозяйстве не сыскал — ни досок, ни настила нормального. Поможешь разобраться? Само собой, за разумную плату, договоримся",
+          "Да, помощь нужна. На доме крыша ремонта требует, после ветров совсем разболталась. Я ведь знал, что надо заняться, но всё откладывал починку на завтра. Кинулся сегодня делать, а материалов нужных под рукой нет, всё закончилось. Вот и рассчитывал на того, кто поможет мне с ремонтом за разумную плату"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Well, let me help you.",
+              "Okay, I'll help.",
+              "Alright, let me lend a hand.",
+              "Agreed, I'm in.",
+              "Deal, I'll help.",
+              "Since the pay is reasonable - why not?",
+              "Deal. I'll help you with the repairs.",
+              "Alright, I'll help."
+            ],
+            "ru_ru": [
+              "Ну давай помогу",
+              "Хорошо, я помогу",
+              "Ладно, давай подсоблю",
+              "Договорились, я в деле",
+              "По рукам, я помогу",
+              "Раз уж плата разумная - почему бы и нет",
+              "Идёт. Помогу тебе с ремонтом",
+              "Хорошо, я помогу"
+            ]
+          },
+          "to_go": "dialog_2",
+          "actions": [
+            "thequestforge:accept",
+            "thequestforge:save"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "What is the payment?",
+              "What can I count on?",
+              "And how much are you willing to pay for the job?",
+              "What's this \"reasonable fee\"?",
+              "And what will my reward be?",
+              "Alright, how much are you paying for the help?",
+              "What's the price?"
+            ],
+            "ru_ru": [
+              "Какая оплата?",
+              "На что я могу рассчитывать?",
+              "И сколько ты готов заплатить за работу?",
+              "Что за разумная плата?",
+              "И какова будет моя награда?",
+              "Хорошо, а платишь сколько за помощь?",
+              "Какова цена вопроса?"
+            ]
+          },
+          "to_go": "dialog_3"
+        },
+        {
+          "text": {
+            "en_us": [
+              "What do you need?",
+              "And what exactly do you need?",
+              "What materials are needed for the repair?",
+              "So, what is it I need to bring?",
+              "What do I need to collect?",
+              "Alright, so what exactly is your household missing?",
+              "What do I need to find for the repairs?",
+              "What is required?"
+            ],
+            "ru_ru": [
+              "А что надо?",
+              "И что именно тебе нужно?",
+              "Какие материалы требуются для починки?",
+              "А что принести-то надо?",
+              "Что нужно собрать?",
+              "Ладно, и чего конкретно у тебя в хозяйстве не хватает?",
+              "Что мне нужно отыскать для ремонта?",
+              "что требуется?"
+            ]
+          },
+          "to_go": "dialog_4"
+        }
+      ]
+    },
+    "dialog_2": {
+      "text": {
+        "en_us": [
+          "That's great, deal. My respect for not refusing. Then I’ll wait for you with supplies, while I prepare the instrument. Have a nice trip",
+          "Good. It's good that we agreed. Get down to business, and I'll be here. The sooner you come back, the sooner we’ll finish and pay off.",
+          "Well, thanks, I helped out. Otherwise I was already thinking that I would have to sculpt something out of mud and sticks myself. Come on, I'll wait for you with the materials",
+          "Hands down. I'm waiting for you with supplies. Don't delay there",
+          "Agreed. I'm glad I wasn't mistaken about you. Come back once you’ve collected everything, and we’ll get to work on the repairs right away. Good luck",
+          "Great. So, we agreed. Go and look for what you need, while I take another look at the front of the work. Waiting for you",
+          "It's coming. Once you've decided to do it, do it. Bring supplies, my reward will not rust. Try to hurry up",
+          "That's great, one less burden. Thanks for your help, traveler. I'm waiting for you with news and materials"
+        ],
+        "ru_ru": [
+          "Вот и отлично, по рукам. Моё почтение, что не отказал. Тогда жду тебя с припасами, а я пока инструмент подготовлю. Удачной дороги",
+          "Добро. Хорошо, что договорились. Берись за дело, а я здесь буду. Чем быстрее вернёшься, тем быстрее закончим и рассчитаемся",
+          "Ну, спасибо, выручил. А то я уже думал, придётся самому из грязи и палок что-то лепить. Давай, буду ждать тебя с материалами",
+          "По рукам. Жду тебя с припасами. Не затягивай там",
+          "Договорились. Рад, что в тебе не ошибся. Возвращайся как всё соберёшь, сразу за ремонт и примемся. Удачи",
+          "Отлично. Значит, договорились. Ступай, поищи что нужно, а я пока фронт работ ещё раз осмотрю. Жду тебя",
+          "Идёт. Раз уж взялся — делай. Приноси припасы, награда за мной не заржавеет. Постарайся побыстрее",
+          "Вот и славно, одним грузом меньше. Спасибо за помощь, путник. Жду тебя с новостями и материалами"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "OK",
+              "All right",
+              "Fine",
+              "Understood"
+            ],
+            "ru_ru": [
+              "Окей",
+              "Ладно",
+              "Хорошо",
+              "Понял"
+            ]
+          },
+          "to_go": "dialog_5",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_3": {
+      "text": {
+        "en_us": [
+          "I can suggest that %reward-1%%reward-2%%reward-3% will do?",
+          "I can suggest %reward-1%%reward-2%%reward-3% Will it work? Now, no matter how much I want, I won’t scrape together any more.",
+          "For your help I will give you %reward-1%%reward-2% on top. Agreed?",
+          "I will not leave you offended. From me %reward-1%%reward-2%%reward-3%. How do you like this deal, hands down?",
+          "For the work I will give %reward-1%%reward-2%%reward-3%. Will this kind of payment suit you?",
+          "From the reserves I can highlight %reward-1%%reward-2%%reward-3%. What do you say, will it go?",
+          "Let's do it this way: I charge %reward-1%%reward-2%%reward-3%. I think this is a completely fair price for such work. Hands down?",
+          "My price: %reward-1%%reward-2%%reward-3%. Hands down or not enough?",
+          "I won’t make you rich, but I can give you %reward-1%%reward-2%%reward-3%. Will it be normal?"
+        ],
+        "ru_ru": [
+          "Могу предложить %reward-1%%reward-2%%reward-3% пойдёт?",
+          "Могу предложить %reward-1%%reward-2%%reward-3% Пойдёт? Больше сейчас при всём желании не наскребу",
+          "За помощь отдам %reward-1%%reward-2% сверху накину. Договорились?",
+          "Обиженным не оставлю. С меня %reward-1%%reward-2%%reward-3%. Как тебе такой расклад, по рукам?",
+          "За работу выдам %reward-1%%reward-2%%reward-3%. Устроит тебя такая плата?",
+          "Из запасов могу выделить %reward-1%%reward-2%%reward-3%. Что скажешь, пойдёт?",
+          "Давай так: с меня %reward-1%%reward-2%%reward-3%. Думаю, это вполне честная цена за такую работу. По рукам?",
+          "Моя цена: %reward-1%%reward-2%%reward-3%. По рукам или мало?",
+          "Богачом я тебя не сделаю, но могу дать %reward-1%%reward-2%%reward-3%. Нормально будет?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Well, let me help you.",
+              "Okay, I'll help.",
+              "Alright, let me lend a hand.",
+              "Agreed, I'm in.",
+              "Deal, I'll help.",
+              "Since the pay is reasonable - why not?",
+              "Deal. I'll help you with the repairs.",
+              "Alright, I'll help."
+            ],
+            "ru_ru": [
+              "Ну давай помогу",
+              "Хорошо, я помогу",
+              "Ладно, давай подсоблю",
+              "Договорились, я в деле",
+              "По рукам, я помогу",
+              "Раз уж плата разумная - почему бы и нет",
+              "Идёт. Помогу тебе с ремонтом",
+              "Хорошо, я помогу"
+            ]
+          },
+          "to_go": "dialog_2",
+          "actions": [
+            "thequestforge:accept",
+            "thequestforge:save"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "What do you need?",
+              "And what exactly do you need?",
+              "What materials are needed for the repair?",
+              "So, what is it I need to bring?",
+              "What do I need to collect?",
+              "Alright, so what exactly is your household missing?",
+              "What do I need to find for the repairs?",
+              "What is required?"
+            ],
+            "ru_ru": [
+              "А что надо?",
+              "И что именно тебе нужно?",
+              "Какие материалы требуются для починки?",
+              "А что принести-то надо?",
+              "Что нужно собрать?",
+              "Ладно, и чего конкретно у тебя в хозяйстве не хватает?",
+              "Что мне нужно отыскать для ремонта?",
+              "что требуется?"
+            ]
+          },
+          "to_go": "dialog_4"
+        }
+      ]
+    },
+    "dialog_4": {
+      "text": {
+        "en_us": [
+          "From the materials you need %target-1%%target-2%%target-3% can you get it?",
+          "The list is simple, you need %target-1%%target-2%%target-3% can you get it?",
+          "Yes, I just need nothing: %target-1%%target-2%%target-3% can you find it somewhere?",
+          "I need %target-1%%target-2%%target-3% can you get it?",
+          "My household has just run out of %target-1%%target-2%%target-3%, can you help me find it?",
+          "To fix a nosebleed you need %target-1%%target-2%%target-3% can you bring it?",
+          "If you take it, find me %target-1%%target-2%%target-3% can you handle it?",
+          "As soon as you bring %target-1%%target-2%%target-3%, we’ll get down to business and sit down. Can you get it?"
+        ],
+        "ru_ru": [
+          "Из материалов надо %target-1%%target-2%%target-3% сможешь достать?",
+          "Список простой, нужны %target-1%%target-2%%target-3% сможешь раздобыть?",
+          "Да мне всего ничего нужно: %target-1%%target-2%%target-3% отыщешь где-нибудь?",
+          "Мне требуются %target-1%%target-2%%target-3% сможешь достать?",
+          "У меня в хозяйстве как раз закончились %target-1%%target-2%%target-3% поможешь найти?",
+          "Для починки кровь из носу нужны %target-1%%target-2%%target-3% сможешь принести?",
+          "Если возьмёшься, найди мне %target-1%%target-2%%target-3% справишься?",
+          "Как только принесёшь %target-1%%target-2%%target-3% сразу за дело и сядем. Сможешь достать?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Well, let me help you.",
+              "Okay, I'll help.",
+              "Alright, let me lend a hand.",
+              "Agreed, I'm in.",
+              "Deal, I'll help.",
+              "Since the pay is reasonable - why not?",
+              "Deal. I'll help you with the repairs.",
+              "Alright, I'll help."
+            ],
+            "ru_ru": [
+              "Ну давай помогу",
+              "Хорошо, я помогу",
+              "Ладно, давай подсоблю",
+              "Договорились, я в деле",
+              "По рукам, я помогу",
+              "Раз уж плата разумная - почему бы и нет",
+              "Идёт. Помогу тебе с ремонтом",
+              "Хорошо, я помогу"
+            ]
+          },
+          "to_go": "dialog_2",
+          "actions": [
+            "thequestforge:accept",
+            "thequestforge:save"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "What is the payment?",
+              "What can I count on?",
+              "And how much are you willing to pay for the job?",
+              "What's this \"reasonable fee\"?",
+              "And what will my reward be?",
+              "Alright, how much are you paying for the help?",
+              "What's the price?"
+            ],
+            "ru_ru": [
+              "Какая оплата?",
+              "На что я могу рассчитывать?",
+              "И сколько ты готов заплатить за работу?",
+              "Что за разумная плата?",
+              "И какова будет моя награда?",
+              "Хорошо, а платишь сколько за помощь?",
+              "Какова цена вопроса?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    },
+    "dialog_5": {
+      "text": {
+        "en_us": [
+          "Oh, he's back. Well, did you find everything? Can we start repairs or are you still looking?",
+          "Oh, it's you. How's it going, did you get everything on the list? Do you have materials with you?",
+          "Well hello. How are things going, did you find everything you need? Otherwise I have everything here with a stake, I’m waiting for you",
+          "Well, have you collected everything?",
+          "Hello, hello. Well, tell me, did you manage to get the materials? Did you bring it?",
+          "Greetings. Well, do you have any supplies?",
+          "Well, finally. Say you have good news. Did you find everything to fix?",
+          "Oh, traveler. Well, have you brought the materials or are you still in the process?"
+        ],
+        "ru_ru": [
+          "О, вернулся. Ну что, всё нашёл? Можем к ремонту приступать или ещё ищешь?",
+          "А, это ты. Ну как успехи, всё раздобыл по списку? Материалы с собой?",
+          "Ну привет. Как дела продвигаются, нашёл всё необходимое? А то у меня тут всё колом стоит, тебя жду",
+          "Ну что, всё собрал?",
+          "Привет-привет. Ну рассказывай, получилось достать материалы? Принёс?",
+          "Приветствую. Ну как, припасы у тебя?",
+          "Ну наконец-то. Скажи, что ты с хорошими новостями. Всё нашёл для починки?",
+          "О, путник. Ну что, принёс материалы или ещё в процессе?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Yes"
+            ],
+            "ru_ru": [
+              "Да "
+            ]
+          },
+          "to_go": "dialog_7",
+          "actions": [
+            "thequestforge:complete"
+          ],
+          "alt_to_go": "dialog_6"
+        }
+      ]
+    },
+    "dialog_6": {
+      "text": {
+        "en_us": [
+          "So, wait... I don't see all the materials. Something is clearly missing here. Check your bags, are you sure you brought everything?",
+          "Didn't understand. That's not all. Collect a complete list, then we’ll talk, but with half the supplies I can’t fix anything",
+          "Listen, well, we didn’t agree like that. I don't see all the materials I asked for. Let's report the rest, otherwise the matter has come to a standstill",
+          "That's not all. I don't see all the materials. Bring the rest",
+          "Wait a minute, let's count... No, I don't see all the materials. Where else is it going? Find everything on the list first",
+          "Oh no, that won't do. I don't see all the materials I need for the renovation. Come back when you've collected everything completely.",
+          "You only brought part. I don't see all the materials. There will be a whole set - there will be a board. Go finish it",
+          "Eh, I’m already happy... It’s too early to get down to business, I don’t see all the materials. Look again at what is missing and tell me"
+        ],
+        "ru_ru": [
+          "Так, погоди... Я не вижу всех материалов. Тут явно чего-то не хватает. Проверь сумки, ты точно всё принёс?",
+          "Не понял. Тут же не всё. Собери полный список, тогда и поговорим, а с половиной припасов я ничего починить не смогу",
+          "Слушай, ну мы же так не договаривались. Я не вижу всех материалов, что просил. Давай доноси остальное, а то дело встало",
+          "Тут не всё. Я не вижу всех материалов. Принеси остальное",
+          "Погоди-ка, давай посчитаем... Нет, я не вижу всех материалов. Куда остальное дел? Разыщи сперва всё по списку",
+          "Э нет, так не пойдёт. Я не вижу всех материалов, которые мне нужны для ремонта. Возвращайся, как соберёшь всё полностью",
+          "Ты принёс только часть. Я не вижу всех материалов. Будет весь комплект — будет и плата. Ступай доделывай",
+          "Эх, а я уже обрадовался... Рано за дело браться, я не вижу всех материалов. Посмотри ещё раз, чего не хватает, и донеси"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll bring it now"
+            ],
+            "ru_ru": [
+              "Сейчас принесу"
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_7": {
+      "text": {
+        "en_us": [
+          "Well, thank you very much, you helped me out! Now I'll definitely fix everything. This is your reward, as agreed. Everything is fair",
+          "Great, this is exactly what you need. Thanks for your help. Here's your payment, here it is. Deserved",
+          "Oh, my heart is relieved, you saved my farm. Thanks a lot! Hold the coin, it’s all down to the last drop, as agreed",
+          "That's great, thank you. Take your reward. Deal with each other",
+          "The materials are excellent, now it’s up to me - I’ll go patch it up. Thanks for the help. Here's your share, take it",
+          "I didn’t cheat, I brought everything. My respect for such work. Here, take your well-deserved pay. Good luck on your journey",
+          "Everything is in place, I checked it. Thank you, closed the question. Here is your reward, take it. No offense",
+          "Well, finally the renovation will get off the ground. Thank you for your efforts, traveler! This is your reward, enjoy it to your health"
+        ],
+        "ru_ru": [
+          "Ну, спасибо тебе огромное, выручил! Теперь-то я точно всё починю. Вот твоя награда, как и договаривались. Всё честно",
+          "Отлично, это как раз то, что нужно. Спасибо за помощь. Вот твоя плата, держи. Заслужил",
+          "Ох, у меня аж от сердца отлегло, спас ты моё хозяйство. Спасибо большое! Держи монету, тут всё до капли, как уговаривались",
+          "Вот и славно, спасибо. Забирай награду. По рукам",
+          "Материалы отличные, теперь дело за мной — пойду латать. Спасибо за подсобу. Вот твоя доля, забирай",
+          "Не обманул, всё принёс. Моё почтение за такую работу. Вот, держи заслуженную плату. Удачи тебе в дорогах",
+          "Всё на месте, проверил. Спасибо, закрыли вопрос. Вот твоя награда, держи. Обид никаких",
+          "Ну наконец-то ремонт с мёртвой точки сдвинется. Спасибо тебе за труды, путник! Вот твоя награда, пользуйся на здоровье"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Thank you!"
+            ],
+            "ru_ru": [
+              "Спасибо!"
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    }
+  },
+  "group": "thequestforge:villager_plains_materials_1",
+  "task_count": {
+    "min": 1,
+    "max": 3
+  }
+}

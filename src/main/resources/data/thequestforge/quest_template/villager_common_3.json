@@ -1,0 +1,395 @@
+{
+  "pool": "none",
+  "type": "LOCAL",
+  "weight": 100,
+  "requirement": [],
+  "name": {
+    "en_us": [
+      "Family Feast",
+      "Empty Pantry",
+      "Culinary Trouble",
+      "Sunday Dinner",
+      "Preparing for Guests",
+      "Signature Dish",
+      "Busy Host",
+      "Kitchen Chores",
+      "Missing Ingredients",
+      "Feast for the Whole World",
+      "Home Comfort",
+      "Saving the Dinner",
+      "Hungry Relatives",
+      "The Big Bake",
+      "A Host's Nightmare"
+    ],
+    "ru_ru": [
+      "Семейный пир",
+      "Пустая кладовая",
+      "Кулинарная беда",
+      "Воскресный обед",
+      "Подготовка к гостям",
+      "Фирменное блюдо",
+      "Хлопотливый хозяин",
+      "Кухонные заботы",
+      "Нехватка ингредиентов",
+      "Пир на весь мир",
+      "Домашний уют",
+      "Спасение ужина",
+      "Голодная родня",
+      "Большая выпечка",
+      "Кошмар хозяина"
+    ]
+  },
+  "description": {
+    "en_us": [
+      "%npc_name% is expecting guests and decided to arrange a grand dinner, but found out that his pantry is completely empty. He needs help collecting ingredients for the festive table. He promises a tasty reward for the help.",
+      "A big family feast is coming up at %npc_name%'s house. The host has been busy in the kitchen all morning, but ran out of necessary products. You need to quickly gather the missing ingredients before the hungry guests arrive.",
+      "%npc_name% wanted to surprise his loved ones with his signature dish, but didn't calculate the supplies. The cooking is paused, and the host is looking for an agile traveler to bring the missing food.",
+      "The house of %npc_name% is full of hustle and bustle—a big dinner is being prepared! However, due to absent-mindedness, the host forgot to stock up on food. Your task is to find the required ingredients and save the family feast.",
+      "%npc_name% asks for help with household chores. Relatives are coming soon, and there is almost nothing to feed them. Bring the requested food, and he will generously share his stashed coins.",
+      "Cooking a big meal requires a lot of resources, which %npc_name% currently lacks. He needs an assistant who can deliver fresh ingredients straight to the kitchen table."
+    ],
+    "ru_ru": [
+      "%npc_name% ждёт гостей и решил закатить грандиозный ужин, но обнаружил, что его кладовая совсем опустела. Ему требуется помощь в сборе ингредиентов для праздничного стола. За подсобу обещает щедро заплатить.",
+      "В доме %npc_name% намечается большой семейный пир. Хозяин всё утро крутится на кухне, но у него закончились нужные продукты. Необходимо срочно раздобыть недостающие ингредиенты, пока не нагрянули голодные родственники.",
+      "%npc_name% хотел удивить близких своим фирменным блюдом, но не рассчитал запасы. Готовка встала, и хозяин ищет проворного путника, который принесёт недостающую провизию.",
+      "В доме %npc_name% суета — готовится большой обед! Однако по рассеянности хозяин забыл пополнить продуктовые запасы. Ваша задача — найти требуемые ингредиенты и спасти семейное застолье.",
+      "%npc_name% просит помощи по хозяйству. Скоро приезжает родня, а кормить их почти нечем. Принесите запрошенную еду, и он щедро поделится заначкой.",
+      "Для приготовления большого блюда требуется много ресурсов, которых у %npc_name% сейчас нет. Ему нужен помощник, способный доставить свежие ингредиенты прямо к кухонному столу."
+    ]
+  },
+  "max_reward": 3,
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": [
+          "Greetings! Oh, I'm spinning like a squirrel in a wheel today... You look like someone with quick feet. Can you help a busy host out?",
+          "Hey there, traveler! You caught me at a busy moment. My house is upside down, cooking is in full swing... Tell me, do you have a minute to spare for a neighbor?",
+          "Good afternoon! Listen, you walk a lot, you know where to find things... I have a real disaster in my kitchen right now. Will you help?",
+          "Greetings! Oh, my hands are covered in flour, and my head is spinning! You wouldn't refuse to help an honest householder out of trouble, would you?",
+          "Hello! It's good that you're passing by. I'm rushing around the house here, completely out of breath. I could really use an assistant right now."
+        ],
+        "ru_ru": [
+          "Приветствую! Ох, кручусь сегодня как белка в колесе... Выглядишь как человек с быстрыми ногами. Не поможешь занятому хозяину?",
+          "Здорово, путник! Вовремя ты зашёл. У меня дома дым коромыслом, готовка в самом разгаре... Скажи, найдётся минутка выручить соседа?",
+          "День добрый! Слушай, ты много ходишь, знаешь где что достать... У меня тут на кухне настоящая катастрофа назревает. Поможешь?",
+          "Приветствую! Ох, руки в муке, голова кругом! Не откажешься помочь честному домохозяину в беде?",
+          "Привет! Хорошо, что ты мимо идёшь. Я тут по дому мечусь, совсем запыхался. Мне бы сейчас очень пригодился помощник."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "What happened?",
+              "What's the disaster?",
+              "Why the panic?"
+            ],
+            "ru_ru": [
+              "А что случилось?",
+              "Что за катастрофа?",
+              "К чему такая паника?"
+            ]
+          },
+          "to_go": "dialog_1"
+        }
+      ]
+    },
+    "dialog_1": {
+      "text": {
+        "en_us": [
+          "My relatives are arriving today! I promised them a grand feast, got the oven ready... but my pantry is practically empty! I don't have enough ingredients for the dinner.",
+          "I'm planning a big family dinner. I wanted to cook my signature dish, went to the cellar, and it's empty! My family will eat me alive if I leave them hungry.",
+          "It's a special day today, I'm cooking for the whole family. But I got so caught up in cleaning that I forgot to check the food supplies. Now the cooking has stopped, and I'm missing the basics!",
+          "I gathered the whole family for a feast, but I severely miscalculated the products. If I don't get the ingredients soon, the tables will be completely bare.",
+          "We are having a big gathering today. I started making the pie and the stew, and suddenly realized I'm out of the main products! I need someone to quickly bring the missing food."
+        ],
+        "ru_ru": [
+          "Да ко мне сегодня родня заявляется! Обещал им грандиозный пир, печь растопил... а кладовая-то почти пустая! Ингредиентов на ужин банально не хватает.",
+          "У меня намечается большой семейный обед. Хотел приготовить своё фирменное блюдо, сунулся в погреб — а там шаром покати! Домашние меня самого съедят, если я их голодными оставлю.",
+          "День сегодня особенный, на всю семью готовлю. Да так закрутился с уборкой, что забыл запасы еды проверить. Теперь готовка встала, самого простого не хватает!",
+          "Собрал всю семью на застолье, да вот с продуктами сильно просчитался. Если не раздобыть ингредиенты в ближайшее время, столы будут совсем пустыми.",
+          "У нас сегодня большие посиделки. Начал делать пирог да рагу, и тут понимаю — продукты-то главные закончились! Мне нужен тот, кто быстро принесёт недостающую еду."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "What do you need?",
+              "What products to look for?",
+              "Give me the grocery list."
+            ],
+            "ru_ru": [
+              "Что надо?",
+              "Какие продукты искать?",
+              "Давай список продуктов."
+            ]
+          },
+          "to_go": "dialog_2"
+        },
+        {
+          "text": {
+            "en_us": [
+              "Will you pay for this?",
+              "What about my reward?",
+              "What's in it for me?"
+            ],
+            "ru_ru": [
+              "А заплатишь за это?",
+              "Что по награде?",
+              "В чём моя выгода?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    },
+    "dialog_2": {
+      "text": {
+        "en_us": [
+          "To finish cooking, I desperately need %target-1%%target-2%%target-3%. Can you find them?",
+          "The recipe is simple, but without %target-1%%target-2%%target-3%, nothing will work out. Can you get them?",
+          "Just the basics! Find me %target-1%%target-2%%target-3%, please. They are essential for the table.",
+          "My kitchen is completely out of %target-1%%target-2%%target-3%. Help me restock!",
+          "If you want to save our dinner, bring %target-1%%target-2%%target-3%. Can you handle it?"
+        ],
+        "ru_ru": [
+          "Чтобы доварить всё, мне позарез нужны %target-1%%target-2%%target-3%. Сможешь отыскать?",
+          "Рецепт-то простой, но без %target-1%%target-2%%target-3% ничего не выйдет. Достанешь?",
+          "Да сущие пустяки! Найди мне %target-1%%target-2%%target-3%, пожалуйста. Без них стол не накрыть.",
+          "У меня на кухне как раз закончились %target-1%%target-2%%target-3%. Поможешь пополнить запасы?",
+          "Если возьмёшься спасти наш ужин, принеси %target-1%%target-2%%target-3%. Справишься?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Sure, I'll bring them.",
+              "Consider it done.",
+              "I'm on it."
+            ],
+            "ru_ru": [
+              "Конечно, принесу.",
+              "Считай, уже сделано.",
+              "Я в деле."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "And the payment?",
+              "What about my reward?"
+            ],
+            "ru_ru": [
+              "А оплата?",
+              "Что насчёт награды?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    },
+    "dialog_3": {
+      "text": {
+        "en_us": [
+          "I'm not greedy when it comes to a good meal! I'll give you %reward-1%%reward-2%%reward-3%. Deal?",
+          "For saving my family's dinner, I'm ready to part with %reward-1%%reward-2%%reward-3%. How does that sound?",
+          "I'll share what I have. %reward-1%%reward-2%%reward-3% is waiting for you. Is that fair?",
+          "As a token of gratitude, I can offer %reward-1%%reward-2%%reward-3%. Will this cover your efforts?",
+          "My price: %reward-1%%reward-2%%reward-3%. A fair exchange for fresh food, right?"
+        ],
+        "ru_ru": [
+          "Для хорошего застолья мне ничего не жалко! Отдам %reward-1%%reward-2%%reward-3%. Идёт?",
+          "За спасение семейного ужина готов расстаться с %reward-1%%reward-2%%reward-3%. Как тебе?",
+          "Поделюсь тем, что есть в заначке. %reward-1%%reward-2%%reward-3% ждут тебя. Справедливо?",
+          "В знак благодарности могу предложить %reward-1%%reward-2%%reward-3%. Покроет твои труды?",
+          "Моя цена: %reward-1%%reward-2%%reward-3%. Честный обмен за свежие продукты, верно?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Sure, I'll bring them.",
+              "Consider it done.",
+              "I'm on it."
+            ],
+            "ru_ru": [
+              "Конечно, принесу.",
+              "Считай, уже сделано.",
+              "Я в деле."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "What do you need?",
+              "What products to look for?"
+            ],
+            "ru_ru": [
+              "Что надо?",
+              "Какие продукты искать?"
+            ]
+          },
+          "to_go": "dialog_2"
+        }
+      ]
+    },
+    "dialog_4": {
+      "text": {
+        "en_us": [
+          "Wonderful! I'm going back to the stove to keep the water boiling. Hurry back with the food!",
+          "Thank you! You literally saved my reputation as a host. I'll be waiting for you right here by the kitchen.",
+          "Great! Don't dawdle, the guests will be knocking on the door soon. I'm counting on you.",
+          "Deal. I'm setting the plates while you get the ingredients. Good luck!",
+          "I knew I could count on you. Bring everything fresh, and I'll prepare the reward!"
+        ],
+        "ru_ru": [
+          "Замечательно! Я пока побегу к печи, чтобы вода не выкипела. Возвращайся скорее с продуктами!",
+          "Спасибо! Ты буквально спас мою репутацию хозяина. Буду ждать тебя прямо здесь, у кухни.",
+          "Отлично! Не задерживайся, а то скоро гости в дверь стучать начнут. Я на тебя рассчитываю.",
+          "По рукам. Я пока тарелки расставлю, а ты добывай ингредиенты. Удачи!",
+          "Знал, что на тебя можно положиться. Приноси всё свежее, а я пока награду подготовлю!"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Alright"
+            ],
+            "ru_ru": [
+              "Хорошо"
+            ]
+          },
+          "to_go": "dialog_5",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_5": {
+      "text": {
+        "en_us": [
+          "Ah, you're back! Did you bring the groceries? The oven is already hot!",
+          "Well? Do you have the ingredients? My pots are empty and waiting!",
+          "You're just in time! Did you manage to gather everything on the list?",
+          "Tell me you brought the food! The guests are almost here.",
+          "Welcome back! Did you find everything I asked for?"
+        ],
+        "ru_ru": [
+          "А, вернулся! Принёс провизию? У меня печь уже раскалилась!",
+          "Ну что? Ингредиенты у тебя? Кастрюли стоят пустые и ждут!",
+          "Ты как раз вовремя! Получилось собрать всё по списку?",
+          "Скажи, что ты принёс еду! Гости уже почти на пороге.",
+          "С возвращением! Всё нашёл, о чём я просил?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Yes"
+            ],
+            "ru_ru": [
+              "Да"
+            ]
+          },
+          "to_go": "dialog_7",
+          "actions": [
+            "thequestforge:complete"
+          ],
+          "alt_to_go": "dialog_6"
+        }
+      ]
+    },
+    "dialog_6": {
+      "text": {
+        "en_us": [
+          "Wait a minute... Where is the rest? You didn't bring all the food. I can't cook a half-meal!",
+          "This won't do. Some ingredients are missing. Please check your bags, the feast is still at risk.",
+          "Hey, we agreed on a full list! I don't see all the products. Bring the rest, quickly!",
+          "You brought only part of it. The recipe requires everything. Go get what's missing, I'll wait.",
+          "Oh no, I can't start cooking with this. You forgot some items. Please, bring the rest!"
+        ],
+        "ru_ru": [
+          "Погоди-ка... А где остальное? Ты принёс не все продукты. Я же не могу приготовить половину блюда!",
+          "Так дело не пойдёт. Не хватает некоторых ингредиентов. Проверь сумки, застолье всё ещё под угрозой.",
+          "Эй, мы так не договаривались! Я не вижу всех продуктов. Давай доноси остальное, живо!",
+          "Ты принёс только часть. Для рецепта нужно всё полностью. Ступай за недостающим, я жду.",
+          "Ох нет, с этим я готовку не начну. Ты кое-что забыл. Пожалуйста, донеси всё остальное!"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll be right back."
+            ],
+            "ru_ru": [
+              "Сейчас вернусь."
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_7": {
+      "text": {
+        "en_us": [
+          "Perfect! Everything is fresh and exactly what I need. Thank you so much, you saved our feast! Here is your promised reward.",
+          "Ah, what a wonderful smell! Now I can finally finish the stew. Thank you, traveler. Take this, you earned every bit of it.",
+          "You are a lifesaver! The dinner will be amazing now. The guests will be happy, and so am I. Here is your payment, as agreed.",
+          "Everything is here, not a single grain missing. Thank you for the swift help! Enjoy your reward.",
+          "I can already hear the guests knocking, and you brought the food just in time. My deepest gratitude! Take your coins and safe travels."
+        ],
+        "ru_ru": [
+          "Идеально! Всё свежее и ровно то, что нужно. Огромное спасибо, ты спас наш праздник! Вот твоя обещанная награда.",
+          "Ах, какой запах! Теперь-то я наконец доварю рагу. Спасибо тебе, путник. Держи, ты заслужил каждую монету.",
+          "Ты просто спаситель! Обед теперь выйдет на славу. Гости будут довольны, и я тоже. Вот твоя плата, как и договаривались.",
+          "Всё на месте, до последнего зёрнышка. Спасибо за быструю подсобу! Пользуйся наградой на здоровье.",
+          "Уже слышу, как гости стучат в дверь, а ты принёс еду как раз вовремя. Моя глубочайшая благодарность! Забирай монеты и удачи в пути."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Thank you!"
+            ],
+            "ru_ru": [
+              "Спасибо!"
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    }
+  },
+  "group": "thequestforge:villager_plains_materials_3",
+  "task_count": {
+    "min": 1,
+    "max": 3
+  }
+}

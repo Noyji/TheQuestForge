@@ -176,6 +176,14 @@ public class TheQuestForgeNetworking {
                 SetTargetCompassC2SPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER)
         );
+        CHANNEL.registerMessage(
+                id(),
+                SaveActionC2SPacket.class,
+                SaveActionC2SPacket::encode,
+                SaveActionC2SPacket::decode,
+                SaveActionC2SPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER)
+        );
     }
 
     public static void debugInfo(String string){

@@ -1,0 +1,46 @@
+{
+  "item.thequestforge.quest_book": "Книга квестов",
+  "item.thequestforge.quest_compass": "Квестовый компас",
+
+  "toast.thequestforge.completed": "Квест выполнен!",
+
+  "gui.thequestforge.rarity.info": "Редкость: ",
+  "gui.thequestforge.quest.rarity.common": "Обычный",
+  "gui.thequestforge.quest.rarity.uncommon": "Необычный",
+  "gui.thequestforge.quest.rarity.rare": "Редкий",
+  "gui.thequestforge.quest.rarity.epic": "Эпический",
+  "gui.thequestforge.quest.rarity.legendary": "Легендарный",
+
+  "gui.thequestforge.time_limit.info": "Осталось дней: ",
+  "gui.thequestforge.quest.time_limit": "Сегодня",
+  "gui.thequestforge.book.task": "Задачи",
+  "gui.thequestforge.book.reward": "Награды",
+  "gui.thequestforge.book.target_compass": "Закрепить квестодателя",
+
+  "dialog.thequestforge.direction_placeholder.east": "восток",
+  "dialog.thequestforge.direction_placeholder.southeast": "юго-восток",
+  "dialog.thequestforge.direction_placeholder.south": "юг",
+  "dialog.thequestforge.direction_placeholder.southwest": "юго-запад",
+  "dialog.thequestforge.direction_placeholder.west": "запад",
+  "dialog.thequestforge.direction_placeholder.northwest": "северо-запад",
+  "dialog.thequestforge.direction_placeholder.north": "север",
+  "dialog.thequestforge.direction_placeholder.northeast": "северо-восток",
+  "dialog.thequestforge.direction_placeholder.days": "дней",
+
+  "overlay.thequestforge.interact_message": "чтобы поговорить",
+
+  "key.categories.thequestforge": "Управление TheQuestForge",
+  "key.thequestforge.interact": "Клавиша взаимодействия с NPC",
+
+  "command.thequestforge.reset.is_not_quest_giver": "Это существо не выдаёт квесты",
+  "command.thequestforge.reset.success": "Этот квестодатель был сброшен",
+  "command.thequestforge.reset.success_player": "Прогресс игрока был сброшен",
+
+  "command.thequestforge.spawn.entity_type_is_null": "Тип существа равен null",
+  "command.thequestforge.spawn.entity_not_mob": "Существо не является мобом",
+  "command.thequestforge.spawn.template_not_found": "Шаблон квеста не найден",
+  "command.thequestforge.spawn.player_is_null": "Игрок равен null",
+  "command.thequestforge.spawn.success": "Квестодатель успешно создан",
+
+  "chat.thequestforge.npc_lock_message": "Мне пока не нужна твоя помощь. Приходи позже."
+}

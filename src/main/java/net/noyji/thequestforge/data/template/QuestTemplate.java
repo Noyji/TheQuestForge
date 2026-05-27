@@ -36,8 +36,10 @@ public class QuestTemplate implements IWeighable {
     private List<String> requirement;
     private Map<String, List<String>> name;
     private Map<String, List<String>> description;
-    @SerializedName("requirement_items")
-    private List<String> requirementItems;
+    @SerializedName("requirement_target")
+    private List<String> requirementTarget;
+    @SerializedName("guaranteed_reward")
+    private List<String> guaranteedReward;
     private String group;
     @SerializedName("task_count")
     private Range taskCount;
@@ -51,6 +53,10 @@ public class QuestTemplate implements IWeighable {
         return (type == null) ? QuestType.LOCAL : type;
     }
 
+    public List<String> getGuaranteedReward() {
+        return (guaranteedReward == null) ? new ArrayList<>() : guaranteedReward;
+    }
+
     @Nullable
     public ResourceLocation getNextQuest(){
         if (nextQuest == null || nextQuest.isEmpty()) return null;
@@ -59,20 +65,13 @@ public class QuestTemplate implements IWeighable {
     }
 
     public Component getQuestDescription(String language, int index){
-        if (language == null || language.isEmpty()) language = "en_us";
-        if (index < 0 || index > description.get(language).size() - 1) {
-            return Component.literal("index out of range");
-        }
         return Component.literal(Util.getTranslateTextFromMap(description, language, index));
     }
 
     public Component getQuestName(String language, int index){
-        if (language == null || language.isEmpty()) language = "en_us";
-        if (index < 0 || index > name.get(language).size() - 1) {
-            return Component.literal("index out of range");
-        }
-        return Component.literal(Util.getTranslateTextFromMap(name, language, index));
+       return Component.literal(Util.getTranslateTextFromMap(name, language, index));
     }
+
     @Nullable
     public TemplateDialog getDialogByKey(String key){
         if (key == null || key.isEmpty()) return null;
@@ -146,7 +145,7 @@ public class QuestTemplate implements IWeighable {
     }
 
     public List<String> getRequirementTarget() {
-        return requirementItems;
+        return requirementTarget;
     }
 
     public boolean checkRequirement(RequirementContext context){
@@ -194,12 +193,20 @@ public class QuestTemplate implements IWeighable {
             nbt.put("requirement", reqTag);
         }
 
-        if (this.requirementItems != null && !this.requirementItems.isEmpty()) {
+        if (this.requirementTarget != null && !this.requirementTarget.isEmpty()) {
             ListTag reqItemsTag = new ListTag();
-            for (String item : this.requirementItems) {
+            for (String item : this.requirementTarget) {
                 reqItemsTag.add(StringTag.valueOf(item));
             }
             nbt.put("requirementItems", reqItemsTag);
+        }
+
+        if (this.guaranteedReward != null && !this.guaranteedReward.isEmpty()) {
+            ListTag guarItemsTag = new ListTag();
+            for (String item : this.guaranteedReward) {
+                guarItemsTag.add(StringTag.valueOf(item));
+            }
+            nbt.put("guaranteedReward", guarItemsTag);
         }
 
         if (this.name != null && !this.name.isEmpty()) {
@@ -273,11 +280,19 @@ public class QuestTemplate implements IWeighable {
             }
         }
 
-        this.requirementItems = new ArrayList<>();
+        this.guaranteedReward = new ArrayList<>();
+        if (nbt.contains("guaranteedReward", Tag.TAG_LIST)) {
+            ListTag guarTag = nbt.getList("guaranteedReward", Tag.TAG_STRING);
+            for (int i = 0; i < guarTag.size(); i++) {
+                this.guaranteedReward.add(guarTag.getString(i));
+            }
+        }
+
+        this.requirementTarget = new ArrayList<>();
         if (nbt.contains("requirementItems", Tag.TAG_LIST)) {
             ListTag reqItemsTag = nbt.getList("requirementItems", Tag.TAG_STRING);
             for (int i = 0; i < reqItemsTag.size(); i++) {
-                this.requirementItems.add(reqItemsTag.getString(i));
+                this.requirementTarget.add(reqItemsTag.getString(i));
             }
         }
 

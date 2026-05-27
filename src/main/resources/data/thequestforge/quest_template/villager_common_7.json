@@ -1,0 +1,408 @@
+{
+  "pool": "none",
+  "type": "LOCAL",
+  "weight": 100,
+  "requirement": [],
+  "name": {
+    "en_us": [
+      "Restless Dead",
+      "Disturbed Peace",
+      "Improper Burial",
+      "Unquiet Souls",
+      "Night Howls",
+      "Shadows of the Past",
+      "Curse of the Graveyard",
+      "Eternal Rest Needed",
+      "Wandering Spirits",
+      "The Wrong Ritual",
+      "Sorrowful Groans",
+      "Put to Rest",
+      "Grave Mistake",
+      "Undead Scourge",
+      "Peace for the Departed"
+    ],
+    "ru_ru": [
+      "Неупокоенные мертвецы",
+      "Нарушенный покой",
+      "Неправильные похороны",
+      "Тревожные души",
+      "Ночные завывания",
+      "Тени прошлого",
+      "Проклятие старой могилы",
+      "Вечный покой",
+      "Бродячие духи",
+      "Ошибочный ритуал",
+      "Скорбные стоны",
+      "Упокоить навсегда",
+      "Погребальная ошибка",
+      "Нашествие нежити",
+      "Покой для ушедших"
+    ]
+  },
+  "description": {
+    "en_us": [
+      "Due to an incorrect burial ritual, the dead in the area could not find peace. Now they wander near %npc_name%'s house at night, terrifying his family. You need to hunt them down and grant them eternal rest.",
+      "Someone disturbed an old grave or held a funeral wrong, and now restless spirits plague the village. %npc_name% asks you to deal with the wandering monsters and purify the area.",
+      "The night air is filled with sorrowful groans. %npc_name% claims that improperly buried souls are seeking vengeance. Help him slay the monsters so the village can sleep peacefully again.",
+      "Restless monsters are roaming right outside the village borders. %npc_name% believes they were disturbed and cannot cross over. Put them out of their misery for a solid reward.",
+      "A grave mistake during a funeral has brought a curse upon %npc_name%'s neighborhood. The undead are aggressive and numerous. Hunt them down before they break into the houses."
+    ],
+    "ru_ru": [
+      "Из-за неправильного погребального ритуала покойники в округе не смогли найти покой. Теперь они бродят по ночам у дома %npc_name%, наводя ужас на его семью. Нужно уничтожить их и подарить им вечный сон.",
+      "Кто-то потревожил старую могилу или не так похоронил ушедшего, и теперь неупокоенные духи не дают деревне покоя. %npc_name% просит вас разобраться с бродячими тварями.",
+      "Ночной воздух полон скорбных стонов. %npc_name% утверждает, что похороненные не по обычаям мертвецы ищут отмщения. Помогите ему истребить монстров, чтобы в дома вернулся сон.",
+      "Неупокоенные монстры бродят у самых границ деревни. %npc_name% верит, что их потревожили, и они не могут уйти в мир иной. Отправьте их на покой за хорошую награду.",
+      "Погребальная ошибка привела к тому, что проклятие пало на окрестности дома %npc_name%. Нежить агрессивна и опасна. Выследите и уничтожьте их, пока они не ворвались в дома."
+    ]
+  },
+  "max_reward": 3,
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": [
+          "Greetings, traveler... Do you feel that unnatural chill in the air? Something terrible is happening here at night.",
+          "Hello. You look like a brave soul who knows how to handle a weapon. I have a problem that requires a real warrior, not a farmer.",
+          "Shh... Listen closely. Do you hear those scratching sounds from the dark? They are back again, and I can't take it anymore.",
+          "Greetings! Thank goodness a seasoned fighter is passing by. The local graves are restless, and we are in grave danger.",
+          "Good day. Tell me, friend, are you afraid of ghosts and the walking dead? Because they've basically laid siege to my courtyard."
+        ],
+        "ru_ru": [
+          "Приветствую, путник... Чувствуешь этот неестественный холод в воздухе? У нас тут по ночам творится что-то страшное.",
+          "Здорово бывали. Выглядишь как храбрец, который умеет держать оружие. У меня тут беда, требующая настоящего воина, а не крестьянина.",
+          "Тсс... Послушай внимательно. Слышишь этот скрежет из темноты? Они снова вернулись, у меня уже сил никаких нет.",
+          "Приветствую! Слава небу, мимо идёт бывалый боец. Местные покойники взбунтовались, и мы все в большой опасности.",
+          "День добрый. Скажи мне, приятель, ты боишься призраков и ходячих мертвецов? А то они уже натурально осадили мой двор."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "What's going on?",
+              "Who is back?",
+              "Tell me more."
+            ],
+            "ru_ru": [
+              "Что происходит?",
+              "Кто вернулся?",
+              "Расскажи подробнее."
+            ]
+          },
+          "to_go": "dialog_1"
+        },
+        {
+          "text": {
+            "en_us": [
+              "I'll purge them.",
+              "I'm not afraid of the dead.",
+              "Show me where they are."
+            ],
+            "ru_ru": [
+              "Я истреблю их.",
+              "Я не боюсь мертвецов.",
+              "Показывай, где они."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        }
+      ]
+    },
+    "dialog_1": {
+      "text": {
+        "en_us": [
+          "We buried someone recently... but the ritual was rushed, done all wrong, not according to the traditions! Now those poor souls are disturbed. They rise at night, groaning and wandering around, unable to find rest.",
+          "Someone plundered the old graves on the outskirts, or maybe the funeral was botched. Either way, the dead have risen. They roam near my house, scratching at the shutters and crying out in anger.",
+          "It's a curse! Due to an improper burial, the spirits of the departed are trapped between worlds. They have taken physical forms and are wandering our lands, seeking to drag us with them.",
+          "My neighbor held a funeral but refused to pay respects to the old ways. Now the graveyard is restless. These creatures are pacing outside every single night, and their souls need to be put down forever.",
+          "They weren't laid to rest properly. Now their bodies are empty shells controlled by sorrow and malice. They wander the plains, and until someone destroys them, this village will know no peace."
+        ],
+        "ru_ru": [
+          "Мы тут недавно покойника хоронили... да ритуал перепутали, сделали всё наспех, не по обычаям! Теперь несчастные души потревожены. Они поднимаются по ночам, воют и бродят вокруг, не в силах уйти.",
+          "Кто-то разворошил старые могилы на окраине, а может, закопали кого не так. Так или иначе, мертвецы поднялись. Они бродят у моего дома, скребутся в ставни и жалобно стенают от злости.",
+          "Это проклятие! Из-за неправильных похорон души ушедших застряли между мирами. Они обрели плоть и теперь скитаются по нашим землям, желая утащить живых за собой.",
+          "Сосед хоронил родича, да плевать хотел на старые традиции. Теперь всё кладбище взбунтовалось. Эти твари ходят под окнами каждую божью ночь, их души нужно упокоить раз и навсегда.",
+          "Их похоронили без должного уважения. Теперь их тела — лишь пустые оболочки, ведомые скорбью и злобой. Они бродят по равнине, и пока их кто-то не уничтожит, покоя нам не видать."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Who do I need to destroy?",
+              "Whom should I hunt?",
+              "Give me the targets."
+            ],
+            "ru_ru": [
+              "Кого мне нужно уничтожить?",
+              "На кого охотиться?",
+              "Давай список целей."
+            ]
+          },
+          "to_go": "dialog_2"
+        },
+        {
+          "text": {
+            "en_us": [
+              "What is my reward for this?",
+              "Is there a bounty on them?"
+            ],
+            "ru_ru": [
+              "Какова моя награда за это?",
+              "За их головы положена награда?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    },
+    "dialog_2": {
+      "text": {
+        "en_us": [
+          "To cleanse this land and give them peace, you must destroy %target-1%%target-2%%target-3%. Can you do it?",
+          "Look for %target-1%%target-2%%target-3% out in the dark. Slay them, and their souls will finally rest.",
+          "My peace depends on this. Eliminate %target-1%%target-2%%target-3%, please. Put an end to their misery.",
+          "You need to hunt down %target-1%%target-2%%target-3%. Don't show them mercy, they are no longer human.",
+          "If you want to lift this curse, track down and defeat %target-1%%target-2%%target-3%. Are you ready for a real fight?"
+        ],
+        "ru_ru": [
+          "Чтобы очистить эту землю и подарить им покой, ты должен уничтожить %target-1%%target-2%%target-3%. Справишься?",
+          "Ищи %target-1%%target-2%%target-3% там, во тьме. Срази их, и их души наконец-то утихнут.",
+          "Мой покой зависит от этого. Пожалуйста, сокруши %target-1%%target-2%%target-3%. Положи конец их страданиям.",
+          "Тебе нужно выследить и перебить %target-1%%target-2%%target-3%. Не проявляй к ним жалости, они больше не люди.",
+          "Если хочешь снять это проклятие, найди и одолей %target-1%%target-2%%target-3%. Готов к настоящему бою?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll destroy them.",
+              "They will trouble you no more.",
+              "I am ready."
+            ],
+            "ru_ru": [
+              "Я уничтожу их.",
+              "Они тебя больше не побеспокоят.",
+              "Я готов."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "And what about the pay?",
+              "What's the reward?"
+            ],
+            "ru_ru": [
+              "А что насчёт платы?",
+              "Какова награда?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    },
+    "dialog_3": {
+      "text": {
+        "en_us": [
+          "For such a dangerous task, I will give you %reward-1%%reward-2%%reward-3%. It's everything I have.",
+          "Your safety and courage are worth a lot. I am ready to pay %reward-1%%reward-2%%reward-3% for their demise.",
+          "I will empty my secret chest for you. %reward-1%%reward-2%%reward-3% will be yours once the air is clear.",
+          "A warrior deserves a warrior's pay. I offer %reward-1%%reward-2%%reward-3% for putting them to rest.",
+          "My offer is fair: %reward-1%%reward-2%%reward-3% in exchange for a peaceful and quiet night."
+        ],
+        "ru_ru": [
+          "За такое опасное дело я отдам тебе %reward-1%%reward-2%%reward-3%. Это всё, что у меня отложено.",
+          "Твоя смелость стоит дорого. Я готов заплатить %reward-1%%reward-2%%reward-3% за их упокоение.",
+          "Я опустошу свой секретный сундук ради тебя. %reward-1%%reward-2%%reward-3% станут твоими, как только небо очистится.",
+          "Воину положена воинская плата. Предлагаю %reward-1%%reward-2%%reward-3% за их уничтожение.",
+          "Моё предложение честное: %reward-1%%reward-2%%reward-3% в обмен на мирную и тихую ночу."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll destroy them.",
+              "They will trouble you no more.",
+              "I am ready."
+            ],
+            "ru_ru": [
+              "Я уничтожу их.",
+              "Они тебя больше не побеспокоят.",
+              "Я готов."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "What exactly do you need?"
+            ],
+            "ru_ru": [
+              "Что именно нужно?"
+            ]
+          },
+          "to_go": "dialog_2"
+        }
+      ]
+    },
+    "dialog_4": {
+      "text": {
+        "en_us": [
+          "May the heavens guard your blade! Go out when darkness falls and grant them peace. I'll be waiting here.",
+          "Thank you, brave hero. Please, be careful—restless souls fight with vicious malice. Return with good news.",
+          "Go, and let your weapon strike true. Until they are destroyed, none of us can sleep. Good luck.",
+          "Remember, they must be put down completely. Bring back peace to our courtyard, and I'll prepare the coin.",
+          "I believe in your strength. Slay the monsters, and let the long-awaited quiet return to our village."
+        ],
+        "ru_ru": [
+          "Пусть небо хранит твой клинок! Выходи, как только сгустится тьма, и подари им покой. Я буду ждать здесь.",
+          "Спасибо тебе, храбрый человек. Пожалуйста, будь осторожнее — неупокоенные души бьются со слепой яростью. Возвращайся с добрыми вестями.",
+          "Ступай, и пусть твоё оружие не знает промаха. Пока они не уничтожены, никто из нас не сможет уснуть. Удачи.",
+          "Помни, их нужно упокоить полностью. Верни мир в наш двор, а я пока подготовлю монеты.",
+          "Верю в твою силу. Срази чудовищ, и пусть долгожданная тишина наконец вернётся в нашу деревню."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Alright"
+            ],
+            "ru_ru": [
+              "Хорошо"
+            ]
+          },
+          "to_go": "dialog_5",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_5": {
+      "text": {
+        "en_us": [
+          "Ah, you've returned! Tell me, is it over? Are the restless dead finally at peace?",
+          "Well? Did you manage to find and defeat those wandering monsters? Is the curse broken?",
+          "I can still feel the chill... Tell me, did you put an end to all of them on the list?",
+          "Welcome back, warrior! Have you cleared our borders of those unquiet spirits?",
+          "Speak to me! Is the night safe again? Did you grant them eternal rest?"
+        ],
+        "ru_ru": [
+          "А, ты вернулся! Скажи мне, всё кончено? Неупокоенные покойники наконец обрели свой мир?",
+          "Ну что? Получилось найти и одолеть тех бродячих монстров? Проклятие снято?",
+          "Я всё ещё чувствую этот могильный холод... Скажи, ты сокрушил их всех по списку?",
+          "С возвращением, воин! Удалось очистить наши границы от этих тревожных духов?",
+          "Ответь мне! Ночь снова безопасна? Ты отправил их на вечный покой?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Yes"
+            ],
+            "ru_ru": [
+              "Да"
+            ]
+          },
+          "to_go": "dialog_7",
+          "actions": [
+            "thequestforge:complete"
+          ],
+          "alt_to_go": "dialog_6"
+        }
+      ]
+    },
+    "dialog_6": {
+      "text": {
+        "en_us": [
+          "No, I can still hear them! The groans are quieter, but some of them are still roaming out there. Finish the job, please!",
+          "It's not over yet. I can feel their angry presence near the cemetery. Slay the rest, or they will multiply again.",
+          "You only did part of the work. We agreed on a complete purging! Go back out there and put them all to rest.",
+          "They are still scratching at the fences! Some targets are still alive. Go back and show no mercy.",
+          "Oh, the curse is still holding. You forgot or missed some of them. Return only when they are all gone!"
+        ],
+        "ru_ru": [
+          "Нет, я всё ещё слышу их! Стоны стали тише, но кто-то из них всё ещё бродит там. Доведи дело до конца, прошу!",
+          "Ещё не всё кончено. Я чувствую их злобное присутствие у кладбища. Срази остальных, иначе они снова наводнят двор.",
+          "Ты выполнил лишь часть работы. Мы договаривались на полное очищение! Возвращайся туда и упокой их всех.",
+          "Они всё ещё скребутся в заборы! Кое-кто из списка ещё жив. Возвращайся во тьму и не знай жалости.",
+          "Ох, проклятие всё ещё держится. Ты кого-то упустил или пощадил. Возвращайся только тогда, когда исчезнет последний из них!"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll finish them."
+            ],
+            "ru_ru": [
+              "Я закончу дело."
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_7": {
+      "text": {
+        "en_us": [
+          "Incredible! The air feels lighter, and the creepy groans have stopped completely. Thank you, you saved our village! Take your well-deserved bounty.",
+          "Ah, silence... the beautiful, sweet silence! They are finally resting in peace, and so can we. Thank you, traveler. Here is your reward.",
+          "You did it, you actually lifted the curse. The departed are finally asleep, and our families are safe. Take this coin, you've earned every bit of it.",
+          "The graves are quiet once more. Your blade has brought peace to both the living and the dead. My deep respect. Here is your payment.",
+          "Finally, I can sleep without fear. Thank you for your strength and courage, hunter. May this reward serve you well on your travels."
+        ],
+        "ru_ru": [
+          "Невероятно! Воздух стал чище, а эти жуткие завывания прекратились вовсе. Спасибо тебе, ты спас нашу деревню! Забирай свою заслуженную награду.",
+          "Ах, тишина... прекрасная, сладкая тишина! Наконец-то они спят спокойно, а вместе с ними и мы. Спасибо тебе, путник. Держи плату.",
+          "Ты сделал это, ты действительно снял проклятие. Ушедшие наконец упокоились, а наши семьи в безопасности. Забирай монеты, ты заслужил каждую из них.",
+          "На кладбище снова воцарился мир. Твой клинок принёс покой и живым, и ушедшим. Моё почтение. Вот твоя награда.",
+          "Наконец-то я смогу уснуть без страха. Спасибо за твою силу и отвагу, охотник. Пусть эта награда сослужит тебе добрую службу в дорогах."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Thank you!"
+            ],
+            "ru_ru": [
+              "Спасибо!"
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    }
+  },
+  "group": "thequestforge:zombie_and_steletons",
+  "task_count": {
+    "min": 1,
+    "max": 3
+  }
+}

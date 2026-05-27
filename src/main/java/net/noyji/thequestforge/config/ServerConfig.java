@@ -31,6 +31,8 @@ public class ServerConfig {
 
     public static final ForgeConfigSpec.ConfigValue<Boolean> GIVE_OUT_EXPERIENCE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> GIVE_OUT_CURRENCY;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> USE_VILLAGER;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> GENERATE_ANYWAY;
 
     private static final ForgeConfigSpec.ConfigValue<Integer> UNCOMMON_QUEST_CHANCE;
     private static final ForgeConfigSpec.ConfigValue<Integer> RARE_QUEST_CHANCE;
@@ -41,7 +43,7 @@ public class ServerConfig {
     static {
         BUILDER.comment("server");
 
-        SPAWN_QUEST_GIVER_CHANCE = BUILDER.defineInRange("quest_giver_chance", 80, 30, 100);
+        SPAWN_QUEST_GIVER_CHANCE = BUILDER.defineInRange("quest_giver_chance", 35, 30, 100);
         ATTEMPTS_TO_CREATE_QUEST = BUILDER.defineInRange("attempts_to_create", 50, 10, 300);
         MAX_REMEMBERED_NPCS = BUILDER.defineInRange("max_remembered_npcs", 128, 2, 1024);
         TIME_TO_RESET_NPCS = BUILDER.defineInRange("time_to_reset_npcs", 40, 1, 501);
@@ -53,6 +55,8 @@ public class ServerConfig {
 
         GIVE_OUT_EXPERIENCE = BUILDER.define("give_out_experience", true);
         GIVE_OUT_CURRENCY = BUILDER.define("give_out_currency", true);
+        USE_VILLAGER = BUILDER.define("use_villager", true);
+        GENERATE_ANYWAY = BUILDER.define("generate_anyway", true);
 
         COMMON_TASK_MULTIPLIER = BUILDER.defineInRange("common_item_multiplier", 1.0f, 0.1f, 10.f);
         UNCOMMON_TASK_MULTIPLIER = BUILDER.defineInRange("uncommon_item_multiplier", 1.13f, 0.1f, 10.f);

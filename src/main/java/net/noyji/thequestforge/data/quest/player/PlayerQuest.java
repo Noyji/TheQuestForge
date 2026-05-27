@@ -67,10 +67,11 @@ public class PlayerQuest {
         return giverData;
     }
 
-    public void setGiverDataAndSync(BlockPos blockPos, ResourceKey<Level> dimension, int entityId, Player player){
+    public void setGiverDataAndSync(BlockPos blockPos, ResourceKey<Level> dimension, int entityId, String name, Player player){
         giverData.setGiverPos(blockPos);
         giverData.setDimension(dimension);
         giverData.setEntityId(entityId);
+        giverData.setName(name);
         TheQuestForgeNetworking.sendToPlayer(new SyncGiverPosS2CPacket(id, giverData.serializeNBT()), player);
     }
 

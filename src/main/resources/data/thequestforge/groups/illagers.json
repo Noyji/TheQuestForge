@@ -1,0 +1,326 @@
+{
+  "id": "illagers",
+  "tasks": [
+    {
+      "task_type": "thequestforge:kill",
+      "value": 15,
+      "target": "minecraft:pillager",
+      "multiplier": true,
+      "weight": 20,
+      "count": {
+        "min": 4,
+        "max": 12
+      }
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "value": 20,
+      "target": "minecraft:vindicator",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 3,
+        "max": 8
+      }
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "value": 25,
+      "target": "minecraft:witch",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 1,
+        "max": 3
+      }
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "value": 60,
+      "target": "minecraft:evoker",
+      "multiplier": false,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "value": 12,
+      "target": "minecraft:vex",
+      "multiplier": true,
+      "weight": 12,
+      "count": {
+        "min": 3,
+        "max": 10
+      }
+    },
+    {
+      "task_type": "thequestforge:kill",
+      "value": 50,
+      "target": "minecraft:ravager",
+      "multiplier": false,
+      "weight": 5,
+      "count": {
+        "min": 1,
+        "max": 1
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "target": "minecraft:iron_ingot",
+      "multiplier": true,
+      "price": 15,
+      "weight": 20,
+      "count": {
+        "min": 2,
+        "max": 5
+      }
+    },
+    {
+      "target": "minecraft:gold_ingot",
+      "multiplier": true,
+      "price": 25,
+      "weight": 15,
+      "count": {
+        "min": 1,
+        "max": 3
+      }
+    },
+    {
+      "target": "minecraft:iron_nugget",
+      "multiplier": true,
+      "price": 2,
+      "weight": 18,
+      "count": {
+        "min": 4,
+        "max": 12
+      }
+    },
+    {
+      "target": "minecraft:gold_nugget",
+      "multiplier": true,
+      "price": 3,
+      "weight": 15,
+      "count": {
+        "min": 3,
+        "max": 9
+      }
+    },
+    {
+      "target": "minecraft:arrow",
+      "multiplier": true,
+      "price": 2,
+      "weight": 22,
+      "count": {
+        "min": 8,
+        "max": 24
+      }
+    },
+    {
+      "target": "minecraft:tipped_arrow",
+      "multiplier": true,
+      "price": 6,
+      "weight": 12,
+      "count": {
+        "min": 3,
+        "max": 8
+      },
+      "tag": "{Potion:\"minecraft:harming\"}"
+    },
+    {
+      "target": "minecraft:tipped_arrow",
+      "multiplier": true,
+      "price": 6,
+      "weight": 12,
+      "count": {
+        "min": 3,
+        "max": 8
+      },
+      "tag": "{Potion:\"minecraft:slowness\"}"
+    },
+    {
+      "target": "minecraft:tipped_arrow",
+      "multiplier": true,
+      "price": 6,
+      "weight": 12,
+      "count": {
+        "min": 3,
+        "max": 8
+      },
+      "tag": "{Potion:\"minecraft:weakness\"}"
+    },
+    {
+      "target": "minecraft:tipped_arrow",
+      "multiplier": true,
+      "price": 6,
+      "weight": 10,
+      "count": {
+        "min": 2,
+        "max": 6
+      },
+      "tag": "{Potion:\"minecraft:poison\"}"
+    },
+    {
+      "target": "minecraft:potion",
+      "multiplier": false,
+      "price": 35,
+      "weight": 14,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{Potion:\"minecraft:swiftness\"}"
+    },
+    {
+      "target": "minecraft:potion",
+      "multiplier": false,
+      "price": 40,
+      "weight": 14,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{Potion:\"minecraft:healing\"}"
+    },
+    {
+      "target": "minecraft:potion",
+      "multiplier": false,
+      "price": 40,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{Potion:\"minecraft:regeneration\"}"
+    },
+    {
+      "target": "minecraft:potion",
+      "multiplier": false,
+      "price": 35,
+      "weight": 12,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{Potion:\"minecraft:fire_resistance\"}"
+    },
+    {
+      "target": "minecraft:splash_potion",
+      "multiplier": false,
+      "price": 45,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{Potion:\"minecraft:weakness\"}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 50,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:power\",lvl:1}]}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 50,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:sharpness\",lvl:1}]}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 50,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:protection\",lvl:1}]}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 50,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:quick_charge\",lvl:1}]}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 55,
+      "weight": 6,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:unbreaking\",lvl:1}]}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 55,
+      "weight": 5,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:piercing\",lvl:1}]}"
+    },
+    {
+      "target": "minecraft:bread",
+      "multiplier": true,
+      "price": 6,
+      "weight": 18,
+      "count": {
+        "min": 2,
+        "max": 5
+      }
+    },
+    {
+      "target": "minecraft:cooked_chicken",
+      "multiplier": true,
+      "price": 8,
+      "weight": 15,
+      "count": {
+        "min": 2,
+        "max": 4
+      }
+    },
+    {
+      "target": "minecraft:gunpowder",
+      "multiplier": true,
+      "price": 4,
+      "weight": 15,
+      "count": {
+        "min": 2,
+        "max": 6
+      }
+    }
+  ],
+  "xp_reward": {
+    "min": 15,
+    "max": 30
+  },
+  "currency_reward": {
+    "min": 15,
+    "max": 30
+  }
+}

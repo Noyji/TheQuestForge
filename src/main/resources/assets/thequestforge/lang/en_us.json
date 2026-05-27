@@ -25,6 +25,7 @@
   "dialog.thequestforge.direction_placeholder.northwest": "northwest",
   "dialog.thequestforge.direction_placeholder.north": "north",
   "dialog.thequestforge.direction_placeholder.northeast": "northeast",
+  "dialog.thequestforge.direction_placeholder.days": "days",
 
   "overlay.thequestforge.interact_message": "to talk",
 

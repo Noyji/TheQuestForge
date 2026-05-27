@@ -9,6 +9,7 @@ import net.minecraft.world.level.Level;
 
 public class GiverData {
     private int entityId;
+    private String name;
     private BlockPos giverPos;
     private ResourceKey<Level> dimension;
 
@@ -18,6 +19,14 @@ public class GiverData {
 
     public void setEntityId(int entityId) {
         this.entityId = entityId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BlockPos getGiverPos() {
@@ -41,6 +50,10 @@ public class GiverData {
 
         nbt.putInt("giver_id", this.entityId);
 
+        if (this.name != null){
+            nbt.putString("name", this.name);
+        }
+
         if (this.giverPos != null) {
             nbt.putLong("giver_pos", this.giverPos.asLong());
         }
@@ -54,6 +67,12 @@ public class GiverData {
 
     public void deserializeNBT(CompoundTag nbt) {
         this.entityId = nbt.getInt("giver_id");
+
+        if (nbt.contains("name")) {
+            this.name = nbt.getString("name");
+        } else {
+            this.name = null;
+        }
 
         if (nbt.contains("giver_pos")) {
             this.giverPos = BlockPos.of(nbt.getLong("giver_pos"));

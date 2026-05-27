@@ -60,4 +60,6 @@ public class RequirementRegistry {
     public static final RegistryObject<AbstractRequirement> DIMENSION_IS = registerRequirement(new DimensionIsRequirement());
     public static final RegistryObject<AbstractRequirement> DIMENSION_IS_NOT = registerRequirement(new DimensionIsNotRequirement());
 
+    public static final RegistryObject<AbstractRequirement> IS_STRUCTURE_NEARBY = registerRequirement(new IsStructureNearbyRequirement());
+
 }

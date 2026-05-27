@@ -14,7 +14,6 @@ import net.noyji.thequestforge.common.util.Util;
 import java.util.function.Predicate;
 
 public class IsBiomeNearbyRequirement extends AbstractRequirement {
-
     // thequestforge:is_biome_nearby:minecraft:desert-200
     // thequestforge:is_biome_nearby:#minecraft:is_forest-200
     @Override

@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.noyji.thequestforge.api.quest.registry.ActionRegistry;
@@ -22,13 +24,14 @@ public class ExportRegistryCommand {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-               root.then(Commands.literal("registry")
-                        .then(Commands.literal("export")
-                                .executes(context -> exportRegistry(context.getSource()))));
+        root.then(Commands.literal("registry")
+                .then(Commands.literal("export")
+                        .executes(context -> exportRegistry(context.getSource()))));
     }
 
     private static int exportRegistry(CommandSourceStack source) {
         JsonObject root = new JsonObject();
+        var registryAccess = source.getServer().registryAccess();
 
         JsonArray itemsArray = new JsonArray();
         ForgeRegistries.ITEMS.getKeys().forEach(id -> itemsArray.add(id.toString()));
@@ -38,9 +41,32 @@ public class ExportRegistryCommand {
         ForgeRegistries.ENTITY_TYPES.getKeys().forEach(id -> entitiesArray.add(id.toString()));
         root.add("entities", entitiesArray);
 
+        JsonArray entityTagsArray = new JsonArray();
+        Registry<?> entityRegistry = registryAccess.registryOrThrow(Registries.ENTITY_TYPE);
+        entityRegistry.getTagNames().forEach(tag -> entityTagsArray.add("#" + tag.location().toString()));
+        root.add("entity_tags", entityTagsArray);
+
         JsonArray enchantmentsArray = new JsonArray();
         ForgeRegistries.ENCHANTMENTS.getKeys().forEach(id -> enchantmentsArray.add(id.toString()));
         root.add("enchantments", enchantmentsArray);
+
+        Registry<?> biomeRegistry = registryAccess.registryOrThrow(Registries.BIOME);
+        JsonArray biomesArray = new JsonArray();
+        biomeRegistry.keySet().forEach(id -> biomesArray.add(id.toString()));
+        root.add("biomes", biomesArray);
+
+        JsonArray biomeTagsArray = new JsonArray();
+        biomeRegistry.getTagNames().forEach(tag -> biomeTagsArray.add("#" + tag.location().toString()));
+        root.add("biome_tags", biomeTagsArray);
+
+        Registry<?> structureRegistry = registryAccess.registryOrThrow(Registries.STRUCTURE);
+        JsonArray structuresArray = new JsonArray();
+        structureRegistry.keySet().forEach(id -> structuresArray.add(id.toString()));
+        root.add("structures", structuresArray);
+
+        JsonArray structureTagsArray = new JsonArray();
+        structureRegistry.getTagNames().forEach(tag -> structureTagsArray.add("#" + tag.location().toString()));
+        root.add("structure_tags", structureTagsArray);
 
         JsonArray taskTypesArray = new JsonArray();
         TaskHandlerRegistry.REGISTRY.get().getKeys().forEach(id -> taskTypesArray.add(id.toString()));

@@ -12,6 +12,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.common.util.Util;
+import net.noyji.thequestforge.config.ServerConfig;
 import net.noyji.thequestforge.data.managers.components.QuestGiverJsonInfo;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Marker;
@@ -77,7 +78,14 @@ public class QuestGiversManager extends SimpleJsonResourceReloadListener {
     }
 
     public boolean thisQuestGiverOrVillager(Entity entity){
-        return hasEntity(entity) || entity instanceof Villager;
+        boolean result = hasEntity(entity);
+
+        if (!result) {
+            if (ServerConfig.USE_VILLAGER.get()){
+                result = entity instanceof Villager;
+            }
+        }
+        return result;
     }
 
     public boolean entityHasPool(ResourceLocation entityKey, String pool){

@@ -1,0 +1,501 @@
+{
+  "pool": "none",
+  "type": "LOCAL",
+  "weight": 100,
+  "requirement": [],
+  "name": {
+    "en_us": [
+      "Wandering Trader's Visit",
+      "Rare Chance",
+      "Overseas Goods",
+      "Merchant on the Horizon",
+      "Bargain Time",
+      "Preparing to Trade",
+      "Exotic Souvenir",
+      "A Dream Purchase",
+      "Short Notice",
+      "Don't Miss the Chance",
+      "The Trader is Waiting",
+      "Time is Ticking",
+      "Valuable Exchange",
+      "Trade Capital",
+      "Wanderer's Goods"
+    ],
+    "ru_ru": [
+      "Визит торговца",
+      "Редкий шанс",
+      "Заморские товары",
+      "Купец на горизонте",
+      "Время торговаться",
+      "Подготовка к сделке",
+      "Экзотический сувенир",
+      "Покупка мечты",
+      "Сжатые сроки",
+      "Не упустить шанс",
+      "Торговец не ждёт",
+      "Время тикает",
+      "Ценный обмен",
+      "Капитал для сделки",
+      "Товары странника"
+    ]
+  },
+  "description": {
+    "en_us": [
+      "A Wandering Trader has appeared in the area, and %npc_name% really wants to buy a rare overseas item for his home. However, he doesn't have enough valuable goods for exchange. You need to gather the required items before the merchant leaves the village.",
+      "%npc_name% heard that a Wandering Trader is visiting soon. He has dreamed of exotic decorations for a long time, but his pockets are empty. You have limited time to collect goods for the trade before the merchant departs.",
+      "The arrival of the Wandering Trader caused a stir. %npc_name% wants to strike a bargain, but time is running out. Gather the necessary resources for him so he can make his dream purchase. A fair reward is guaranteed.",
+      "You need to help %npc_name% quickly gather valuable items. A traveling merchant is passing through, and the host wants to buy something special. The trader will leave soon, so you must act fast.",
+      "A rare opportunity has presented itself to %npc_name% to buy an exotic item from a Wandering Trader. To make the deal happen, he needs help collecting exchange goods. The clock is ticking!",
+      "The Wandering Trader never stays in one place for long. %npc_name% asks you to quickly gather goods for trade so he can buy a rare item for his home. Time is limited!"
+    ],
+    "ru_ru": [
+      "В округе появился бродячий торговец, и %npc_name% очень хочет купить у него редкую заморскую вещицу для дома. Однако ценных товаров для обмена у него нет. Нужно раздобыть требуемые ресурсы, пока купец не покинул деревню.",
+      "%npc_name% прослышал, что мимо проходит бродячий торговец. Он давно мечтал об экзотических украшениях, но карманы пусты. У вас есть ограниченное время, чтобы собрать товары для сделки до ухода купца.",
+      "Визит странствующего торговца вызвал ажиотаж. %npc_name% хочет совершить выгодную сделку, но время поджимает. Соберите для него нужные ресурсы, чтобы он успел сделать покупку мечты. Честная награда гарантирована.",
+      "Нужно помочь %npc_name% быстро собрать ценные вещи. Мимо проходит странствующий купец, и хозяин хочет приобрести у него кое-что особенное. Торговец скоро уйдёт, так что действовать нужно быстро.",
+      "У %npc_name% появился редкий шанс купить экзотику у бродячего торговца. Чтобы сделка состоялась, ему нужна помощь в сборе товаров для обмена. Часики тикают!",
+      "Бродячий торговец никогда не задерживается на одном месте надолго. %npc_name% просит быстро собрать товары для обмена, чтобы он успел выкупить редкую вещицу для дома. Время ограничено!"
+    ]
+  },
+  "max_reward": 3,
+  "dialogs": {
+    "start": {
+      "text": {
+        "en_us": [
+          "Hey, traveler, wait a minute! You have a quick step. Did you hear the news? There's a chance to get some rare items, but I'm completely unprepared!",
+          "Greetings! Oh, I'm so nervous... I've been waiting for this for so long, and now I'm afraid I'll miss it. Will you help a local out with a time-sensitive matter?",
+          "Good day! Listen, you travel a lot, you know the value of things. I have a rare opportunity here, but without a quick assistant, I'll miss my chance completely.",
+          "Psst... over here! Have you seen who came to our area? I desperately need help before this opportunity slips away from me.",
+          "Hello! You're just the person I need. I have an urgent matter, and time is working against me. Care to listen?"
+        ],
+        "ru_ru": [
+          "Эй, путник, постой-ка! У тебя шаг быстрый. Слышал новости? Тут есть шанс редкими вещами разжиться, а я совсем не готов!",
+          "Приветствую! Ох, я так волнуюсь... Столько этого ждал, а теперь боюсь всё пропустить. Выручишь местного в одном срочном деле?",
+          "День добрый! Слушай, ты много странствуешь, знаешь цену вещам. У меня тут редкая возможность нарисовалась, но без проворного помощника я свой шанс упущу.",
+          "Псс... сюда! Видел, кто в наши края пожаловал? Мне срочно нужна помощь, пока эта удача не ускользнула у меня из-под носа.",
+          "Привет! Ты-то мне и нужен. У меня тут срочное дело, а время играет против меня. Выслушаешь?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "What's the rush?",
+              "What happened?",
+              "What kind of opportunity?"
+            ],
+            "ru_ru": [
+              "К чему такая спешка?",
+              "А что случилось?",
+              "Что за возможность?"
+            ]
+          },
+          "to_go": "dialog_1"
+        },
+        {
+          "text": {
+            "en_us": [
+              "I can help.",
+              "I'm in.",
+              "Alright, tell me what to do."
+            ],
+            "ru_ru": [
+              "Я помогу.",
+              "Я в деле.",
+              "Ладно, говори что делать."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        }
+      ]
+    },
+    "dialog_1": {
+      "text": {
+        "en_us": [
+          "A Wandering Trader is in the area! I saw him walking his llamas. I've been dreaming of buying a glowing coral or a rare sapling from him for my home, but my pockets are empty. I need goods for exchange!",
+          "There's a traveling merchant passing by. They always have overseas wonders! But he only takes valuable goods or emeralds, and I have none. I need to gather some \"capital\" before he leaves.",
+          "I want to make a deal with the Wandering Trader. This is my only chance to get an exotic souvenir for the house, but I have nothing to trade! If I don't get the resources, I'll be left with nothing.",
+          "The Wandering Trader has set up camp nearby. I've always wanted a Nautilus shell, but you can't buy that with dirt. I urgently need valuable items to offer him.",
+          "It's about the traveling merchant! He has such beautiful things... I want to strike a deal, but I lack trade goods. I need someone nimble to gather resources while I keep an eye on him."
+        ],
+        "ru_ru": [
+          "В округе бродячий торговец! Сам видел, как он лам своих ведёт. Я давно мечтал купить у него светящийся коралл или редкий саженец для дома, но карманы пусты. Нужны товары для обмена!",
+          "Тут мимо странствующий купец проходит. У них же вечно заморские диковинки! Но он берёт только ценные вещи или изумруды, а у меня шаром покати. Надо собрать «капитал», пока он не ушёл.",
+          "Хочу провернуть сделку с бродячим торговцем. Это мой единственный шанс достать экзотический сувенир в дом, но менять-то не на что! Если не раздобуду ресурсы, останусь ни с чем.",
+          "Бродячий торговец разбил лагерь неподалёку. Я всегда хотел раковину наутилуса, но за грязь её не купишь. Мне срочно нужны ценные вещи, чтобы предложить ему обмен.",
+          "Дело в странствующем купце! У него такие красивые вещицы... Хочу ударить по рукам, да вот товаров для торга нет. Мне нужен кто-то проворный, кто соберёт ресурсы, пока я глаз с него не спускаю."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "What exactly do you need?",
+              "What should I gather for the trade?",
+              "Give me the list."
+            ],
+            "ru_ru": [
+              "Что именно нужно?",
+              "Что собрать для сделки?",
+              "Давай список."
+            ]
+          },
+          "to_go": "dialog_2"
+        },
+        {
+          "text": {
+            "en_us": [
+              "What about my cut?",
+              "Will I get paid for this rush?"
+            ],
+            "ru_ru": [
+              "А моя доля?",
+              "За эту спешку мне заплатят?"
+            ]
+          },
+          "to_go": "dialog_3"
+        },
+        {
+          "text": {
+            "en_us": [
+              "How much time do we have?",
+              "When is he leaving?",
+              "What's the deadline?"
+            ],
+            "ru_ru": [
+              "Сколько у нас времени?",
+              "Когда он уходит?",
+              "Какие сроки?"
+            ]
+          },
+          "to_go": "dialog_8"
+        }
+      ]
+    },
+    "dialog_2": {
+      "text": {
+        "en_us": [
+          "To make a solid offer, I need %target-1%%target-2%%target-3%. Can you find them?",
+          "The merchant is picky. Get me %target-1%%target-2%%target-3%, this should interest him.",
+          "I thought it over, and %target-1%%target-2%%target-3% will be the perfect trade currency. Will you get them?",
+          "Bring me %target-1%%target-2%%target-3%. This will be enough to buy what I want.",
+          "To strike a bargain, I desperately need %target-1%%target-2%%target-3%. Can you handle it before he leaves?"
+        ],
+        "ru_ru": [
+          "Чтобы сделка выгорела, мне нужны %target-1%%target-2%%target-3%. Сможешь отыскать?",
+          "Купец парень привередливый. Раздобудь мне %target-1%%target-2%%target-3%, это должно его заинтересовать.",
+          "Я тут прикинул, отличной валютой для торга станут %target-1%%target-2%%target-3%. Достанешь?",
+          "Принеси мне %target-1%%target-2%%target-3%. Этого с головой хватит, чтобы выкупить желаемое.",
+          "Для торга мне позарез нужны %target-1%%target-2%%target-3%. Справишься, пока он не ушёл?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Consider it done.",
+              "I'll bring them.",
+              "I'm on it."
+            ],
+            "ru_ru": [
+              "Считай, уже сделано.",
+              "Я принесу.",
+              "Я в деле."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "And the payment?",
+              "What's in it for me?"
+            ],
+            "ru_ru": [
+              "А оплата?",
+              "Что я с этого получу?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    },
+    "dialog_3": {
+      "text": {
+        "en_us": [
+          "Don't worry, I have some personal savings! I'll give you %reward-1%%reward-2%%reward-3%. Deal?",
+          "I won't leave you empty-handed. For your swiftness, you'll get %reward-1%%reward-2%%reward-3%. Fair?",
+          "I'm keeping the exotic item, but you can have %reward-1%%reward-2%%reward-3%. How does that sound?",
+          "For running this errand, I'm ready to part with %reward-1%%reward-2%%reward-3%. Deal?",
+          "My price for your quick legs: %reward-1%%reward-2%%reward-3%. Will this cover your efforts?"
+        ],
+        "ru_ru": [
+          "Не переживай, у меня есть личные сбережения! Отдам тебе %reward-1%%reward-2%%reward-3%. По рукам?",
+          "С пустыми руками не оставлю. За твою расторопность получишь %reward-1%%reward-2%%reward-3%. Честно?",
+          "Экзотику я заберу себе, а тебе достанутся %reward-1%%reward-2%%reward-3%. Как тебе такой расклад?",
+          "За помощь в этом деле готов расстаться с %reward-1%%reward-2%%reward-3%. Идёт?",
+          "Моя цена за твои быстрые ноги: %reward-1%%reward-2%%reward-3%. Покроет твои труды?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Consider it done.",
+              "I'll bring them.",
+              "I'm on it."
+            ],
+            "ru_ru": [
+              "Считай, уже сделано.",
+              "Я принесу.",
+              "Я в деле."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "What exactly do you need?"
+            ],
+            "ru_ru": [
+              "Что именно нужно?"
+            ]
+          },
+          "to_go": "dialog_2"
+        },
+        {
+          "text": {
+            "en_us": [
+              "How much time do we have?"
+            ],
+            "ru_ru": [
+              "Сколько у нас времени?"
+            ]
+          },
+          "to_go": "dialog_8"
+        }
+      ]
+    },
+    "dialog_4": {
+      "text": {
+        "en_us": [
+          "Excellent! I'll stay here and keep an eye on him so he doesn't leave without warning. Hurry up!",
+          "Thank you! Go gather the goods, and I'll go negotiate the reservation of the item.",
+          "Great! Don't dawdle, his llamas are already restless. I'm counting on you.",
+          "Deal. Remember, time is our main enemy right now. Good luck!",
+          "I knew I could count on you. Bring everything quickly, and I'll prepare your reward!"
+        ],
+        "ru_ru": [
+          "Отлично! Я пока подежурю здесь, чтобы он не ушёл без предупреждения. Поторапливайся!",
+          "Спасибо! Беги за товарами, а я пока пойду договорюсь, чтобы вещицу никому не продали.",
+          "Супер! Не задерживайся, его ламы уже копытами бьют. Я на тебя рассчитываю.",
+          "По рукам. Помни, время сейчас — наш главный враг. Удачи!",
+          "Знал, что на тебя можно положиться. Приноси всё скорее, а я пока твою награду отложу!"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Alright"
+            ],
+            "ru_ru": [
+              "Хорошо"
+            ]
+          },
+          "to_go": "dialog_5",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_5": {
+      "text": {
+        "en_us": [
+          "Ah, you're back! Did you bring the trade goods? He's about to pack his bags!",
+          "Well? Do you have the resources? The merchant is still here, but not for long!",
+          "You're just in time! Did you manage to gather everything?",
+          "Tell me you brought the goods! I can't wait any longer.",
+          "Welcome back! Did you find everything I asked for?"
+        ],
+        "ru_ru": [
+          "А, вернулся! Принёс товары для торга? Он уже тюки пакует!",
+          "Ну что? Ресурсы у тебя? Купец ещё здесь, но это ненадолго!",
+          "Ты как раз вовремя! Получилось собрать всё необходимое?",
+          "Скажи, что ты принёс вещи! Мне уже не терпится пойти к нему.",
+          "С возвращением! Всё нашёл, о чём я просил?"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Yes"
+            ],
+            "ru_ru": [
+              "Да"
+            ]
+          },
+          "to_go": "dialog_7",
+          "actions": [
+            "thequestforge:complete"
+          ],
+          "alt_to_go": "dialog_6"
+        }
+      ]
+    },
+    "dialog_6": {
+      "text": {
+        "en_us": [
+          "Wait a minute... This won't be enough! You didn't bring everything. He won't make a deal for a half-price!",
+          "This won't do. We are short on goods. Check your bags, the deal is at risk.",
+          "Hey, we agreed on a specific amount! I don't see all the items. Bring the rest, quickly!",
+          "You brought only part of it. The merchant knows the exact value. Go get what's missing, hurry!",
+          "Oh no, I can't approach him with this. You forgot some items. Please, bring the rest!"
+        ],
+        "ru_ru": [
+          "Погоди-ка... Этого не хватит! Ты принёс не всё. За полцены он сделку не провернёт!",
+          "Так дело не пойдёт. Товаров не хватает. Проверь сумки, покупка всё ещё под угрозой.",
+          "Эй, мы договаривались на конкретное количество! Я не вижу всех вещей. Давай доноси остальное, живо!",
+          "Ты принёс только часть. Торговец знает цену вещам. Ступай за недостающим, поспеши!",
+          "Ох нет, с этим к нему подходить стыдно. Ты кое-что забыл. Пожалуйста, донеси всё остальное!"
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "I'll be right back."
+            ],
+            "ru_ru": [
+              "Сейчас вернусь."
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_7": {
+      "text": {
+        "en_us": [
+          "Perfect! Everything is exactly as I wanted. Thank you so much, I'm running to him right now before he leaves! Here is your reward.",
+          "Ah, what a relief! Now I can finally make the trade. Thank you, traveler. Take this, you earned it.",
+          "You are a lifesaver! I will finally have that rare souvenir. Here is your payment, as agreed.",
+          "Everything is here, great. Thank you for being so fast! Enjoy your reward.",
+          "I can already see him preparing his llamas, but I made it! My deepest gratitude! Take your coins and safe travels."
+        ],
+        "ru_ru": [
+          "Идеально! Всё ровно так, как я хотел. Огромное спасибо, бегу к нему прямо сейчас, пока не ушёл! Вот твоя награда.",
+          "Уф, прямо отлегло! Теперь-то я наконец совершу обмен. Спасибо тебе, путник. Держи, ты заслужил.",
+          "Ты просто спаситель! Наконец-то у меня появится этот редкий сувенир. Вот твоя плата, как и договаривались.",
+          "Всё на месте, отлично. Спасибо за скорость, без тебя бы я не успел! Пользуйся наградой на здоровье.",
+          "Уже вижу, как он лам своих запрягает, но мы успели! Моя глубочайшая благодарность! Забирай монеты и удачи в пути."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Thank you!"
+            ],
+            "ru_ru": [
+              "Спасибо!"
+            ]
+          },
+          "to_go": "exit",
+          "actions": [
+            "thequestforge:close"
+          ]
+        }
+      ]
+    },
+    "dialog_8": {
+      "text": {
+        "en_us": [
+          "These wanderers never stay long. I'd say we have exactly %time% before he disappears into the horizon.",
+          "He usually stops for just a couple of days. We have %time% left maximum. You can't delay!",
+          "Time is strict here. The merchant will leave the area in %time%. If you don't return by then, it's over.",
+          "I asked him to wait, but he gave me an ultimatum. We only have %time% at our disposal.",
+          "Listen, the clock is ticking. You have %time%, no more. After that, he and his llamas will be gone."
+        ],
+        "ru_ru": [
+          "Эти бродяги долго на месте не сидят. Я бы сказал, у нас есть ровно %time%, прежде чем он скроется за горизонтом.",
+          "Обычно он останавливается всего на пару дней. У нас осталось максимум %time%. Медлить нельзя!",
+          "Тут всё строго. Купец покинет наши края через %time%. Если не вернёшься к этому сроку — пиши пропало.",
+          "Я просил его подождать, но он поставил ультиматум. В нашем распоряжении всего %time%.",
+          "Слушай, часики-то тикают. Навскидку у тебя есть %time%, не больше. После этого он со своими ламами уйдёт."
+        ]
+      },
+      "buttons": [
+        {
+          "text": {
+            "en_us": [
+              "Consider it done.",
+              "I'll bring them.",
+              "I'm on it."
+            ],
+            "ru_ru": [
+              "Считай, уже сделано.",
+              "Я принесу.",
+              "Я в деле."
+            ]
+          },
+          "to_go": "dialog_4",
+          "actions": [
+            "thequestforge:save",
+            "thequestforge:accept"
+          ]
+        },
+        {
+          "text": {
+            "en_us": [
+              "What exactly do you need?"
+            ],
+            "ru_ru": [
+              "Что именно нужно?"
+            ]
+          },
+          "to_go": "dialog_2"
+        },
+        {
+          "text": {
+            "en_us": [
+              "And the payment?"
+            ],
+            "ru_ru": [
+              "А оплата?"
+            ]
+          },
+          "to_go": "dialog_3"
+        }
+      ]
+    }
+  },
+  "time_limit": {
+    "min": 4,
+    "max": 8
+  },
+  "group": "thequestforge:villager_plains_materials_4",
+  "task_count": {
+    "min": 1,
+    "max": 3
+  }
+}

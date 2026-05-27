@@ -19,11 +19,18 @@ public class QuestGiverGUI extends Screen {
 
     private static final ResourceLocation DIALOG_FRAME_TEXTURE =
             TheQuestForge.id("textures/gui/quest_giver/dialog_frame.png");
+    private static final ResourceLocation BLUR_VIGNETTE_TEXTURE =
+            TheQuestForge.id("textures/gui/quest_giver/blur_vignette.png");
 
     private final Entity entity;
 
     private TypewriterTextWidget typewriterTextWidget;
     private DialogOptionSelector optionSelector;
+
+    private int frameX;
+    private int frameY;
+    private int frameWidth;
+    private int frameHeight;
 
     public QuestGiverGUI(Entity entity) {
         super(Component.literal("quest_giver_gui"));
@@ -36,25 +43,60 @@ public class QuestGiverGUI extends Screen {
 
         DialogueCameraManager.startFocus(entity);
 
-        createTypewriterTextWidget();
-        createOptionSelector();
-        DialogManager dialogManager =
-                new DialogManager(this.entity, this.typewriterTextWidget, this.optionSelector, this::onClose);
+        int baseFrameWidth = 330;
+        int baseSelectorWidth = 200;
+        int gap = 10;
+        int bottomPadding = 10;
+        this.frameHeight = 100;
+
+        int totalBaseWidth = baseFrameWidth + gap + baseSelectorWidth;
+
+        this.frameWidth = baseFrameWidth;
+        int selectorWidth = baseSelectorWidth;
+
+        if (totalBaseWidth > this.width - 20) {
+            float responsiveScale = (this.width - 20f) / totalBaseWidth;
+            this.frameWidth = (int) (baseFrameWidth * responsiveScale);
+            selectorWidth = (int) (baseSelectorWidth * responsiveScale);
+        }
+
+        int totalWidth = this.frameWidth + gap + selectorWidth;
+        int startX = (this.width - totalWidth) / 2;
+
+        this.frameX = startX;
+        this.frameY = this.height - this.frameHeight - bottomPadding;
+
+        int selectorX = this.frameX + this.frameWidth + gap;
+        int selectorY = this.height - 80 - (bottomPadding + 10);
+
+        int textPaddingX = 15;
+        int textPaddingY = 15;
+        int dialogX = this.frameX + textPaddingX;
+        int dialogY = this.frameY + textPaddingY;
+        int dialogWidth = this.frameWidth - (textPaddingX * 2);
+
+        createTypewriterTextWidget(dialogX, dialogY, dialogWidth);
+        createOptionSelector(selectorX, selectorY, selectorWidth, 80);
+
+        DialogManager dialogManager = new DialogManager(
+                this.entity, this.typewriterTextWidget, this.optionSelector, this::onClose
+        );
     }
 
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         optionSelector.setVisible(typewriterTextWidget.isFinished());
 
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
         drawDialogFrame(guiGraphics);
-        typewriterTextWidget.render(guiGraphics, mouseX, mouseY, partialTick);
 
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        drawBlurVignette(guiGraphics);
     }
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == GLFW.GLFW_KEY_SPACE){
+        if (keyCode == GLFW.GLFW_KEY_SPACE) {
             typewriterTextWidget.skipAnimation();
             return true;
         }
@@ -72,57 +114,48 @@ public class QuestGiverGUI extends Screen {
         return false;
     }
 
-    private void createTypewriterTextWidget(){
-        int dialogWidth = Math.min(this.width - 80, 318);
-        int dialogX = (this.width ) / 2 - 210;
-        int dialogY = this.height - 100;
-
+    private void createTypewriterTextWidget(int x, int y, int width) {
         if (typewriterTextWidget == null) {
             typewriterTextWidget = new TypewriterTextWidget.Builder()
-                    .position(dialogX, dialogY)
-                    .width(dialogWidth)
+                    .position(x, y)
+                    .width(width)
                     .speed(35.0f)
                     .sound(TheQuestForgeSounds.NPC_VOICE.get())
                     .soundSettings(3, 0.9f)
-                    .onComplete(() -> {
-                    })
+                    .onComplete(() -> {})
                     .build();
+            this.addRenderableWidget(this.typewriterTextWidget);
         } else {
-            typewriterTextWidget.updateBounds(dialogX, dialogY, dialogWidth);
+            typewriterTextWidget.updateBounds(x, y, width);
+            if (!this.renderables.contains(typewriterTextWidget)) {
+                this.addRenderableWidget(typewriterTextWidget);
+            }
         }
-        this.addRenderableWidget(this.typewriterTextWidget);
     }
 
-    private void createOptionSelector(){
-        int selectorWidth = 200;
-        int selectorHeight = 80;
-
-        int selectorX = this.width / 2 + 115;
-        int selectorY = this.height - selectorHeight - 20;
-
+    private void createOptionSelector(int x, int y, int width, int height) {
         if (this.optionSelector == null) {
-            this.optionSelector = DialogOptionSelector.builder(selectorX, selectorY, selectorWidth, selectorHeight)
+            this.optionSelector = DialogOptionSelector.builder(x, y, width, height)
                     .align(DialogOptionSelector.Alignment.LEFT)
                     .build();
+            this.addRenderableWidget(this.optionSelector);
         } else {
-            this.optionSelector.updateBounds(selectorX, selectorY, selectorWidth, selectorHeight);
+            this.optionSelector.updateBounds(x, y, width, height);
+            if (!this.renderables.contains(optionSelector)) {
+                this.addRenderableWidget(optionSelector);
+            }
         }
-        this.addRenderableWidget(this.optionSelector);
     }
 
-    private void drawDialogFrame(GuiGraphics guiGraphics){
-        float baseWidth = 330F;
-        float baseHeight = 100F;
-
-        float maxAllowedWidth = this.width * 0.95F;
-        float scale = Math.min(1.0F, maxAllowedWidth / baseWidth);
-
-        int x = (int) (((this.width / 2F - 55F) / scale) - (baseWidth / 2F));
-        int y = (int) ((this.height - 10f) / scale - baseHeight);
-
+    private void drawDialogFrame(GuiGraphics guiGraphics) {
         RenderSystem.enableBlend();
-        guiGraphics.blit(DIALOG_FRAME_TEXTURE, x, y, (int) (baseWidth * scale), (int) (baseHeight * scale), 0, 0, 330, 100, 330, 100);;
+        guiGraphics.blit(DIALOG_FRAME_TEXTURE, frameX, frameY, frameWidth, frameHeight, 0, 0, 330, 100, 330, 100);
         RenderSystem.disableBlend();
+    }
 
+    private void drawBlurVignette(GuiGraphics guiGraphics) {
+        RenderSystem.enableBlend();
+        guiGraphics.blit(BLUR_VIGNETTE_TEXTURE, 0, 0, this.width, this.height, 0, 0, 256, 256, 256, 256);
+        RenderSystem.disableBlend();
     }
 }

@@ -1,0 +1,310 @@
+{
+  "id": "villager_plains_materials_4",
+  "tasks": [
+    {
+      "task_type": "thequestforge:collect",
+      "value": 10,
+      "target": "minecraft:gold_ingot",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 4,
+        "max": 10
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 3,
+      "target": "minecraft:paper",
+      "multiplier": true,
+      "weight": 20,
+      "count": {
+        "min": 15,
+        "max": 40
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 8,
+      "target": "minecraft:leather",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 15,
+      "target": "minecraft:book",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 2,
+        "max": 8
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 5,
+      "target": "minecraft:iron_ingot",
+      "multiplier": true,
+      "weight": 20,
+      "count": {
+        "min": 5,
+        "max": 20
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 4,
+      "target": "minecraft:rabbit_hide",
+      "multiplier": true,
+      "weight": 12,
+      "count": {
+        "min": 4,
+        "max": 12
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 15,
+      "target": "minecraft:lapis_lazuli",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 18
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 4,
+      "target": "minecraft:copper_ingot",
+      "multiplier": true,
+      "weight": 18,
+      "count": {
+        "min": 10,
+        "max": 25
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 12,
+      "target": "minecraft:amethyst_shard",
+      "multiplier": true,
+      "weight": 14,
+      "count": {
+        "min": 3,
+        "max": 10
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 4,
+      "target": "minecraft:ink_sac",
+      "multiplier": true,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 8,
+      "target": "minecraft:glow_ink_sac",
+      "multiplier": true,
+      "weight": 12,
+      "count": {
+        "min": 3,
+        "max": 10
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 6,
+      "target": "minecraft:honeycomb",
+      "multiplier": true,
+      "weight": 14,
+      "count": {
+        "min": 3,
+        "max": 10
+      }
+    },
+    {
+      "task_type": "thequestforge:collect",
+      "value": 10,
+      "target": "minecraft:slime_ball",
+      "multiplier": true,
+      "weight": 12,
+      "count": {
+        "min": 2,
+        "max": 8
+      }
+    }
+  ],
+  "rewards": [
+    {
+      "target": "minecraft:tipped_arrow",
+      "multiplier": true,
+      "price": 5,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      },
+      "tag": "{Potion:\"minecraft:slowness\"}"
+    },
+    {
+      "target": "minecraft:tipped_arrow",
+      "multiplier": true,
+      "price": 5,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      },
+      "tag": "{Potion:\"minecraft:weakness\"}"
+    },
+    {
+      "target": "minecraft:tipped_arrow",
+      "multiplier": true,
+      "price": 5,
+      "weight": 15,
+      "count": {
+        "min": 5,
+        "max": 15
+      },
+      "tag": "{Potion:\"minecraft:poison\"}"
+    },
+    {
+      "target": "minecraft:potion",
+      "multiplier": false,
+      "price": 40,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 2
+      },
+      "tag": "{Potion:\"minecraft:healing\"}"
+    },
+    {
+      "target": "minecraft:potion",
+      "multiplier": false,
+      "price": 40,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 2
+      },
+      "tag": "{Potion:\"minecraft:night_vision\"}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 50,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:unbreaking\",lvl:1}]}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 50,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:efficiency\",lvl:2}]}"
+    },
+    {
+      "target": "minecraft:enchanted_book",
+      "multiplier": false,
+      "price": 50,
+      "weight": 8,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "tag": "{StoredEnchantments:[{id:\"minecraft:protection\",lvl:1}]}"
+    },
+    {
+      "target": "minecraft:experience_bottle",
+      "multiplier": true,
+      "price": 10,
+      "weight": 12,
+      "count": {
+        "min": 3,
+        "max": 8
+      }
+    },
+    {
+      "target": "minecraft:iron_axe",
+      "multiplier": false,
+      "price": 40,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 1
+      },
+      "enchantment": [
+        {
+          "id": "minecraft:efficiency",
+          "level": {
+            "min": 1,
+            "max": 2
+          },
+          "weight": 10
+        }
+      ],
+      "enchantment_count": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    {
+      "target": "minecraft:clock",
+      "multiplier": false,
+      "price": 30,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    {
+      "target": "minecraft:compass",
+      "multiplier": false,
+      "price": 25,
+      "weight": 10,
+      "count": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    {
+      "target": "minecraft:torch",
+      "multiplier": true,
+      "price": 2,
+      "weight": 15,
+      "count": {
+        "min": 10,
+        "max": 32
+      }
+    }
+  ],
+  "xp_reward": {
+    "min": 10,
+    "max": 20
+  },
+  "currency_reward": {
+    "min": 10,
+    "max": 20
+  }
+}

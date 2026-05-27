@@ -5,9 +5,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.noyji.thequestforge.api.client.registry.PlaceholderRegistry;
 import net.noyji.thequestforge.api.quest.task.AbstractTask;
 import net.noyji.thequestforge.common.items.TheQuestForgeItems;
-import net.noyji.thequestforge.common.items.custom.QuestCompassItem;
 import net.noyji.thequestforge.common.util.Util;
 import net.noyji.thequestforge.data.capability.CapabilityUtil;
 import net.noyji.thequestforge.data.managers.QuestTemplateManager;
@@ -91,7 +91,8 @@ public class QuestBookManager {
 
     public Component getQuestDescription(){
         if (selectQuest == null) return Component.literal("Empty");
-        return template.getQuestDescription(languageKey, selectQuest.getDescriptionIndex());
+        String rawText = template.getQuestDescription(languageKey, selectQuest.getDescriptionIndex()).getString();
+        return Component.literal(PlaceholderRegistry.parse(rawText, player, null, selectQuest));
     }
 
     public List<AbstractTask<?>> getCurrentQuestTasks(){

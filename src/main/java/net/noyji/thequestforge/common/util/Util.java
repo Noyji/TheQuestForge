@@ -1,11 +1,13 @@
 package net.noyji.thequestforge.common.util;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.QuartPos;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -15,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.noyji.thequestforge.api.quest.IWeighable;
 import net.noyji.thequestforge.config.ServerConfig;
@@ -122,13 +125,15 @@ public class Util {
         if (languageKey == null || languageKey.isEmpty()) languageKey = "en_us";
         if (textIndex < 0) textIndex = 0;
 
-        String result = source.get(languageKey).get(textIndex);
+        if (source.containsKey(languageKey)) {
+            return source.get(languageKey).get(textIndex);
+        }
 
-        if (result == null) result = source.get("en_us").get(textIndex);
+        if (source.containsKey("en_us")) {
+            return source.get("en_us").get(textIndex);
+        }
 
-        if (result == null) result = "???";
-
-        return result;
+        return "???";
     }
 
     public static double getRarityMultiplier(QuestRarity rarity){
@@ -268,6 +273,37 @@ public class Util {
         int index = (int) Math.round(angle / 45.0) % 8;
 
         return DIRECTIONS[index];
+    }
+
+    public static BlockPos findStructurePosLocate(Level level, BlockPos centerPos, String structureStr, int radiusInBlocks) {
+        if (!(level instanceof ServerLevel serverLevel)) return null;
+
+        Registry<Structure> registry = serverLevel.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        HolderSet<Structure> holderSet = null;
+
+        if (structureStr.startsWith("#")) {
+            TagKey<Structure> tagKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.parse(structureStr.substring(1)));
+            var optionalTag = registry.getTag(tagKey);
+            if (optionalTag.isPresent()) {
+                holderSet = optionalTag.get();
+            }
+        } else {
+            ResourceKey<Structure> key = ResourceKey.create(Registries.STRUCTURE, ResourceLocation.parse(structureStr));
+            var optionalHolder = registry.getHolder(key);
+            if (optionalHolder.isPresent()) {
+                holderSet = HolderSet.direct(optionalHolder.get());
+            }
+        }
+
+        if (holderSet == null) return null;
+
+        int chunkRadius = Math.max(1, radiusInBlocks / 16);
+
+        Pair<BlockPos, Holder<Structure>> result = serverLevel.getChunkSource().getGenerator().findNearestMapStructure(
+                serverLevel, holderSet, centerPos, chunkRadius, false
+        );
+
+        return result != null ? result.getFirst() : null;
     }
 
     private static boolean isSameItem(ItemStack stack1, ItemStack stack2) {

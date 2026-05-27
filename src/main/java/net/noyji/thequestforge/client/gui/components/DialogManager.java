@@ -17,6 +17,7 @@ import net.noyji.thequestforge.data.template.components.TemplateDialog;
 import net.noyji.thequestforge.data.template.components.TemplateDialogButton;
 import net.noyji.thequestforge.network.TheQuestForgeNetworking;
 import net.noyji.thequestforge.network.c2s.ActionHandlerC2SPacket;
+import net.noyji.thequestforge.network.c2s.SaveActionC2SPacket;
 
 import java.util.UUID;
 
@@ -59,6 +60,10 @@ public class DialogManager {
     private void setupOptionAction() {
         this.optionSelector.setOnSelectAction((TemplateDialogButton selectedButton) -> {
             if (player == null) return;
+
+            if (selectedButton.hasAction("thequestforge:save") || selectedButton.hasAction("save")) {
+                TheQuestForgeNetworking.sendToServer(new SaveActionC2SPacket(quest.getSourceTemplate().toString(), currentDialogKey, optionSelector.getSelectedIndex(), entity.getId()));
+            }
 
             if (selectedButton.hasAction("thequestforge:close") || selectedButton.hasAction("close")) {
                 if (this.onCloseScreen != null) {

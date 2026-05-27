@@ -5,6 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.api.client.placeholder.IPlaceholderResolver;
 import net.noyji.thequestforge.data.quest.entity.Quest;
+import net.noyji.thequestforge.data.quest.player.PlayerQuest;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,7 +24,7 @@ public class PlaceholderRegistry {
         REGISTRY.put(key, resolver);
     }
 
-    public static String parse(String text, Player player, Entity entity, Quest quest){
+    public static String parse(String text, Player player, Entity entity, PlayerQuest quest){
         if (text == null || text.isEmpty()) return text;
 
         Matcher matcher = PLACEHOLDERS_PATTERN.matcher(text);
