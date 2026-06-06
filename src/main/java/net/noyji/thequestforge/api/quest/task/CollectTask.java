@@ -13,14 +13,8 @@ import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 
 public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     private ItemStack itemStack;
-    private int progress;
 
     public CollectTask() {
-    }
-
-    public CollectTask(ItemStack itemStack, int goal) {
-        this.itemStack = itemStack;
-        this.goal = goal;
     }
 
     public ItemStack getItemStack(){
@@ -35,11 +29,6 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
     @Override
     public ResourceLocation getLocation() {
         return TheQuestForge.id("collect");
-    }
-
-    @Override
-    public boolean isComplete() {
-        return progress >= goal;
     }
 
     @Override
@@ -69,11 +58,6 @@ public class CollectTask extends AbstractTask<TickEvent.PlayerTickEvent>{
         Player player = event.player;
 
         progress = Util.countMatchingItems(player, itemStack);
-    }
-
-    @Override
-    public int getProgress() {
-        return progress;
     }
 
     @Override

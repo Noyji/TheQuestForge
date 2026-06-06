@@ -53,9 +53,6 @@ public class NextQuestAction extends AbstractAction{
             }
         } else {
             playerData.lockNpc(npcId);
-
-            player.sendSystemMessage(Component.literal("Цепочка заданий завершена!").withStyle(style -> style.withColor(0x00FFCC)));
-
             TheQuestForgeNetworking.sendToPlayer(new ClosePlayerGuiS2CPacket(), player);
         }
         return true;

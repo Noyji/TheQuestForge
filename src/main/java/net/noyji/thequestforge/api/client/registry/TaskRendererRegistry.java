@@ -1,5 +1,6 @@
 package net.noyji.thequestforge.api.client.registry;
 
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -13,7 +14,8 @@ import net.noyji.thequestforge.api.quest.task.KillTask;
 
 import java.util.HashMap;
 import java.util.Map;
-@Mod.EventBusSubscriber(modid = TheQuestForge.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+
+@Mod.EventBusSubscriber(modid = TheQuestForge.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class TaskRendererRegistry {
 
     private static final Map<Class<? extends AbstractTask<?>>, ITaskRenderer<?>> RENDERERS = new HashMap<>();

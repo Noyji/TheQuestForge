@@ -137,11 +137,9 @@ public class PlayerQuestData {
     }
 
     public void debugInfoCatalog() {
-        TheQuestForge.LOGGER.info("=== QUEST CATALOG DEBUG ===");
 
         if (this.questCatalog.isEmpty()) {
             TheQuestForge.LOGGER.info("Каталог пуст.");
-            TheQuestForge.LOGGER.info("===========================");
             return;
         }
 
@@ -172,7 +170,6 @@ public class PlayerQuestData {
                 }
             }
         }
-        TheQuestForge.LOGGER.info("===========================");
     }
     @Nullable
     public Map<ResourceLocation, List<UUID>> getTargetsCatalog(ResourceLocation taskKey){

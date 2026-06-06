@@ -43,9 +43,9 @@ public class ServerConfig {
     static {
         BUILDER.comment("server");
 
-        SPAWN_QUEST_GIVER_CHANCE = BUILDER.defineInRange("quest_giver_chance", 35, 30, 100);
+        SPAWN_QUEST_GIVER_CHANCE = BUILDER.defineInRange("quest_giver_chance", 35, 0, 100);
         ATTEMPTS_TO_CREATE_QUEST = BUILDER.defineInRange("attempts_to_create", 50, 10, 300);
-        MAX_REMEMBERED_NPCS = BUILDER.defineInRange("max_remembered_npcs", 128, 2, 1024);
+        MAX_REMEMBERED_NPCS = BUILDER.defineInRange("max_remembered_npcs", 128, 2, 2048);
         TIME_TO_RESET_NPCS = BUILDER.defineInRange("time_to_reset_npcs", 40, 1, 501);
 
         UNCOMMON_QUEST_CHANCE = BUILDER.defineInRange("uncommon_quest_rarity", 30, 0, 100);
@@ -58,11 +58,11 @@ public class ServerConfig {
         USE_VILLAGER = BUILDER.define("use_villager", true);
         GENERATE_ANYWAY = BUILDER.define("generate_anyway", true);
 
-        COMMON_TASK_MULTIPLIER = BUILDER.defineInRange("common_item_multiplier", 1.0f, 0.1f, 10.f);
-        UNCOMMON_TASK_MULTIPLIER = BUILDER.defineInRange("uncommon_item_multiplier", 1.13f, 0.1f, 10.f);
-        RARE_TASK_MULTIPLIER = BUILDER.defineInRange("rare_item_multiplier", 1.2f, 0.1f, 10.f);
-        EPIC_TASK_MULTIPLIER = BUILDER.defineInRange("epic_item_multiplier", 1.4f, 0.1f, 10.f);
-        LEGENDARY_TASK_MULTIPLIER = BUILDER.defineInRange("legendary_item_multiplier", 1.5f, 0.1f, 10.f);
+        COMMON_TASK_MULTIPLIER = BUILDER.defineInRange("common_item_multiplier", 1.0f, 0.1f, 10.0f);
+        UNCOMMON_TASK_MULTIPLIER = BUILDER.defineInRange("uncommon_item_multiplier", 1.13f, 0.1f, 10.0f);
+        RARE_TASK_MULTIPLIER = BUILDER.defineInRange("rare_item_multiplier", 1.2f, 0.1f, 10.0f);
+        EPIC_TASK_MULTIPLIER = BUILDER.defineInRange("epic_item_multiplier", 1.4f, 0.1f, 10.0f);
+        LEGENDARY_TASK_MULTIPLIER = BUILDER.defineInRange("legendary_item_multiplier", 1.5f, 0.1f, 10.0f);
 
         CURRENCY_ID = BUILDER.define("currency_id", "minecraft:emerald");
 

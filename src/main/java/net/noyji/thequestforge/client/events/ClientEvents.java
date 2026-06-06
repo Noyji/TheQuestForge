@@ -55,9 +55,4 @@ public class ClientEvents {
         ClientHandler.interact(event);
     }
 
-    @SubscribeEvent
-    public static void onFMLClientSetup(FMLClientSetupEvent event) {
-        TaskRendererRegistry.init(event);
-    }
-
 }

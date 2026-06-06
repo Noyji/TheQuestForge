@@ -70,12 +70,12 @@ public class QuestBookManager {
     }
 
     public Component getQuestName(){
-        if (selectQuest == null) return Component.literal("Empty");
+        if (selectQuest == null) return Component.literal("");
         return template.getQuestName(languageKey, selectQuest.getNameIndex());
     }
 
     public Component getQuestRarity(){
-        if (selectQuest == null) return Component.literal("Empty");
+        if (selectQuest == null) return Component.literal("");
         return Component.translatable("gui.thequestforge.rarity.info").append(selectQuest.getRarity().getTranslateName());
     }
     @Nullable
@@ -90,7 +90,7 @@ public class QuestBookManager {
     }
 
     public Component getQuestDescription(){
-        if (selectQuest == null) return Component.literal("Empty");
+        if (selectQuest == null) return Component.literal("");
         String rawText = template.getQuestDescription(languageKey, selectQuest.getDescriptionIndex()).getString();
         return Component.literal(PlaceholderRegistry.parse(rawText, player, null, selectQuest));
     }

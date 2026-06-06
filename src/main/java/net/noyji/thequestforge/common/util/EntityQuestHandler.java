@@ -19,6 +19,7 @@ import net.noyji.thequestforge.data.capability.entity.DialogSessionManager;
 import net.noyji.thequestforge.data.capability.entity.EntityQuestData;
 import net.noyji.thequestforge.data.capability.player.PlayerQuestData;
 import net.noyji.thequestforge.data.managers.QuestGiversManager;
+import net.noyji.thequestforge.data.managers.QuestTemplateManager;
 import net.noyji.thequestforge.data.quest.entity.Quest;
 import net.noyji.thequestforge.data.quest.player.components.QuestType;
 import net.noyji.thequestforge.network.TheQuestForgeNetworking;
@@ -29,6 +30,10 @@ public class EntityQuestHandler {
     private static final RandomSource RANDOM = RandomSource.create();
 
     private static boolean tryCreateQuestGiver(Entity entity){
+        if (QuestTemplateManager.INSTANCE.isEmpty()){
+            return false;
+        }
+
         if (entity == null) return false;
 
         if (!QuestGiversManager.INSTANCE.thisQuestGiverOrVillager(entity)) return  false;

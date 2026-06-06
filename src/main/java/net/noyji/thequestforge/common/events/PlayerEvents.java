@@ -1,6 +1,8 @@
 package net.noyji.thequestforge.common.events;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -46,6 +48,11 @@ public class PlayerEvents {
         Player player = event.getEntity();
         if (!(player instanceof ServerPlayer serverPlayer)) return;
 
+        if (QuestTemplateManager.INSTANCE.isEmpty()){
+            serverPlayer.sendSystemMessage(Component.translatable("chat.thequestforge.error.quest_not_found")
+                    .withStyle(ChatFormatting.RED));
+        }
+
         TheQuestForgeNetworking.sendToPlayer(new SyncQuestTemplateS2CPacket(QuestTemplateManager.INSTANCE.serializeNBT()), serverPlayer);
     }
 
@@ -57,7 +64,7 @@ public class PlayerEvents {
 
         PlayerQuestData playerQuestData = CapabilityUtil.getPlayerQuestData(serverPlayer);
         TheQuestForgeNetworking.sendToPlayer(new SyncPlayerAllQuestS2CPacket(playerQuestData.serializeNBT()), serverPlayer);
-        playerQuestData.debugInfoCatalog();
+//        playerQuestData.debugInfoCatalog();
     }
 
     @SubscribeEvent

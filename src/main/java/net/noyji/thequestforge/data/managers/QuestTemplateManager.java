@@ -74,6 +74,10 @@ public class QuestTemplateManager extends SimpleJsonResourceReloadListener {
         return Util.getWeightItem(templatePoolMap.get(pool), RANDOM);
     }
 
+    public boolean isEmpty(){
+        return templateMap.isEmpty();
+    }
+
     public QuestTemplate getQuestTemplate(ResourceLocation templateKey){
         return templateMap.get(templateKey);
     }

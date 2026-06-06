@@ -42,5 +42,6 @@
   "command.thequestforge.spawn.player_is_null": "Игрок равен null",
   "command.thequestforge.spawn.success": "Квестодатель успешно создан",
 
-  "chat.thequestforge.npc_lock_message": "Мне пока не нужна твоя помощь. Приходи позже."
+  "chat.thequestforge.npc_lock_message": "Мне пока не нужна твоя помощь. Приходи позже.",
+  "chat.thequestforge.error.quest_not_found": "Ошибка! Задания не найдены, функция выдачи заданий отключена!"
 }

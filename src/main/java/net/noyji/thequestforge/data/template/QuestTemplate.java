@@ -44,7 +44,7 @@ public class QuestTemplate implements IWeighable {
     @SerializedName("task_count")
     private Range taskCount;
     @SerializedName("max_reward")
-    private int maxReward;
+    private int maxReward = 1;
     private Map<String, TemplateDialog> dialogs;
     @SerializedName("next_quest")
     private String nextQuest;

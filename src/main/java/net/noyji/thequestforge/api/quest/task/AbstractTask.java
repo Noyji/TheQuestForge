@@ -5,17 +5,21 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.Event;
+import net.noyji.thequestforge.TheQuestForge;
 import net.noyji.thequestforge.data.group.components.JsonTask;
 import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 
 public abstract class AbstractTask<T extends Event> {
     protected int goal;
+    protected int progress = 0;
 
     public abstract ResourceLocation getTarget();
 
     public abstract ResourceLocation getLocation();
 
-    public abstract boolean isComplete();
+    public boolean isComplete() {
+        return progress >= goal;
+    }
 
     public abstract Class<T> getEventClass();
 
@@ -23,9 +27,11 @@ public abstract class AbstractTask<T extends Event> {
 
     public abstract void handle(T event);
 
-    public abstract int getProgress();
+    public int getProgress() {
+        return progress;
+    }
 
-    public abstract void inComplete(Player player);
+    public void inComplete(Player player){}
 
     public abstract String getTargetName();
 
@@ -33,8 +39,10 @@ public abstract class AbstractTask<T extends Event> {
 
     public abstract void deserializeNBT(CompoundTag nbt);
 
-    //
-    public abstract void info();
+    public void info(){
+        TheQuestForge.LOGGER.debug("{}: Goal, {}", goal, getLocation());
+    }
+
     public void tryHandle(Event genericEvent){
         if (getEventClass().isInstance(genericEvent)){
             handle(getEventClass().cast(genericEvent));

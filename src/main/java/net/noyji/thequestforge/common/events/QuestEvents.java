@@ -15,7 +15,6 @@ import net.noyji.thequestforge.data.capability.CapabilityUtil;
 @Mod.EventBusSubscriber
 public class QuestEvents {
     private static final ResourceLocation KILL_KEY = TheQuestForge.id("kill");
-    private static final ResourceLocation COLLECT_KEY = TheQuestForge.id("collect");
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         LivingEntity deathMob = event.getEntity();
@@ -43,6 +42,4 @@ public class QuestEvents {
             CapabilityUtil.getPlayerQuestData(player).checkCollectTasks(player, event);
         }
     }
-
-
 }

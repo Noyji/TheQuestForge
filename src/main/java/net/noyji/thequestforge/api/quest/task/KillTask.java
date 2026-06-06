@@ -15,7 +15,6 @@ import net.noyji.thequestforge.data.quest.player.components.QuestRarity;
 public class KillTask extends AbstractTask<LivingDeathEvent> {
     private EntityType<?> target;
     private CompoundTag tag;
-    private int progress = 0;
 
     public KillTask() {
     }
@@ -47,11 +46,6 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
     }
 
     @Override
-    public boolean isComplete() {
-        return progress >= goal;
-    }
-
-    @Override
     public Class<LivingDeathEvent> getEventClass() {
         return LivingDeathEvent.class;
     }
@@ -62,10 +56,6 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
 
         tag = jsonTask.getTag();
         goal = jsonTask.getCount(randomSource, rarity);
-    }
-
-    @Override
-    public void inComplete(Player player) {
     }
 
     @Override
@@ -87,11 +77,6 @@ public class KillTask extends AbstractTask<LivingDeathEvent> {
                 progress++;
             }
         }
-    }
-
-    @Override
-    public int getProgress() {
-        return progress;
     }
 
     @Override

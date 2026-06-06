@@ -42,5 +42,6 @@
   "command.thequestforge.spawn.player_is_null": "Player is null",
   "command.thequestforge.spawn.success": "Quest giver created",
 
-  "chat.thequestforge.npc_lock_message": "I don't need your help yet. Come back later."
+  "chat.thequestforge.npc_lock_message": "I don't need your help yet. Come back later.",
+  "chat.thequestforge.error.quest_not_found": "Error! No quests found, quest giver spawning disabled!"
 }
